@@ -1,0 +1,278 @@
+"""Record-level merge of every Ascension client cache we hold.
+
+The existing intake.py dedups whole FILES (sha256 of the inner file).  That is not
+enough: no single snapshot is complete.  The best itemcache anyone submitted holds
+42,616 items, but the union across all submissions holds 75,984 -- so the interesting
+object is the union of RECORDS, not the best file.
+
+This builds that union, incrementally and idempotently:
+
+  * every .wdb record is keyed by (entry, sha1(payload))
+  * an identical payload seen in 29 different submissions is stored ONCE, carrying a
+    list of the sources that corroborate it  -> that is the "discard duplicates" half
+  * a DIFFERENT payload for the same entry is NOT overwritten and NOT dropped.  It is
+    a real variant: Ascension re-tunes items between patches and across game modes,
+    so both readings are true, each for its own mode and capture date.  Collapsing
+    them would silently destroy data.  Views (see export.py) pick a winner per mode;
+    the store keeps everything.
+
+Layout under merged/:
+  sources.tsv        one row per (file sha256, folder it appeared in)
+  <cache>/pack.bin   [entry u32][size u32][payload] for each DISTINCT record
+  <cache>/index.tsv  entry, sha1, size, offset, modes, srcs, first/last capture date
+
+Re-run after dropping new caches in.  Existing records are never rewritten; only new
+ones append, so the store is safe to interrupt.
+"""
+import os, sys, json, struct, hashlib, collections, time
+
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+import wdblib, modes, config
+
+STORE   = config.STORE
+SOURCES = config.SOURCES
+SCAN_ROOTS = config.SCAN_ROOTS + [config.EXTRACT]
+
+SRC_COLS = ["id", "sha256", "cache", "filename", "group", "realm", "mode", "slug",
+            "mode_source", "records", "captured", "path"]
+IDX_COLS = ["entry", "sha1", "size", "offset", "modes", "srcs",
+            "first_captured", "last_captured"]
+
+# fingerprint inference thresholds for submissions zipped from above the realm folder
+INFER_MIN_SHARED = 500
+INFER_MIN_AGREE  = 0.90
+
+
+def read_tsv(path, cols):
+    if not os.path.exists(path):
+        return []
+    out = []
+    with open(path, encoding="utf-8") as f:
+        head = f.readline().rstrip("\n").split("\t")
+        for line in f:
+            if not line.strip():
+                continue
+            vals = line.rstrip("\n").split("\t")
+            out.append(dict(zip(head, vals)))
+    return out
+
+
+def write_tsv(path, cols, rows):
+    os.makedirs(os.path.dirname(path), exist_ok=True)
+    tmp = path + ".tmp"
+    with open(tmp, "w", encoding="utf-8", newline="\n") as f:
+        f.write("\t".join(cols) + "\n")
+        for r in rows:
+            f.write("\t".join(str(r.get(c, "")) for c in cols) + "\n")
+    os.replace(tmp, path)
+
+
+def group_of(path):
+    """The folder that directly contains the .wdb == the realm/mode unit."""
+    parent = os.path.basename(os.path.dirname(os.path.abspath(path)))
+    return "enUS (realm root)" if parent == "enUS" else parent
+
+
+def sha256_file(path):
+    h = hashlib.sha256()
+    with open(path, "rb") as f:
+        for chunk in iter(lambda: f.read(1 << 20), b""):
+            h.update(chunk)
+    return h.hexdigest()
+
+
+def scan_disk():
+    """Every .wdb on disk -> one entry per (sha256, group) placement."""
+    found = {}
+    for root in SCAN_ROOTS:
+        if not os.path.isdir(root):
+            continue
+        for dp, _d, fs in os.walk(root):
+            for fn in fs:
+                if not fn.lower().endswith(".wdb"):
+                    continue
+                p = os.path.join(dp, fn).replace("\\", "/")
+                h = sha256_file(p)
+                g = group_of(p)
+                found.setdefault((h, g), p)      # first path wins; content is identical
+    return found
+
+
+def build_profiles(index):
+    """cache -> slug -> {entry: set(sha1)} from what is already merged, used to
+    identify submissions whose folder name lost the realm/mode. Any cache type can
+    serve as the fingerprint; a submission with no itemcache is identified from its
+    creaturecache instead."""
+    prof = collections.defaultdict(
+        lambda: collections.defaultdict(lambda: collections.defaultdict(set)))
+    for cache, idx in index.items():
+        for (entry, sha1), row in idx.items():
+            for slug in row["modes"]:
+                if slug != modes.UNKNOWN:
+                    prof[cache][slug][entry].add(sha1)
+    return prof
+
+
+def infer_mode(cache, fingerprint, profiles):
+    """fingerprint = {entry: sha1} of one unknown source. Return (slug, agree, shared)."""
+    best = (None, 0.0, 0)
+    for slug, prof in profiles.get(cache, {}).items():
+        shared = [e for e in fingerprint if e in prof]
+        if len(shared) < INFER_MIN_SHARED:
+            continue
+        agree = sum(1 for e in shared if fingerprint[e] in prof[e]) / len(shared)
+        if agree > best[1]:
+            best = (slug, agree, len(shared))
+    return best
+
+
+def load_store():
+    """Return (sources_by_key, index_by_cache, next_id)."""
+    srcs = {}
+    for r in read_tsv(SOURCES, SRC_COLS):
+        srcs[(r["sha256"], r["group"])] = r
+    index = {}
+    if os.path.isdir(STORE):
+        for cache in sorted(os.listdir(STORE)):
+            idx_path = f"{STORE}/{cache}/index.tsv"
+            if not os.path.exists(idx_path):
+                continue
+            d = {}
+            for r in read_tsv(idx_path, IDX_COLS):
+                d[(int(r["entry"]), r["sha1"])] = {
+                    "size": int(r["size"]), "offset": int(r["offset"]),
+                    "modes": set(filter(None, r["modes"].split(","))),
+                    "srcs": set(filter(None, r["srcs"].split(","))),
+                    "first_captured": r["first_captured"],
+                    "last_captured": r["last_captured"],
+                }
+            index[cache] = d
+    next_id = 1 + max([int(r["id"]) for r in srcs.values()] or [0])
+    return srcs, index, next_id
+
+
+def main():
+    t0 = time.time()
+    os.makedirs(STORE, exist_ok=True)
+    srcs, index, next_id = load_store()
+    known_keys = set(srcs)
+    disk = scan_disk()
+    new_keys = [k for k in disk if k not in known_keys]
+    print(f"sources on disk: {len(disk)}  already merged: {len(known_keys)}  "
+          f"new: {len(new_keys)}")
+
+    modes.seed_json({g for _h, g in disk})
+
+    # ---- read new files, classify, collect records -------------------------------
+    pending = []          # (srckey, srcrow, [(entry, payload), ...])
+    fingerprints = {}     # srckey -> {entry: sha1}, any cache type, for inference
+    for (h, g) in sorted(new_keys, key=lambda k: disk[k]):
+        p = disk[(h, g)]
+        info = wdblib.inspect(p)
+        cls = modes.classify(g)
+        captured = time.strftime("%Y-%m-%d", time.localtime(os.path.getmtime(p)))
+        row = {"id": "", "sha256": h, "cache": info.cache,
+               "filename": os.path.basename(p), "group": g,
+               "realm": cls["realm"], "mode": cls["mode"], "slug": cls["slug"],
+               "mode_source": cls["source"], "records": info.records,
+               "captured": captured, "path": p}
+        recs = []
+        if info.standard and info.records:
+            with open(p, "rb") as f:
+                b = f.read()
+            fp = {}
+            for entry, size, payload in wdblib.iter_records(b):
+                s1 = hashlib.sha1(payload).hexdigest()
+                recs.append((entry, s1, payload))
+                fp[entry] = s1
+            if fp:
+                fingerprints[(h, g)] = fp
+        pending.append(((h, g), row, recs))
+
+    # ---- resolve unknown modes by fingerprint ------------------------------------
+    profiles = build_profiles(index)
+    # also let brand-new known-mode sources in this same run act as references
+    for key, row, recs in pending:
+        if row["slug"] != modes.UNKNOWN and key in fingerprints:
+            for e, s1 in fingerprints[key].items():
+                profiles[row["cache"]][row["slug"]][e].add(s1)
+    # Infer per GROUP, keeping whichever of its files gives the most evidence, so a
+    # submission with no itemcache is still identified from its creaturecache.
+    inferred = {}
+    for key, row, recs in pending:
+        if row["slug"] != modes.UNKNOWN:
+            continue
+        fp = fingerprints.get(key)
+        if not fp:
+            continue
+        slug, agree, shared = infer_mode(row["cache"], fp, profiles)
+        if slug and agree >= INFER_MIN_AGREE:
+            prev = inferred.get(row["group"])
+            if prev is None or shared > prev[2]:
+                inferred[row["group"]] = (slug, agree, shared)
+    # apply per GROUP, so a group's other files inherit the verdict
+    for key, row, recs in pending:
+        if row["slug"] == modes.UNKNOWN and row["group"] in inferred:
+            slug, agree, shared = inferred[row["group"]]
+            row["slug"] = slug
+            row["mode"] = slug
+            row["mode_source"] = f"inferred:{agree:.3f}/{shared}"
+    for g, (slug, agree, shared) in sorted(inferred.items()):
+        print(f"  inferred mode for {g!r}: {slug} ({agree:.1%} over {shared} entries)")
+
+    # ---- merge records into the packs -------------------------------------------
+    added = collections.Counter(); dup = collections.Counter()
+    packs = {}
+    for key, row, recs in pending:
+        row["id"] = str(next_id); next_id += 1
+        srcs[key] = row
+        if not recs:
+            continue
+        cache = row["cache"]
+        idx = index.setdefault(cache, {})
+        if cache not in packs:
+            os.makedirs(f"{STORE}/{cache}", exist_ok=True)
+            packs[cache] = open(f"{STORE}/{cache}/pack.bin", "ab")
+        pk = packs[cache]
+        for entry, s1, payload in recs:
+            k = (entry, s1)
+            r = idx.get(k)
+            if r is None:
+                off = pk.tell()
+                pk.write(struct.pack("<II", entry, len(payload)) + payload)
+                r = idx[k] = {"size": len(payload), "offset": off,
+                              "modes": set(), "srcs": set(),
+                              "first_captured": row["captured"],
+                              "last_captured": row["captured"]}
+                added[cache] += 1
+            else:
+                dup[cache] += 1
+            r["modes"].add(row["slug"])
+            r["srcs"].add(row["id"])
+            r["first_captured"] = min(r["first_captured"], row["captured"])
+            r["last_captured"] = max(r["last_captured"], row["captured"])
+    for pk in packs.values():
+        pk.close()
+
+    # ---- persist -----------------------------------------------------------------
+    write_tsv(SOURCES, SRC_COLS,
+              sorted(srcs.values(), key=lambda r: int(r["id"])))
+    for cache, idx in index.items():
+        rows = [{"entry": e, "sha1": s, "size": r["size"], "offset": r["offset"],
+                 "modes": ",".join(sorted(r["modes"])),
+                 "srcs": ",".join(sorted(r["srcs"], key=int)),
+                 "first_captured": r["first_captured"],
+                 "last_captured": r["last_captured"]}
+                for (e, s), r in sorted(idx.items())]
+        write_tsv(f"{STORE}/{cache}/index.tsv", IDX_COLS, rows)
+
+    print(f"\n{'cache':<18}{'records':>10}{'entries':>10}{'+new':>8}{'dup':>10}")
+    for cache in sorted(index):
+        ents = len({e for e, _s in index[cache]})
+        print(f"{cache:<18}{len(index[cache]):>10}{ents:>10}"
+              f"{added[cache]:>8}{dup[cache]:>10}")
+    print(f"\nstore: {STORE}   ({time.time()-t0:.0f}s)")
+
+
+if __name__ == "__main__":
+    main()

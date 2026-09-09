@@ -1,0 +1,16 @@
+# Working data -- all of it is regenerable from submitted caches, and some of it
+# contains player data that must never be committed.
+_inbox/
+extracted/
+merged/
+merged.prev/
+cachedata/
+ledger.json
+MANIFEST.md
+config.json
+quarantine/
+
+__pycache__/
+*.pyc
+modes.json
+decoded/
