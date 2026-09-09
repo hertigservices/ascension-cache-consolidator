@@ -116,13 +116,66 @@ The six stages, each runnable on its own:
 | `rebuild.py` | write merged, client-loadable `.wdb` files per mode |
 | `audit_publish.py` | scan everything about to be published for player data |
 
-Three tools sit outside the pipeline:
+Five tools sit outside the pipeline:
 
 | tool | what it does |
 |---|---|
 | `unpack.py` | decompress the published dataset, or install one mode into your client |
 | `publish.py` | run the pipeline, mirror the result into this repository, audit it, commit and push. `--watch` repeats that whenever the inbox changes, so a dropped submission becomes public without anyone deciding anything by hand |
+| `tray_app.py` | the same thing with a face: a system-tray icon that watches the inbox, runs the pipeline when a submission lands, and opens a window with a live log and buttons for the manual commands |
+| `sweep_inbox.py` | find submissions the pipeline is silently skipping, and give them names that stop it |
 | `test_audit.py` | prove the publish gate still catches what it claims to, in both directions |
+
+### The tray app
+
+```bash
+pythonw tools/tray_app.py          # or double-click tools/Cache Consolidator.cmd
+python -m pip install pystray pillow   # only this tool needs them
+```
+
+It supervises `publish.py` as a child process rather than importing it. That
+matters: `publish.py` exits on any git error, so its own `--watch` loop ends
+outright the first time a `.git/index.lock` collides with anything, leaving
+nothing running to say so. As a child process that is an exit code the tray app
+reports and retries. A failed run is also **not** recorded as handled, so the
+submission that failed is tried again instead of waiting for somebody else's
+drop to move the inbox on past it.
+
+It also refuses to start elevated. Intake hands every submitted archive to
+7-Zip, and an archive can contain entries that resolve outside the extraction
+directory; when that was tested here the escape failed because Windows refused
+to create the link without administrator rights. Running the pipeline elevated
+removes the control that actually stopped it.
+
+### Why a submission can go missing, and what finds it
+
+Two stages are allow-lists that discard what they do not recognise. That is
+deliberate — an unrecognised file shape must never reach a public dataset — but
+it means a submission can be lost with no error printed anywhere:
+
+* `intake.py` extracts each archive into `extracted/<stem>/`, taking `<stem>`
+  from the **filename**. If that directory already exists it reports `cached`
+  and moves on, so two people who both send `WDB.zip` collide and the second is
+  never read.
+* `luamerge.py` matches addon files by **exact** filename against five names.
+  `AIO_Client (1).lua` is not a slightly wrong name to it; it is an unknown file,
+  dropped in silence.
+
+```bash
+python tools/sweep_inbox.py          # report only, changes nothing
+python tools/sweep_inbox.py --fix    # rename the archives being skipped
+```
+
+`--fix` renames a skipped archive to `<stem>__<content hash><ext>`, which no
+other content can claim. It renames **only** copies it has positively identified
+as unread, by comparing their member hashes against the bytes already extracted,
+and it renames nothing at all when it cannot tell two files apart — renaming the
+copy that *was* read would extract the same bytes twice and inflate the
+corroboration counts that record how many people independently sent a record.
+It never renames a `.lua` file, for the reason above.
+
+The tray app runs this check before every consolidation, and gives each arriving
+archive a unique name as it lands, so the collision does not recur.
 
 Paths are resolved by `tools/config.py` and need no configuration for a fresh clone.
 To scan collections that live elsewhere, add a `config.json` next to `tools/`:
@@ -132,6 +185,7 @@ To scan collections that live elsewhere, add a `config.json` next to `tools/`:
 ```
 
 Requires Python 3.8+ and 7-Zip (only to unpack submitted archives).
+The tray app additionally needs `pystray` and `pillow`; nothing else does.
 
 ## Addon SavedVariables
 

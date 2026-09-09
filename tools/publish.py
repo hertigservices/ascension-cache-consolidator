@@ -26,7 +26,7 @@ It never invents a remote, never force-pushes, and never commits anything under
 `quarantine/`.  If the working tree has changes it did not make, it says so and
 stops rather than sweeping someone else's edit into a commit.
 """
-import os, sys, subprocess, shutil, time, filecmp
+import os, re, sys, subprocess, shutil, time, filecmp
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, HERE)
@@ -45,6 +45,40 @@ def run(cmd, cwd=None, check=True):
         print((r.stdout + r.stderr).strip())
         raise SystemExit(f"!! {' '.join(cmd)} failed ({r.returncode})")
     return r
+
+
+def stream(cmd, cwd=None, every=10):
+    """Run a command with its output arriving live, not at the end.
+
+    The push is the one step here that can take minutes, and it was the one step
+    with nothing to look at: git writes transfer progress to stderr, `run()`
+    captures stderr, and git suppresses progress altogether when stderr is not a
+    terminal -- which it is not when something is reading this output. So a large
+    push printed "committed" and then nothing at all until it finished, which is
+    indistinguishable from a hang.
+
+    `--progress` makes git report anyway; not capturing lets it through. Progress
+    lines are thinned to one every `every` percent, because git emits hundreds and
+    a log is not a terminal that can overwrite its own last line.
+    """
+    p = subprocess.Popen(cmd, cwd=cwd, stdout=subprocess.PIPE,
+                         stderr=subprocess.STDOUT, text=True,
+                         encoding="utf-8", errors="replace", bufsize=1)
+    tail, last = [], {}
+    for line in p.stdout:
+        line = line.rstrip("\r\n")
+        if not line:
+            continue
+        tail.append(line)
+        del tail[:-40]
+        m = re.match(r"^([A-Za-z][A-Za-z ]+):\s+(\d+)%", line)
+        if m:
+            phase, pct = m.group(1), int(m.group(2))
+            if pct - last.get(phase, -every) < every and pct != 100:
+                continue
+            last[phase] = pct
+        print("   " + line, flush=True)
+    return p.wait(), tail
 
 
 def git(*args, check=True):
@@ -220,12 +254,15 @@ def publish(push):
         print("!! no git remote configured; commit kept, nothing pushed")
         return False
     branch = git("rev-parse", "--abbrev-ref", "HEAD").stdout.strip()
-    r = git("push", "origin", branch, check=False)
-    if r.returncode != 0:
-        print((r.stdout + r.stderr).strip())
+    print(f"pushing {branch} to origin -- this is the slow part on a big "
+          f"dataset, and it reports as it goes:", flush=True)
+    t0 = time.time()
+    rc, tail = stream(["git", "push", "--progress", "origin", branch], cwd=REPO)
+    if rc != 0:
+        print("\n".join(tail))
         print("!! push failed; the commit is still here, retry when resolved")
         return False
-    print(f"pushed {branch}")
+    print(f"pushed {branch} in {time.time() - t0:.0f}s")
     return True
 
 
