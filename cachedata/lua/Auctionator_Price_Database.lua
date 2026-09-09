@@ -1,4 +1,7 @@
 AUCTIONATOR_PRICE_DATABASE = {
+	["Area 52 - Free-Pick"] = {
+		["Aura of Experience"] = 19680000,
+	},
 	["Darkmoon - Season 10 Wildcard"] = {
 		["Potion of Experience"] = 561999,
 	},
