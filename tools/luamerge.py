@@ -164,6 +164,47 @@ def group_of(path):
     return os.path.basename(os.path.dirname(path))
 
 
+def submission_of(path):
+    """Which submission a file arrived in -- the unit that stands for a person.
+
+    `srcs` counts distinct files, which is not the same thing: one contributor
+    with several characters produces several SavedVariables files, and two
+    contributors who both captured the same bytes produce one. For deciding
+    whether executable code has been independently confirmed, the archive it
+    was submitted in is the closest thing we have to "somebody else said so".
+    """
+    ap = os.path.abspath(path)
+    ex = os.path.abspath(config.EXTRACT)
+    if ap.startswith(ex):
+        rel = os.path.relpath(ap, ex).replace("\\", "/")
+        return "archive:" + rel.split("/")[0]
+    # X.lua and X.lua.bak are the same submission: the .bak is the addon's own
+    # backup of that very file, not a second person confirming anything.
+    base = os.path.basename(ap)
+    if base.lower().endswith(".bak"):
+        base = base[:-4]
+    return "loose:" + base
+
+
+def backfill_submissions(state):
+    """Give older state entries the submission field they were written without.
+
+    Cheap and idempotent: the files are on disk and their hashes are their
+    keys, so this is a rescan, not a re-merge.
+    """
+    missing = [sid for sid, m in state.get("sources", {}).items()
+               if not m.get("submission")]
+    if not missing:
+        return 0
+    want, fixed = set(missing), 0
+    for _key, path in discover():
+        sid = sha256(path)
+        if sid in want:
+            state["sources"][sid]["submission"] = submission_of(path)
+            fixed += 1
+    return fixed
+
+
 def discover():
     """Every .lua under the scan roots that we have a spec for."""
     found, seen = [], set()
@@ -438,10 +479,14 @@ def run_merge():
             "filename": os.path.basename(path), "spec": key,
             "group": grp, "realm": cls["realm"], "mode": cls["mode"],
             "slug": cls["slug"], "records": n, "captured": meta["captured"],
+            "submission": submission_of(path),
         }
         added += 1
         print(f"  + {os.path.basename(path):<32} {n:>6,} leaves   "
               f"{cls['realm'] or '(account-wide)'} / {cls['mode']}")
+    n_back = backfill_submissions(state)
+    if n_back:
+        print(f"  filled in the submission of {n_back} earlier source file(s)")
     save_state(state)
     print(f"\n{added} new, {skipped} already merged, {len(conflicts)} field conflicts")
     for path, a, b in conflicts[:10]:
@@ -494,6 +539,114 @@ def write_mobspells(state):
 _SAFE_NAME = re.compile(r"[^A-Za-z0-9._-]")
 
 
+def choose_addon_build(srcinfo, variants):
+    """Pick which build of one addon gets published. The single source of truth.
+
+    Ranked by how many separate submissions carried the build -- see
+    submission_of() for why that, and not the number of files. Ties fall to the
+    oldest capture, which is a fact about the world rather than a property of
+    the bytes; a tie there too is refused outright.
+
+    Returns (vid, variant, note, tied) where note is "corroborated",
+    "single submission" or "UNRESOLVED", and tied is the full list of builds
+    that could not be separated.
+
+    Both the writer and the verifier call this. They used to hold separate
+    copies of the rule, which silently drifted apart.
+    """
+    def submissions(v):
+        return {srcinfo.get(sid, {}).get("submission") or ("file:" + sid[:12])
+                for sid in v["srcs"]}
+
+    def earliest(v):
+        d = sorted(x for x in (srcinfo.get(sid, {}).get("captured")
+                               for sid in v["srcs"]) if x)
+        return d[0] if d else ""
+
+    ranked = sorted(variants.items(),
+                    key=lambda kv: (len(submissions(kv[1])),
+                                    _neg_date(earliest(kv[1]))),
+                    reverse=True)
+    top = ranked[0]
+    tied = [kv for kv in ranked
+            if len(submissions(kv[1])) == len(submissions(top[1]))
+            and earliest(kv[1]) == earliest(top[1])]
+    if len(tied) > 1:
+        return top[0], top[1], "UNRESOLVED", tied
+    note = ("corroborated" if len(submissions(top[1])) >= 2
+            else "single submission")
+    return top[0], top[1], note, tied
+
+
+def addon_stats(srcinfo, v):
+    """(distinct submissions, distinct files, oldest capture) for one build."""
+    subs_ = {srcinfo.get(sid, {}).get("submission") or ("file:" + sid[:12])
+             for sid in v["srcs"]}
+    dates = sorted(x for x in (srcinfo.get(sid, {}).get("captured")
+                               for sid in v["srcs"]) if x)
+    return len(subs_), len(v["srcs"]), (dates[0] if dates else "")
+
+
+def _neg_date(d):
+    """Sort key that makes an OLDER date rank higher, with '' ranking last."""
+    return tuple(-int(x) for x in d.split("-")) if d else (-9999,)
+
+
+def _write_addon_report(rows):
+    """Say, in plain words, how far each published addon can be trusted.
+
+    These files are program code that was pushed to players' clients, and this
+    project republishes them. Anyone rebuilding the UI from this dataset is
+    going to run them. They deserve to know which ones only one person ever
+    sent us, and which ones we could not decide between at all -- without
+    reading the merge code to find out.
+    """
+    if not rows:
+        return
+    rows = sorted(rows, key=lambda r: (r[5] != "UNRESOLVED", r[2], r[0].lower()))
+    out = os.path.join(OUT, "ADDONS-PROVENANCE.md")
+    with open(out, "w", encoding="utf-8", newline="\n") as f:
+        f.write("# How well corroborated is each published addon?\n\n"
+                "These files are **executable code** that Ascension's server\n"
+                "pushed to game clients, recovered from players' saved\n"
+                "variables. If you rebuild the interface from this dataset you\n"
+                "will be running them, so here is exactly how much confirmation\n"
+                "each one has.\n\n"
+                "**submissions** is the number of separate uploads a build\n"
+                "arrived in -- the closest thing we have to *different people\n"
+                "independently saw the same code*. **files** counts the\n"
+                "individual saved-variable files instead, which is always the\n"
+                "same or larger, because one person with several characters\n"
+                "sends several files.\n\n"
+                "* **corroborated** -- two or more separate submissions carried\n"
+                "  this exact build.\n"
+                "* **single submission** -- one upload is the only evidence this\n"
+                "  is what the server sent. Almost certainly genuine, but it\n"
+                "  rests on one person's word, so treat it as unverified code.\n"
+                "* **UNRESOLVED** -- two or more different builds are equally\n"
+                "  corroborated and equally old, and nothing but the code's own\n"
+                "  bytes could separate them. We refuse to pick on that basis,\n"
+                "  so the file is **left out** of the merged `AIO_Client.lua`\n"
+                "  and every build is written to `addons/unresolved/` for a\n"
+                "  person to compare.\n\n"
+                "*Oldest capture* is the earliest modification time of a\n"
+                "file carrying this build. For a file that arrived inside an\n"
+                "archive that may be when it was unpacked here rather than when\n"
+                "the player recorded it, so read it as a rough ordering and not\n"
+                "a precise date. It breaks ties between equally corroborated\n"
+                "builds, in preference to anything derived from the code's own\n"
+                "bytes.\n\n"
+                "| addon file | builds seen | submissions | files | oldest capture | status |\n"
+                "|---|---:|---:|---:|---|---|\n")
+        for name, nvar, nsub, nsrc, when, note in rows:
+            f.write("| `%s` | %d | %d | %d | %s | %s |\n"
+                    % (name, nvar, nsub, nsrc, when or "unknown", note))
+    n_un = sum(1 for r in rows if r[5] == "UNRESOLVED")
+    n_one = sum(1 for r in rows if r[5] == "single submission")
+    print(f"  addon provenance: {len(rows)} file(s), {n_one} on a single "
+          f"submission, {n_un} unresolved -> lua/ADDONS-PROVENANCE.md")
+
+
 def write_aio(state):
     store = state.get("aio") or {}
     if not store:
@@ -502,13 +655,28 @@ def write_aio(state):
     n_files = n_variants = 0
     extra = {}
     os.makedirs(ADDONS_OUT, exist_ok=True)
+    srcinfo = state.get("sources") or {}
+    report, unresolved_dir = [], os.path.join(ADDONS_OUT, "unresolved")
     for fname, variants in store.items():
-        # The client's own format holds one build per filename, so the merged
-        # file carries the most-corroborated variant and the rest go beside it.
-        vid, v = max(variants.items(), key=lambda kv: (len(kv[1]["srcs"]), kv[0]))
+        vid, v, note, tied = choose_addon_build(srcinfo, variants)
+        nsub, nsrc, when = addon_stats(srcinfo, v)
+        report.append((fname, len(variants), nsub, nsrc, when, note))
+        n_variants += len(variants)
+        if note == "UNRESOLVED":
+            # Nothing left to separate them but the bytes themselves, and the
+            # bytes are the thing under suspicion. Refuse rather than guess.
+            os.makedirs(unresolved_dir, exist_ok=True)
+            for vid_, v_ in tied:
+                safe_ = _SAFE_NAME.sub("_", fname)
+                with open(f"{unresolved_dir}/{safe_}__{vid_}.lua", "w",
+                          encoding="utf-8", newline="\n") as f:
+                    f.write(v_["code"])
+            print(f"  !! {fname}: {len(tied)} builds equally corroborated and "
+                  f"equally old -- left OUT of the merged file; all builds "
+                  f"written to addons/unresolved/ for a person to decide")
+            continue
         addons.hash[fname] = T({"name": fname, "crc": v["crc"], "code": v["code"]})
         n_files += 1
-        n_variants += len(variants)
         # Also write the code out as an actual .lua source file. The merged
         # SavedVariables is what the client wants; a source tree is what a
         # person rebuilding the UI wants, and it is the same bytes either way.
@@ -521,6 +689,7 @@ def write_aio(state):
             extra[fname] = {k: {"crc": d["crc"], "bytes": d["bytes"],
                                 "sources": len(d["srcs"])}
                             for k, d in variants.items()}
+    _write_addon_report(report)
     path = f"{OUT}/AIO_Client.lua"
     # AIO_sv (hotbars, frame positions, character names) is deliberately absent.
     luaser.dump({"AIO_sv_Addons": addons}, path)
@@ -636,8 +805,13 @@ def verify(state):
           + ("OK" if not bad else f"{bad} FAILED"))
 
     src_bad = src_n = 0
+    _srcinfo = state.get("sources") or {}
     for fname, variants in (state.get("aio") or {}).items():
-        _vid, v = max(variants.items(), key=lambda kv: (len(kv[1]["srcs"]), kv[0]))
+        _vid, v, _note, _tied = choose_addon_build(_srcinfo, variants)
+        if _note == "UNRESOLVED":
+            # Deliberately not written to addons/<name>.lua; its builds live in
+            # addons/unresolved/ instead, so there is nothing to compare here.
+            continue
         p = os.path.join(ADDONS_OUT, _SAFE_NAME.sub("_", fname))
         if not p.lower().endswith(".lua"):
             p += ".lua"

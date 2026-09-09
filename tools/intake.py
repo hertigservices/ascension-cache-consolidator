@@ -4,7 +4,7 @@ Idempotent. Drop any submission (zip/rar/loose folder) into a scanned root and r
 Dedup key = sha256 of the extracted file, so a zip and a rar of the same itemcache
 collapse to ONE record with a corroboration count. No DB writes, no deletes.
 """
-import os, sys, json, hashlib, subprocess, time, re
+import os, sys, json, hashlib, shutil, subprocess, time, re
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import wdblib, config
 
@@ -43,6 +43,10 @@ def sha256(path):
         for chunk in iter(lambda: f.read(1 << 20), b""):
             h.update(chunk)
     return h.hexdigest()
+
+# Beside EXTRACT, never inside it: anything under EXTRACT is scanned.
+QUARANTINE = os.path.join(os.path.dirname(EXTRACT), "quarantine")
+
 
 def extract_all():
     """Extract every archive under the scan roots into EXTRACT/<stem>/ (skip if already done)."""
@@ -97,8 +101,51 @@ def extract_all():
                             os.remove(tp)
                 if ok:
                     with open(os.path.join(out, SRCMARK), "w") as f: f.write(fn)
-                done.append((fn, "ok" if ok else f"ERR {r.returncode}"))
+                    done.append((fn, "ok"))
+                else:
+                    where = quarantine(out, fn, (r.stderr or r.stdout or "").strip())
+                    done.append((fn, f"FAILED -> quarantine/{os.path.basename(where)}"
+                                     if where else f"ERR {r.returncode}"))
     return done
+
+
+def quarantine(out, fn, why):
+    """Move a failed extraction out of the way, and say where it went.
+
+    It must not stay under EXTRACT. The "have we already done this one?" test is
+    `isdir(out) and listdir(out)`, so a half-written directory left in place
+    reports `cached` on every future run: the archive is never retried, and the
+    fragments 7-Zip did write are scanned into the ledger as if they were a real
+    submission. A truncated upload would fail once, silently, and be treated as
+    finished forever.
+
+    It is moved rather than deleted. A failed extraction is the most interesting
+    kind -- a corrupt upload worth asking the sender to redo, or an archive doing
+    something it should not -- and deleting the evidence to keep the folder tidy
+    would be exactly the wrong instinct.
+    """
+    os.makedirs(QUARANTINE, exist_ok=True)
+    stamp = time.strftime("%Y%m%d-%H%M%S")
+    dest = os.path.join(QUARANTINE, f"{os.path.basename(out)}__{stamp}")
+    try:
+        shutil.move(out, dest)
+    except OSError as e:
+        print(f"  !! {fn} failed to extract AND could not be quarantined: {e}")
+        print(f"     remove {out} by hand or it will report 'cached' forever")
+        return None
+    try:
+        with open(os.path.join(dest, "WHY-THIS-IS-HERE.txt"), "w",
+                  encoding="utf-8") as f:
+            f.write("Extraction of this archive failed, so its partial output was\n"
+                    "moved here. Nothing in this folder has been scanned or\n"
+                    "published, and the archive will be retried on the next run.\n\n"
+                    f"archive : {fn}\n"
+                    f"when    : {stamp}\n"
+                    f"7-Zip said:\n{why or '(nothing)'}\n")
+    except OSError:
+        pass
+    print(f"  !! {fn} failed to extract; partial output quarantined at {dest}")
+    return dest
 
 def label_for(path):
     """Return (provenance_label, group). Group = the realm/character folder that

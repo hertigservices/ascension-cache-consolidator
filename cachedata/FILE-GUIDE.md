@@ -19,7 +19,7 @@ Two consequences shape everything here:
 
 ## The cache files
 
-### `itemcache.wdb`  — 586,660 distinct records held
+### `itemcache.wdb`  — 587,021 distinct records held
 
 *Stored from:* `SMSG_ITEM_QUERY_SINGLE_RESPONSE`
 
@@ -27,7 +27,7 @@ Item definitions: name, icon, quality, item level, stats, damage, price, and on-
 
 **Not in this file:** Not loot tables, not drop sources, not where an item comes from.
 
-### `creaturecache.wdb`  — 22,695 distinct records held
+### `creaturecache.wdb`  — 22,707 distinct records held
 
 *Stored from:* `SMSG_CREATURE_QUERY_RESPONSE`
 
@@ -43,7 +43,7 @@ World objects: doors, chests, ore veins, herbs, mailboxes, campfires. Holds the 
 
 **Not in this file:** Not placements. No cache records where objects stand in the world.
 
-### `questcache.wdb`  — 20,707 distinct records held
+### `questcache.wdb`  — 20,760 distinct records held
 
 *Stored from:* `SMSG_QUEST_QUERY_RESPONSE`
 
