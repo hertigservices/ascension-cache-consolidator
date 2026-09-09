@@ -238,17 +238,22 @@ def publish(push):
 
     status = git("status", "--porcelain").stdout.splitlines()
     if not status:
-        print("nothing changed; already published")
-        return True
-    print(f"\n{len(status)} path(s) changed: {describe(status)}")
-
-    git("add", "-A", "cachedata", "tools")
-    msg = ("Consolidate submissions and republish\n\n"
-           "Automated run: every file in the inbox merged, deduplicated and\n"
-           "re-exported, then audited for player data before commit.\n\n"
-           "Co-Authored-By: Claude Opus 5 <noreply@anthropic.com>\n")
-    git("commit", "-m", msg)
-    print("committed " + git("rev-parse", "--short", "HEAD").stdout.strip())
+        # "Nothing to commit" is not "nothing to push". A run that committed and
+        # then failed to push -- dropped network, timeout, an interrupted run --
+        # leaves the work in a local commit, and returning success here would
+        # mean every later run cheerfully reports "already published" while that
+        # commit is never sent anywhere. Fall through instead; the push below
+        # costs nothing when there is genuinely nothing to send.
+        print("nothing new to commit")
+    else:
+        print(f"\n{len(status)} path(s) changed: {describe(status)}")
+        git("add", "-A", "cachedata", "tools")
+        msg = ("Consolidate submissions and republish\n\n"
+               "Automated run: every file in the inbox merged, deduplicated and\n"
+               "re-exported, then audited for player data before commit.\n\n"
+               "Co-Authored-By: Claude Opus 5 <noreply@anthropic.com>\n")
+        git("commit", "-m", msg)
+        print("committed " + git("rev-parse", "--short", "HEAD").stdout.strip())
 
     if not push:
         print("\nnot pushing (pass --push to publish)")
