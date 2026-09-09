@@ -72,19 +72,31 @@ If you would rather not run a script, this is all we need.
 - `wowcache.wdb` — we have not verified what is in this one, so it stays out
   until we have.
 
-**Optionally, also send these five files** and only these five, from
-`WTF/Account/<your login>/SavedVariables/`:
+### The five addon files (optional, but the most valuable thing here)
+
+There are **two** folders called `SavedVariables` and the difference is the whole
+rule:
+
+| folder | |
+|---|---|
+| `WTF/Account/<your login>/SavedVariables/` | **this one** — settings shared by all your characters |
+| `WTF/Account/<your login>/<Realm - Mode>/<Character>/SavedVariables/` | not this one — one per character |
+
+From the **first** folder only, send these five files and only these five:
 
 `MobSpells.lua`, `AIO_Client.lua`, `Auctionator_Price_Database.lua`,
 `GatherMate2.lua`, `CoASniff.lua`
 
-Those hold things no cache file can: what mobs actually cast and how hard they
-hit, the addon code the server pushes to your client, auction prices, and where
-herb and mine nodes are.
+You will not have all of them — nobody does. Send whichever exist. They hold
+things no cache file can: what mobs actually cast and how hard they hit, the
+addon code the server pushes to your client, auction prices, and where herb and
+mine nodes are. `.bak` copies are fine too, sometimes better.
 
-**Do not send anything else from `WTF/`.** That tree is named after your login
-and your characters, and it holds your chat log, your macros, your keybinds and
-your UI layout. None of it is game data and none of it is wanted.
+**Nothing else from `WTF/`, including the per-character folders.** That tree is
+named after your login and your characters and holds your chat log, your macros,
+your keybinds and your UI layout. The per-character `SavedVariables` is where
+`Details.lua`, `DBM-Core.lua`, `PowerAuras.lua` and `AscensionUI.lua` live — that
+is UI state, not game data, and it is not wanted.
 
 ---
 
@@ -125,7 +137,8 @@ Never accepted, never published, no exceptions:
 - `itemtextcache.wdb` — other people's mail and letters
 - `wowcache.wdb` — contents unverified
 - anything else under `WTF/` — chat, macros, keybinds, combat logs, screenshots,
-  and a folder tree literally named after your login and your characters
+  the per-character `SavedVariables` folders, and a folder tree literally named
+  after your login and your characters
 - combat logs of any kind — they carry the names, GUIDs, classes, specs and
   talent builds of everyone you were grouped with, not just you
 - any file whose kind the tool does not recognise
@@ -137,11 +150,16 @@ A file with `{redacted}` where a name used to be is accepted, not rejected.
 
 ## Sending it
 
-Open an issue on this repository saying what you have — which realm, which game
-mode, roughly how big — and attach the bundle.
+Post it in **`#cache-dump`** on the **Conquest of AzerothCore** Discord, with a
+line saying what it is — which realm, which game mode, roughly when you captured
+it. That is where these submissions are collected and where you will get an
+answer fastest.
 
-GitHub caps issue attachments at 25 MB. If yours is bigger, say so in the issue
-rather than trying to split it, and you will be pointed somewhere to put it.
+Not in that server, or the file is too big for Discord's upload limit? Open an
+issue on this repository instead and attach the bundle. GitHub caps issue
+attachments at 25 MB — if yours is over that, say so rather than splitting it up,
+and you will be pointed somewhere to put it. Running the tool with `--index`
+(above) is usually enough to get well under both limits.
 
 Useful things to mention, if you know them:
 
