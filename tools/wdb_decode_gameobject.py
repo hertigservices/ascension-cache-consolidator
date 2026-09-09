@@ -20,7 +20,7 @@ Unions every distinct (by sha256) non-empty gameobjectcache across all realms/mo
 dedup by entry (all snapshots of one entry are identical; keep first).
 Native python can't see /c/... -> C:/... paths only. NON-DESTRUCTIVE, filesystem-only.
 """
-import os, sys, struct, hashlib
+import os, sys, math, struct, hashlib
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import wdblib, config
 
@@ -35,12 +35,26 @@ OUT_REP = config.WORK + "/decoded/gameobject_report.md"
 TAIL_QUESTITEMS = 6
 
 DATA_N = 24
-COLS = ["entry", "type", "displayId", "name", "IconName", "castBarCaption", "unk1",
-        "size"] + [f"Data{i}" for i in range(DATA_N)]
+# The quest items were already being read to prove the byte count, then dropped.
+# They are the loot a gameobject hands out for a quest, which is exactly the kind
+# of link a rebuilt world DB needs, so they are kept now.
+COLS = (["entry", "type", "displayId", "name", "IconName", "castBarCaption", "unk1",
+         "size"] + [f"Data{i}" for i in range(DATA_N)]
+        + [f"questItem{i + 1}" for i in range(TAIL_QUESTITEMS)])
 
 
 def sanitize(s):
     return s.replace("\t", " ").replace("\r", " ").replace("\n", " ").replace("\\", "/")
+
+
+def fnum(v):
+    """Format a float for the TSV: integral values stay integral, the rest get a
+    fixed number of decimals. Deterministic, so an unchanged re-run diffs clean."""
+    if not math.isfinite(v):
+        return "0"
+    if v == int(v):
+        return str(int(v))
+    return f"{v:.6f}".rstrip("0").rstrip(".")
 
 
 class Cur:
@@ -71,9 +85,18 @@ def decode_go(entry, payload, tail=TAIL_QUESTITEMS):
     d["unk1"] = sanitize(c.cstr())
     for i in range(DATA_N):
         d[f"Data{i}"] = c.u32()
-    d["size"] = round(c.f32())
-    for _ in range(tail):
-        c.u32()                                      # questItems
+    # `size` is the object's render scale and it is genuinely fractional -- 0.63 for
+    # a Deeprun Rat Trap, 1.5 for a large chest. It was being round()ed to an int,
+    # which flattened 12,114 of 13,828 objects to exactly 1 and 721 more to 0 (a
+    # zero-scale object is invisible). gameobject_template.size is a float column;
+    # give it the float.
+    d["size"] = fnum(c.f32())
+    for i in range(tail):
+        v = c.u32()                                  # questItems
+        # `tail` is a tuning knob the oracle sweeps, so it can exceed the number of
+        # columns; read every slot to keep the byte count honest, store what fits.
+        if i < TAIL_QUESTITEMS:
+            d[f"questItem{i + 1}"] = v
     return d, c.o
 
 

@@ -9,13 +9,22 @@ PROVEN LAYOUT (empirically derived + oracle-verified — see wdb_decode_quest_re
   Unlike itemcache, the quest payload REPEATS the quest id as its first u32 (== the
   record-header entry). 65 leading u32 = QuestId + 64 standard 3.3.5 fields. Then 5
   strings (Title, Objectives, Details, EndText, CompletedText), then 28 u32
-  (RequiredNpcOrGo id[4]/count[4], RequiredSourceItem id[4]/count[4],
+  (four INTERLEAVED objectives of npcOrGo/count/srcItem/srcCount, then
   RequiredItem id[6]/count[6]), then 4 ObjectiveText strings. No trailing
   QuestGiver-text-window / sound fields exist in this build's response.
 
+  A WARNING ABOUT THE ORACLE, because this file has already been bitten by it.
+  consumed==size proves the layout's total WIDTH, not its ALIGNMENT. Any
+  rearrangement that moves the same number of bytes -- a shifted field, a pair of
+  arrays that are really one interleave -- scores 100% exact and is invisible here.
+  The objective block was read as two separate arrays for its whole first life and
+  the oracle never once complained. Check field ORDER against known-good rows
+  (stock quests in a world DB, a wiki entry, the client's own tooltip), not against
+  the byte count.
+
 Native python can't see /c/... paths on this box -> C:/... paths only.
 """
-import os, sys, struct, hashlib
+import os, sys, math, struct, hashlib
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import wdblib, config
 
@@ -25,13 +34,54 @@ SCAN = [config.EXTRACT] + config.SCAN_ROOTS
 OUT_TSV = config.WORK + "/decoded/quest.tsv"
 OUT_REP = config.WORK + "/decoded/quest_report.md"
 
-OUT_COLS = ["entry","Method","QuestLevel","MinLevel","ZoneOrSort","Type","SuggestedPlayers",
-            "RewOrReqMoney","RewSpell","SrcItemId","Flags",
-            "Title","Objectives","Details","EndText","CompletedText",
-            "ObjectiveText1","ObjectiveText2","ObjectiveText3","ObjectiveText4"]
+# Every field the walk reads is kept. The walk had to touch all of them anyway to
+# prove the byte count; storing only twenty of them threw the rest away at the door.
+# Names follow this file's existing convention (the wire field names), not the
+# AzerothCore quest_template spelling, because quest is not a DB merge job -- the
+# published TSV is the product, and renaming the columns already in it would break
+# anyone holding the old shape for no gain.
+REW_ITEM   = [c for i in range(1,5) for c in (f"RewardItem{i}", f"RewardAmount{i}")]
+REW_CHOICE = [c for i in range(1,7)
+              for c in (f"RewardChoiceItemId{i}", f"RewardChoiceItemCount{i}")]
+REW_FACTION = ([f"RewardFactionId{i}" for i in range(1,6)]
+               + [f"RewardFactionValueId{i}" for i in range(1,6)]
+               + [f"RewardFactionValueIdOverride{i}" for i in range(1,6)])
+REQ_NPCGO  = [c for i in range(1,5)
+              for c in (f"RequiredNpcOrGo{i}", f"RequiredNpcOrGoCount{i}")]
+REQ_SRC    = [c for i in range(1,5)
+              for c in (f"RequiredSourceItemId{i}", f"RequiredSourceItemCount{i}")]
+REQ_ITEM   = [c for i in range(1,7)
+              for c in (f"RequiredItemId{i}", f"RequiredItemCount{i}")]
+
+OUT_COLS = (["entry","Method","QuestLevel","MinLevel","ZoneOrSort","Type",
+             "SuggestedPlayers","RepObjectiveFaction","RepObjectiveValue",
+             "RepObjectiveFaction2","RepObjectiveValue2","NextQuestInChain",
+             "RewXPId","RewOrReqMoney","RewMoneyMaxLevel","RewSpell","RewSpellCast",
+             "RewHonor","RewHonorMultiplier","SrcItemId","Flags","RewTitleId",
+             "RequiredPlayerKills","RewTalents","RewArenaPoints","RewRepMask"]
+            + REW_ITEM + REW_CHOICE + REW_FACTION
+            # The quest POI. Community wisdom is that quest point-of-interest data
+            # is never cached client-side and has to come from a packet sniff.
+            # It is right here in the query response, on the quests that have one.
+            + ["PointMapId","PointX","PointY","PointOpt"]
+            + ["Title","Objectives","Details","EndText","CompletedText"]
+            + REQ_NPCGO + REQ_SRC + REQ_ITEM
+            + ["ObjectiveText1","ObjectiveText2","ObjectiveText3","ObjectiveText4"])
+
+TEXTCOLS = {"Title","Objectives","Details","EndText","CompletedText",
+            "ObjectiveText1","ObjectiveText2","ObjectiveText3","ObjectiveText4"}
 
 def sanitize(s):
     return s.replace("\t"," ").replace("\r"," ").replace("\n"," ").replace("\\","/")
+
+def fnum(v):
+    """Format a float for the TSV: integral values stay integral, the rest get a
+    fixed number of decimals. Deterministic, so an unchanged re-run diffs clean."""
+    if not math.isfinite(v):
+        return "0"
+    if v == int(v):
+        return str(int(v))
+    return f"{v:.6f}".rstrip("0").rstrip(".")
 
 class Cur:
     __slots__=("b","o","n")
@@ -50,8 +100,7 @@ class Cur:
 
 def decode_quest(entry, payload):
     c=Cur(payload); d={k:0 for k in OUT_COLS}
-    for k in ("Title","Objectives","Details","EndText","CompletedText",
-              "ObjectiveText1","ObjectiveText2","ObjectiveText3","ObjectiveText4"):
+    for k in TEXTCOLS:
         d[k]=""
     d["entry"]=entry
     quest_id      = c.u32()                       # [0] repeated quest id (== header entry)
@@ -61,29 +110,36 @@ def decode_quest(entry, payload):
     d["ZoneOrSort"]     = c.i32()                 # [4]
     d["Type"]           = c.u32()                 # [5]
     d["SuggestedPlayers"]= c.u32()                # [6]
-    c.u32(); c.u32()                              # [7,8]  RepObjectiveFaction, Value
-    c.u32(); c.u32()                              # [9,10] RepObjectiveFaction2, Value2
-    c.u32()                                       # [11] NextQuestInChain
-    c.u32()                                       # [12] XPId (RewardXP index)
+    d["RepObjectiveFaction"] = c.u32()            # [7]
+    d["RepObjectiveValue"]   = c.u32()            # [8]
+    d["RepObjectiveFaction2"]= c.u32()            # [9]
+    d["RepObjectiveValue2"]  = c.u32()            # [10]
+    d["NextQuestInChain"]= c.u32()                # [11]
+    d["RewXPId"]        = c.u32()                 # [12] RewardXP index
     d["RewOrReqMoney"]  = c.i32()                 # [13]
-    c.u32()                                       # [14] RewMoneyMaxLevel
+    d["RewMoneyMaxLevel"]= c.u32()                # [14]
     d["RewSpell"]       = c.u32()                 # [15]
-    c.i32()                                       # [16] RewSpellCast
-    c.u32()                                       # [17] RewHonor
-    c.f32()                                       # [18] RewHonorMultiplier
+    d["RewSpellCast"]   = c.i32()                 # [16]
+    d["RewHonor"]       = c.u32()                 # [17]
+    d["RewHonorMultiplier"]= fnum(c.f32())        # [18]
     d["SrcItemId"]      = c.u32()                 # [19]
     d["Flags"]          = c.u32()                 # [20]
-    c.u32()                                       # [21] RewTitleId
-    c.u32()                                       # [22] RequiredPlayerKills
-    c.u32()                                       # [23] RewTalents
-    c.u32()                                       # [24] RewArenaPoints
-    c.u32()                                       # [25] RewRepMask (review show mask)
-    for _ in range(4): c.u32(); c.u32()           # [26..33] RewardItem id/count x4
-    for _ in range(6): c.u32(); c.u32()           # [34..45] RewardChoiceItem id/count x6
-    for _ in range(5): c.u32()                    # [46..50] RewardFactionId x5
-    for _ in range(5): c.i32()                    # [51..55] RewardFactionValueId x5
-    for _ in range(5): c.u32()                    # [56..60] RewardFactionValueIdOverride x5
-    c.u32(); c.f32(); c.f32(); c.u32()            # [61..64] PointMapId, PointX, PointY, PointOpt
+    d["RewTitleId"]     = c.u32()                 # [21]
+    d["RequiredPlayerKills"]= c.u32()             # [22]
+    d["RewTalents"]     = c.u32()                 # [23]
+    d["RewArenaPoints"] = c.u32()                 # [24]
+    d["RewRepMask"]     = c.u32()                 # [25] review show mask
+    for i in range(4):                            # [26..33]
+        d[f"RewardItem{i+1}"]=c.u32(); d[f"RewardAmount{i+1}"]=c.u32()
+    for i in range(6):                            # [34..45]
+        d[f"RewardChoiceItemId{i+1}"]=c.u32()
+        d[f"RewardChoiceItemCount{i+1}"]=c.u32()
+    for i in range(5): d[f"RewardFactionId{i+1}"]=c.u32()             # [46..50]
+    for i in range(5): d[f"RewardFactionValueId{i+1}"]=c.i32()        # [51..55]
+    for i in range(5): d[f"RewardFactionValueIdOverride{i+1}"]=c.u32()# [56..60]
+    d["PointMapId"]=c.u32()                       # [61..64]
+    d["PointX"]=fnum(c.f32()); d["PointY"]=fnum(c.f32())
+    d["PointOpt"]=c.u32()
     # ---- string block 1 (5) ----
     d["Title"]        = sanitize(c.cstr())
     d["Objectives"]   = sanitize(c.cstr())
@@ -91,9 +147,26 @@ def decode_quest(entry, payload):
     d["EndText"]      = sanitize(c.cstr())
     d["CompletedText"]= sanitize(c.cstr())
     # ---- tail fixed (28 u32) ----
-    for _ in range(4): c.u32(); c.u32()           # RequiredNpcOrGo id/count x4
-    for _ in range(4): c.u32(); c.u32()           # RequiredSourceItem id/count x4
-    for _ in range(6): c.u32(); c.u32()           # RequiredItem id/count x6
+    # The four objectives are INTERLEAVED: each objective carries its npc/go and its
+    # item drop together -- (npcOrGo, count, srcItem, srcCount) -- rather than the
+    # packet sending all four npc/go pairs and then all four item pairs. Both
+    # readings consume the same 64 bytes, so the consumed==size oracle cannot tell
+    # them apart: it proves WIDTH, not ALIGNMENT, and the wrong one scored 100%
+    # exact for as long as it shipped.
+    #
+    # Settled by vote against the stock quests in the live world DB (id < 30000,
+    # which came from AzerothCore and are authoritative for 3.3.5 content):
+    # interleaved reproduces the RequiredNpcOrGo block on 10,421 of 10,456 quests
+    # (99.67%); two-separate-arrays managed 9,103 (87.06%). Quest 14 settles it on
+    # its own -- creatures 122/121/449 killed 15/5/5 times, which only the
+    # interleave produces. On the item-drop half every remaining disagreement is
+    # "DB empty, client has data" (651 quests) and not one is a real conflict.
+    for i in range(4):
+        d[f"RequiredNpcOrGo{i+1}"]=c.i32(); d[f"RequiredNpcOrGoCount{i+1}"]=c.u32()
+        d[f"RequiredSourceItemId{i+1}"]=c.u32()
+        d[f"RequiredSourceItemCount{i+1}"]=c.u32()
+    for i in range(6):
+        d[f"RequiredItemId{i+1}"]=c.u32(); d[f"RequiredItemCount{i+1}"]=c.u32()
     # ---- string block 2 (4 ObjectiveText) ----
     d["ObjectiveText1"]=sanitize(c.cstr())
     d["ObjectiveText2"]=sanitize(c.cstr())

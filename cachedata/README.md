@@ -1,6 +1,6 @@
 # Ascension client cache — merged dataset
 
-_Merged from 525 distinct submitted cache files, the newest captured 2026-09-09._
+_Merged from 638 distinct submitted cache files, the newest captured 2026-09-09._
 
 Community-submitted `Cache\WDB` folders from the Ascension WoW client, merged
 at the **record** level. Identical records collapse to one row no matter how
@@ -34,13 +34,13 @@ independent submissions corroborate it.
 
 | cache | distinct records | union entries |
 |---|---:|---:|
-| creaturecache | 20,140 | 18,759 |
-| gameobjectcache | 13,608 | 13,526 |
-| itemcache | 581,614 | 551,644 |
-| itemnamecache | 2,457 | 2,452 |
-| npccache | 1,537 | 1,523 |
-| pagetextcache | 144 | 144 |
-| questcache | 20,240 | 18,552 |
+| creaturecache | 21,590 | 20,189 |
+| gameobjectcache | 13,999 | 13,915 |
+| itemcache | 582,538 | 551,740 |
+| itemnamecache | 2,501 | 2,496 |
+| npccache | 1,742 | 1,722 |
+| pagetextcache | 172 | 172 |
+| questcache | 20,250 | 18,552 |
 
 ## Game modes
 
@@ -48,15 +48,15 @@ independent submissions corroborate it.
 |---|---|---:|---:|---:|---:|---:|---:|---:|
 | `coa-alpha` | conquest-of-azeroth | 1,359 | 1,400 | 0 | 0 | 54 | 1 | 119 |
 | `coa-beta` | conquest-of-azeroth | 3,392 | 3,120 | 13,385 | 39 | 221 | 11 | 556 |
-| `conquest-of-azeroth` | conquest-of-azeroth | 15,717 | 11,581 | 68,064 | 1,995 | 1,190 | 121 | 2,778 |
-| `free-pick` | free-pick | 2,872 | 2,982 | 22,883 | 256 | 143 | 7 | 413 |
+| `conquest-of-azeroth` | conquest-of-azeroth | 16,361 | 11,983 | 72,924 | 2,055 | 1,362 | 148 | 3,001 |
+| `free-pick` | free-pick | 2,876 | 2,982 | 22,949 | 256 | 144 | 7 | 413 |
 | `live-qa` | free-pick | 0 | 0 | 398 | 0 | 0 | 0 | 210 |
-| `season-10-freepick` | free-pick | 8,347 | 6,022 | 548,629 | 204 | 92 | 23 | 18,552 |
-| `season-10-wildcard` | wildcard | 4,150 | 3,040 | 19,172 | 158 | 200 | 7 | 455 |
+| `season-10-freepick` | free-pick | 11,820 | 8,506 | 548,843 | 631 | 375 | 27 | 18,552 |
+| `season-10-wildcard` | wildcard | 4,166 | 3,041 | 19,344 | 158 | 200 | 7 | 456 |
 | `season-9` | season-9 | 5,098 | 4,981 | 19,638 | 449 | 212 | 3 | 406 |
 | `stress-test` | stress-test | 1,003 | 381 | 8,736 | 15 | 19 | 1 | 101 |
 | `unknown` | unknown | 2,968 | 2,037 | 0 | 19 | 176 | 0 | 445 |
-| `warcraft-reborn` | warcraft-reborn | 2,729 | 2,297 | 37,036 | 620 | 118 | 9 | 260 |
+| `warcraft-reborn` | warcraft-reborn | 2,755 | 2,297 | 37,211 | 663 | 119 | 9 | 279 |
 
 ### `unknown` is not a game mode
 
