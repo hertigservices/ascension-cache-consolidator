@@ -45,7 +45,13 @@ import re
 import sys
 import zipfile
 
-sys.stdout.reconfigure(encoding="utf-8", errors="replace")
+# Only when there is actually a console to reconfigure. Under pythonw
+# (which is how the tray app runs) sys.stdout is None, and reaching for
+# .reconfigure on it raised at import time -- so importing this module
+# to check for name collisions failed, silently, in the one program
+# that calls it on every run.
+if hasattr(sys.stdout, "reconfigure"):
+    sys.stdout.reconfigure(encoding="utf-8", errors="replace")
 HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, HERE)
 import config
