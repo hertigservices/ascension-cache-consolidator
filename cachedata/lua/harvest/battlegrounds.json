@@ -1,0 +1,580 @@
+[
+ {
+  "isRandom": 1,
+  "name": "Random Battleground",
+  "raw": {
+   "4": 1,
+   "5": 32,
+   "_array": [
+    "Random Battleground"
+   ]
+  },
+  "rawCount": 5
+ },
+ {
+  "canEnter": 1,
+  "name": "Manastorm Brawl",
+  "raw": {
+   "5": 33,
+   "_array": [
+    "Manastorm Brawl",
+    1
+   ]
+  },
+  "rawCount": 5
+ },
+ {
+  "canEnter": 1,
+  "name": "Warsong Gulch",
+  "raw": {
+   "5": 2,
+   "_array": [
+    "Warsong Gulch",
+    1
+   ]
+  },
+  "rawCount": 5
+ },
+ {
+  "canEnter": 1,
+  "name": "Arathi Basin",
+  "raw": {
+   "5": 3,
+   "_array": [
+    "Arathi Basin",
+    1
+   ]
+  },
+  "rawCount": 5
+ },
+ {
+  "name": "Eye of the Storm",
+  "raw": {
+   "5": 7,
+   "_array": [
+    "Eye of the Storm"
+   ]
+  },
+  "rawCount": 5
+ },
+ {
+  "canEnter": 1,
+  "name": "Warsong Gulch (Winter)",
+  "raw": {
+   "5": 35,
+   "_array": [
+    "Warsong Gulch (Winter)",
+    1
+   ]
+  },
+  "rawCount": 5
+ },
+ {
+  "canEnter": 1,
+  "name": "Twin Peaks",
+  "raw": {
+   "5": 108,
+   "_array": [
+    "Twin Peaks",
+    1
+   ]
+  },
+  "rawCount": 5
+ },
+ {
+  "canEnter": 1,
+  "name": "Southshore vs. Tarren Mill",
+  "raw": {
+   "5": 789,
+   "_array": [
+    "Southshore vs. Tarren Mill",
+    1
+   ]
+  },
+  "rawCount": 5
+ },
+ {
+  "canEnter": 1,
+  "name": "Temple of Kotmogu",
+  "raw": {
+   "5": 790,
+   "_array": [
+    "Temple of Kotmogu",
+    1
+   ]
+  },
+  "rawCount": 5
+ },
+ {
+  "canEnter": 1,
+  "name": "Assault on Alcaz",
+  "raw": {
+   "5": 791,
+   "_array": [
+    "Assault on Alcaz",
+    1
+   ]
+  },
+  "rawCount": 5
+ },
+ {
+  "canEnter": 1,
+  "name": "Alterac Attack",
+  "raw": {
+   "5": 792,
+   "_array": [
+    "Alterac Attack",
+    1
+   ]
+  },
+  "rawCount": 5
+ },
+ {
+  "canEnter": 1,
+  "name": "Andorhal Assault",
+  "raw": {
+   "5": 793,
+   "_array": [
+    "Andorhal Assault",
+    1
+   ]
+  },
+  "rawCount": 5
+ },
+ {
+  "canEnter": 1,
+  "name": "The War of Zin-Malor",
+  "raw": {
+   "5": 794,
+   "_array": [
+    "The War of Zin-Malor",
+    1
+   ]
+  },
+  "rawCount": 5
+ },
+ {
+  "canEnter": 1,
+  "name": "The Battle of Bladespire Hold",
+  "raw": {
+   "5": 795,
+   "_array": [
+    "The Battle of Bladespire Hold",
+    1
+   ]
+  },
+  "rawCount": 5
+ },
+ {
+  "canEnter": 1,
+  "name": "The Battle of Booty Bay",
+  "raw": {
+   "5": 796,
+   "_array": [
+    "The Battle of Booty Bay",
+    1
+   ]
+  },
+  "rawCount": 5
+ },
+ {
+  "canEnter": 1,
+  "name": "Skirmish in the Steppes",
+  "raw": {
+   "5": 797,
+   "_array": [
+    "Skirmish in the Steppes",
+    1
+   ]
+  },
+  "rawCount": 5
+ },
+ {
+  "canEnter": 1,
+  "name": "Clash in The Cauldron",
+  "raw": {
+   "5": 798,
+   "_array": [
+    "Clash in The Cauldron",
+    1
+   ]
+  },
+  "rawCount": 5
+ },
+ {
+  "canEnter": 1,
+  "name": "Deatholme Deathmatch",
+  "raw": {
+   "5": 799,
+   "_array": [
+    "Deatholme Deathmatch",
+    1
+   ]
+  },
+  "rawCount": 5
+ },
+ {
+  "canEnter": 1,
+  "name": "Battle of Dire Maul",
+  "raw": {
+   "5": 800,
+   "_array": [
+    "Battle of Dire Maul",
+    1
+   ]
+  },
+  "rawCount": 5
+ },
+ {
+  "canEnter": 1,
+  "name": "Siege of Sardor Isle",
+  "raw": {
+   "5": 801,
+   "_array": [
+    "Siege of Sardor Isle",
+    1
+   ]
+  },
+  "rawCount": 5
+ },
+ {
+  "canEnter": 1,
+  "name": "Frostwhisper Fallout",
+  "raw": {
+   "5": 802,
+   "_array": [
+    "Frostwhisper Fallout",
+    1
+   ]
+  },
+  "rawCount": 5
+ },
+ {
+  "canEnter": 1,
+  "name": "Silverpine Showdown",
+  "raw": {
+   "5": 803,
+   "_array": [
+    "Silverpine Showdown",
+    1
+   ]
+  },
+  "rawCount": 5
+ },
+ {
+  "canEnter": 1,
+  "name": "Battle for Nagrand",
+  "raw": {
+   "5": 804,
+   "_array": [
+    "Battle for Nagrand",
+    1
+   ]
+  },
+  "rawCount": 5
+ },
+ {
+  "canEnter": 1,
+  "name": "Hellfire Havoc",
+  "raw": {
+   "5": 805,
+   "_array": [
+    "Hellfire Havoc",
+    1
+   ]
+  },
+  "rawCount": 5
+ },
+ {
+  "canEnter": 1,
+  "name": "War of The World Tree",
+  "raw": {
+   "5": 806,
+   "_array": [
+    "War of The World Tree",
+    1
+   ]
+  },
+  "rawCount": 5
+ },
+ {
+  "canEnter": 1,
+  "name": "Airstrip Assault",
+  "raw": {
+   "5": 807,
+   "_array": [
+    "Airstrip Assault",
+    1
+   ]
+  },
+  "rawCount": 5
+ },
+ {
+  "canEnter": 1,
+  "name": "Bloodshed in The Barrens",
+  "raw": {
+   "5": 808,
+   "_array": [
+    "Bloodshed in The Barrens",
+    1
+   ]
+  },
+  "rawCount": 5
+ },
+ {
+  "canEnter": 1,
+  "name": "Battle of North Gate Pass",
+  "raw": {
+   "5": 809,
+   "_array": [
+    "Battle of North Gate Pass",
+    1
+   ]
+  },
+  "rawCount": 5
+ },
+ {
+  "canEnter": 1,
+  "name": "Excavation of Ahn'Qiraj",
+  "raw": {
+   "5": 810,
+   "_array": [
+    "Excavation of Ahn'Qiraj",
+    1
+   ]
+  },
+  "rawCount": 5
+ },
+ {
+  "canEnter": 1,
+  "name": "Stonewatch Slaughter",
+  "raw": {
+   "5": 811,
+   "_array": [
+    "Stonewatch Slaughter",
+    1
+   ]
+  },
+  "rawCount": 5
+ },
+ {
+  "canEnter": 1,
+  "name": "Slaughter in Stromgarde",
+  "raw": {
+   "5": 812,
+   "_array": [
+    "Slaughter in Stromgarde",
+    1
+   ]
+  },
+  "rawCount": 5
+ },
+ {
+  "canEnter": 1,
+  "name": "Battle for Theramore",
+  "raw": {
+   "5": 813,
+   "_array": [
+    "Battle for Theramore",
+    1
+   ]
+  },
+  "rawCount": 5
+ },
+ {
+  "canEnter": 1,
+  "name": "Trouble in Tor'Watha",
+  "raw": {
+   "5": 814,
+   "_array": [
+    "Trouble in Tor'Watha",
+    1
+   ]
+  },
+  "rawCount": 5
+ },
+ {
+  "canEnter": 1,
+  "name": "Carnage in the Crater",
+  "raw": {
+   "5": 815,
+   "_array": [
+    "Carnage in the Crater",
+    1
+   ]
+  },
+  "rawCount": 5
+ },
+ {
+  "canEnter": 1,
+  "name": "Warsong Lumber War",
+  "raw": {
+   "5": 816,
+   "_array": [
+    "Warsong Lumber War",
+    1
+   ]
+  },
+  "rawCount": 5
+ },
+ {
+  "canEnter": 1,
+  "name": "War of Windshear Crag",
+  "raw": {
+   "5": 817,
+   "_array": [
+    "War of Windshear Crag",
+    1
+   ]
+  },
+  "rawCount": 5
+ },
+ {
+  "canEnter": 1,
+  "name": "Clash Map Group 1",
+  "raw": {
+   "5": 818,
+   "_array": [
+    "Clash Map Group 1",
+    1
+   ]
+  },
+  "rawCount": 5
+ },
+ {
+  "canEnter": 1,
+  "name": "Clash Map Group 2",
+  "raw": {
+   "5": 819,
+   "_array": [
+    "Clash Map Group 2",
+    1
+   ]
+  },
+  "rawCount": 5
+ },
+ {
+  "canEnter": 1,
+  "name": "Clash Map Group 3",
+  "raw": {
+   "5": 820,
+   "_array": [
+    "Clash Map Group 3",
+    1
+   ]
+  },
+  "rawCount": 5
+ },
+ {
+  "canEnter": 1,
+  "name": "Clash Map Group 4",
+  "raw": {
+   "5": 821,
+   "_array": [
+    "Clash Map Group 4",
+    1
+   ]
+  },
+  "rawCount": 5
+ },
+ {
+  "canEnter": 1,
+  "name": "Zanza's Isle",
+  "raw": {
+   "5": 835,
+   "_array": [
+    "Zanza's Isle",
+    1
+   ]
+  },
+  "rawCount": 5
+ },
+ {
+  "canEnter": 1,
+  "name": "Akhen City Ruins",
+  "raw": {
+   "5": 836,
+   "_array": [
+    "Akhen City Ruins",
+    1
+   ]
+  },
+  "rawCount": 5
+ },
+ {
+  "canEnter": 1,
+  "name": "Arathi Basin (Winter)",
+  "raw": {
+   "5": 34,
+   "_array": [
+    "Arathi Basin (Winter)",
+    1
+   ]
+  },
+  "rawCount": 5
+ },
+ {
+  "canEnter": 1,
+  "name": "Arathi Basin (HD)",
+  "raw": {
+   "5": 36,
+   "_array": [
+    "Arathi Basin (HD)",
+    1
+   ]
+  },
+  "rawCount": 5
+ },
+ {
+  "name": "Alterac Valley",
+  "raw": {
+   "5": 1,
+   "_array": [
+    "Alterac Valley"
+   ]
+  },
+  "rawCount": 5
+ },
+ {
+  "canEnter": 1,
+  "name": "Warsong Gulch (HD)",
+  "raw": {
+   "5": 37,
+   "_array": [
+    "Warsong Gulch (HD)",
+    1
+   ]
+  },
+  "rawCount": 5
+ },
+ {
+  "name": "FFA BG",
+  "raw": {
+   "5": 12,
+   "_array": [
+    "FFA BG"
+   ]
+  },
+  "rawCount": 5
+ },
+ {
+  "name": "Strand of the Ancients",
+  "raw": {
+   "5": 9,
+   "_array": [
+    "Strand of the Ancients"
+   ]
+  },
+  "rawCount": 5
+ },
+ {
+  "name": "Isle of Conquest",
+  "raw": {
+   "5": 30,
+   "_array": [
+    "Isle of Conquest"
+   ]
+  },
+  "rawCount": 5
+ }
+]

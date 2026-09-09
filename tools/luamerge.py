@@ -39,7 +39,7 @@ is the exception: it keys its own database by "<Realm> - <Mode>", so it splits.
 import os, sys, json, hashlib, time, re
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-import config, modes, luaser
+import config, modes, luaser, harvestmerge
 
 STORE = os.path.join(config.STORE, "lua").replace("\\", "/")
 STATE = os.path.join(STORE, "state.json").replace("\\", "/")
@@ -115,7 +115,24 @@ SPECS = {
         "fields": {},
         "why": "the custom client events Ascension fires, and their argument shapes",
     },
+    # An in-game harvester someone ran across several realms and modes. It is
+    # the only source here for two things no .wdb can hold: what an NPC had for
+    # sale (SMSG_LIST_INVENTORY is answered into a frame and never written to
+    # disk) and which gossip text an NPC actually uses. Branch policy, the $n
+    # restoration and the snapshot-vs-union split all live in harvestmerge.py.
+    "wildcardharvest.lua": {
+        "globals": (harvestmerge.GLOBAL,),
+        "shape": "harvest",
+        "fields": {},
+        "why": "vendor pages, NPC gossip and the client's own reference tables",
+    },
 }
+
+# Files whose name carries a date or a label rather than being fixed. Matched
+# only after the exact table above misses, so an exact name always wins.
+PATTERNS = (
+    (re.compile(r"^wildcardharvest[\w.\-()' ]*\.lua$", re.I), "wildcardharvest.lua"),
+)
 
 ALIASES = {"mobspells.lua.bak": "mobspells.lua",
            "aio_client.lua.bak": "aio_client.lua",
@@ -127,6 +144,14 @@ ALIASES = {"mobspells.lua.bak": "mobspells.lua",
 def spec_for(filename):
     key = filename.lower()
     key = ALIASES.get(key, key)
+    if key in SPECS:
+        return key, SPECS[key]
+    # A .bak is the addon's own backup of the same file, so it resolves to the
+    # same spec -- and to the same submission, see submission_of().
+    bare = key[:-4] if key.endswith(".bak") else key
+    for rx, target in PATTERNS:
+        if rx.match(bare):
+            return target, SPECS[target]
     return key, SPECS.get(key)
 
 
@@ -420,7 +445,8 @@ MERGERS = {"mobspells.lua": merge_mobspells,
            "aio_client.lua": merge_aio,
            "auctionator_price_database.lua": merge_auctionator,
            "gathermate2.lua": merge_gathermate,
-           "coasniff.lua": merge_coasniff}
+           "coasniff.lua": merge_coasniff,
+           "wildcardharvest.lua": harvestmerge.merge_wildcardharvest}
 
 
 def load_state():
@@ -758,7 +784,8 @@ def write_coasniff(state):
 
 
 WRITERS = [write_mobspells, write_aio, write_auctionator,
-           write_gathermate, write_coasniff]
+           write_gathermate, write_coasniff,
+           harvestmerge.write_wildcardharvest]
 
 
 def run_export(state):
@@ -766,10 +793,12 @@ def run_export(state):
     print()
     for w in WRITERS:
         r = w(state)
-        if r:
-            path, note = r
-            print(f"  {os.path.basename(path):<34} {note}"
-                  f"  ({os.path.getsize(path):,} B)")
+        if not r:
+            continue
+        # A writer returns one (path, note) or a list of them.
+        for path, note in ([r] if isinstance(r, tuple) else r):
+            rel = os.path.relpath(path, OUT).replace("\\", "/")
+            print(f"  {rel:<34} {note}  ({os.path.getsize(path):,} B)")
     return verify(state)
 
 

@@ -1,0 +1,2005 @@
+{
+ "eligibility": [],
+ "eligibilityReasons": {
+  "nil / nil": 10250
+ },
+ "events": [
+  {
+   "args": [
+    97885
+   ],
+   "at": "2026-09-02 21:24:22",
+   "ev": "SKILL_CARD_COLLECTION_ITEM_USED",
+   "lvl": 34,
+   "xp": 54101
+  },
+  {
+   "args": [
+    1,
+    24231,
+    1
+   ],
+   "at": "2026-09-02 21:24:23",
+   "ev": "PENDING_SKILL_CARD_ADDED",
+   "lvl": 34,
+   "xp": 54101
+  },
+  {
+   "args": [
+    2,
+    11923,
+    1
+   ],
+   "at": "2026-09-02 21:24:23",
+   "ev": "PENDING_SKILL_CARD_ADDED",
+   "lvl": 34,
+   "xp": 54101
+  },
+  {
+   "args": [
+    3,
+    12231,
+    1
+   ],
+   "at": "2026-09-02 21:24:23",
+   "ev": "PENDING_SKILL_CARD_ADDED",
+   "lvl": 34,
+   "xp": 54101
+  },
+  {
+   "args": [
+    4,
+    12211,
+    1
+   ],
+   "at": "2026-09-02 21:24:23",
+   "ev": "PENDING_SKILL_CARD_ADDED",
+   "lvl": 34,
+   "xp": 54101
+  },
+  {
+   "args": [
+    5,
+    26850,
+    1
+   ],
+   "at": "2026-09-02 21:24:23",
+   "ev": "PENDING_SKILL_CARD_ADDED",
+   "lvl": 34,
+   "xp": 54101
+  },
+  {
+   "args": [
+    6,
+    12205,
+    1
+   ],
+   "at": "2026-09-02 21:24:23",
+   "ev": "PENDING_SKILL_CARD_ADDED",
+   "lvl": 34,
+   "xp": 54101
+  },
+  {
+   "args": [
+    7,
+    26590,
+    1
+   ],
+   "at": "2026-09-02 21:24:23",
+   "ev": "PENDING_SKILL_CARD_ADDED",
+   "lvl": 34,
+   "xp": 54101
+  },
+  {
+   "args": [
+    8,
+    50134,
+    1
+   ],
+   "at": "2026-09-02 21:24:23",
+   "ev": "PENDING_SKILL_CARD_ADDED",
+   "lvl": 34,
+   "xp": 54101
+  },
+  {
+   "args": [
+    9,
+    27272,
+    1
+   ],
+   "at": "2026-09-02 21:24:23",
+   "ev": "PENDING_SKILL_CARD_ADDED",
+   "lvl": 34,
+   "xp": 54101
+  },
+  {
+   "args": [
+    10,
+    12098,
+    1
+   ],
+   "at": "2026-09-02 21:24:23",
+   "ev": "PENDING_SKILL_CARD_ADDED",
+   "lvl": 34,
+   "xp": 54101
+  },
+  {
+   "args": [
+    "PURCHASE_SEALED_CARD_OK"
+   ],
+   "at": "2026-09-02 21:24:23",
+   "ev": "PURCHASE_SEALED_CARD_RESULT",
+   "lvl": 34,
+   "xp": 54101
+  },
+  {
+   "args": [
+    10,
+    12098,
+    1
+   ],
+   "at": "2026-09-02 21:24:26",
+   "ev": "PENDING_SKILL_CARD_REMOVED",
+   "lvl": 34,
+   "xp": 54101
+  },
+  {
+   "args": [
+    7,
+    26590,
+    1
+   ],
+   "at": "2026-09-02 21:24:26",
+   "ev": "PENDING_SKILL_CARD_REMOVED",
+   "lvl": 34,
+   "xp": 54101
+  },
+  {
+   "args": [
+    5,
+    26850,
+    1
+   ],
+   "at": "2026-09-02 21:24:26",
+   "ev": "PENDING_SKILL_CARD_REMOVED",
+   "lvl": 34,
+   "xp": 54101
+  },
+  {
+   "args": [
+    4,
+    12211,
+    1
+   ],
+   "at": "2026-09-02 21:24:26",
+   "ev": "PENDING_SKILL_CARD_REMOVED",
+   "lvl": 34,
+   "xp": 54101
+  },
+  {
+   "args": [
+    2,
+    11923,
+    1
+   ],
+   "at": "2026-09-02 21:24:26",
+   "ev": "PENDING_SKILL_CARD_REMOVED",
+   "lvl": 34,
+   "xp": 54101
+  },
+  {
+   "args": [
+    "CLAIM_SKILL_CARD_OK"
+   ],
+   "at": "2026-09-02 21:24:26",
+   "ev": "CLAIM_SKILL_CARD_RESULT",
+   "lvl": 34,
+   "xp": 54101
+  },
+  {
+   "args": [
+    5,
+    27272,
+    1
+   ],
+   "at": "2026-09-02 21:24:40",
+   "ev": "PENDING_SKILL_CARD_REMOVED",
+   "lvl": 34,
+   "xp": 54101
+  },
+  {
+   "args": [
+    4,
+    50134,
+    1
+   ],
+   "at": "2026-09-02 21:24:40",
+   "ev": "PENDING_SKILL_CARD_REMOVED",
+   "lvl": 34,
+   "xp": 54101
+  },
+  {
+   "args": [
+    3,
+    12205,
+    1
+   ],
+   "at": "2026-09-02 21:24:40",
+   "ev": "PENDING_SKILL_CARD_REMOVED",
+   "lvl": 34,
+   "xp": 54101
+  },
+  {
+   "args": [
+    2,
+    12231,
+    1
+   ],
+   "at": "2026-09-02 21:24:40",
+   "ev": "PENDING_SKILL_CARD_REMOVED",
+   "lvl": 34,
+   "xp": 54101
+  },
+  {
+   "args": [
+    1,
+    24231,
+    1
+   ],
+   "at": "2026-09-02 21:24:40",
+   "ev": "PENDING_SKILL_CARD_REMOVED",
+   "lvl": 34,
+   "xp": 54101
+  },
+  {
+   "args": [
+    "CLAIM_SKILL_CARD_OK"
+   ],
+   "at": "2026-09-02 21:24:40",
+   "ev": "CLAIM_SKILL_CARD_RESULT",
+   "lvl": 34,
+   "xp": 54101
+  },
+  {
+   "args": [
+    1,
+    51322,
+    2
+   ],
+   "at": "2026-09-02 21:24:58",
+   "ev": "PENDING_SKILL_CARD_ADDED",
+   "lvl": 34,
+   "xp": 54101
+  },
+  {
+   "args": [
+    2,
+    50626,
+    1
+   ],
+   "at": "2026-09-02 21:24:58",
+   "ev": "PENDING_SKILL_CARD_ADDED",
+   "lvl": 34,
+   "xp": 54101
+  },
+  {
+   "args": [
+    3,
+    49920,
+    1
+   ],
+   "at": "2026-09-02 21:24:58",
+   "ev": "PENDING_SKILL_CARD_ADDED",
+   "lvl": 34,
+   "xp": 54101
+  },
+  {
+   "args": [
+    4,
+    50126,
+    1
+   ],
+   "at": "2026-09-02 21:24:58",
+   "ev": "PENDING_SKILL_CARD_ADDED",
+   "lvl": 34,
+   "xp": 54101
+  },
+  {
+   "args": [
+    5,
+    25497,
+    1
+   ],
+   "at": "2026-09-02 21:24:58",
+   "ev": "PENDING_SKILL_CARD_ADDED",
+   "lvl": 34,
+   "xp": 54101
+  },
+  {
+   "args": [
+    6,
+    70156,
+    1
+   ],
+   "at": "2026-09-02 21:24:58",
+   "ev": "PENDING_SKILL_CARD_ADDED",
+   "lvl": 34,
+   "xp": 54101
+  },
+  {
+   "args": [
+    7,
+    50490,
+    1
+   ],
+   "at": "2026-09-02 21:24:58",
+   "ev": "PENDING_SKILL_CARD_ADDED",
+   "lvl": 34,
+   "xp": 54101
+  },
+  {
+   "args": [
+    8,
+    53836,
+    3
+   ],
+   "at": "2026-09-02 21:24:58",
+   "ev": "PENDING_SKILL_CARD_ADDED",
+   "lvl": 34,
+   "xp": 54101
+  },
+  {
+   "args": [
+    9,
+    24215,
+    5
+   ],
+   "at": "2026-09-02 21:24:58",
+   "ev": "PENDING_SKILL_CARD_ADDED",
+   "lvl": 34,
+   "xp": 54101
+  },
+  {
+   "args": [
+    10,
+    50950,
+    5
+   ],
+   "at": "2026-09-02 21:24:58",
+   "ev": "PENDING_SKILL_CARD_ADDED",
+   "lvl": 34,
+   "xp": 54101
+  },
+  {
+   "args": [
+    "PURCHASE_SEALED_CARD_OK"
+   ],
+   "at": "2026-09-02 21:24:58",
+   "ev": "PURCHASE_SEALED_CARD_RESULT",
+   "lvl": 34,
+   "xp": 54101
+  },
+  {
+   "args": [
+    6,
+    70156,
+    1
+   ],
+   "at": "2026-09-02 21:25:00",
+   "ev": "PENDING_SKILL_CARD_REMOVED",
+   "lvl": 34,
+   "xp": 54101
+  },
+  {
+   "args": [
+    5,
+    25497,
+    1
+   ],
+   "at": "2026-09-02 21:25:00",
+   "ev": "PENDING_SKILL_CARD_REMOVED",
+   "lvl": 34,
+   "xp": 54101
+  },
+  {
+   "args": [
+    3,
+    49920,
+    1
+   ],
+   "at": "2026-09-02 21:25:00",
+   "ev": "PENDING_SKILL_CARD_REMOVED",
+   "lvl": 34,
+   "xp": 54101
+  },
+  {
+   "args": [
+    2,
+    50626,
+    1
+   ],
+   "at": "2026-09-02 21:25:00",
+   "ev": "PENDING_SKILL_CARD_REMOVED",
+   "lvl": 34,
+   "xp": 54101
+  },
+  {
+   "args": [
+    1,
+    51322,
+    2
+   ],
+   "at": "2026-09-02 21:25:00",
+   "ev": "PENDING_SKILL_CARD_REMOVED",
+   "lvl": 34,
+   "xp": 54101
+  },
+  {
+   "args": [
+    "CLAIM_SKILL_CARD_OK"
+   ],
+   "at": "2026-09-02 21:25:00",
+   "ev": "CLAIM_SKILL_CARD_RESULT",
+   "lvl": 34,
+   "xp": 54101
+  },
+  {
+   "args": [
+    5,
+    50950,
+    5
+   ],
+   "at": "2026-09-02 21:25:21",
+   "ev": "PENDING_SKILL_CARD_REMOVED",
+   "lvl": 34,
+   "xp": 54101
+  },
+  {
+   "args": [
+    4,
+    24215,
+    5
+   ],
+   "at": "2026-09-02 21:25:21",
+   "ev": "PENDING_SKILL_CARD_REMOVED",
+   "lvl": 34,
+   "xp": 54101
+  },
+  {
+   "args": [
+    3,
+    53836,
+    3
+   ],
+   "at": "2026-09-02 21:25:21",
+   "ev": "PENDING_SKILL_CARD_REMOVED",
+   "lvl": 34,
+   "xp": 54101
+  },
+  {
+   "args": [
+    2,
+    50490,
+    1
+   ],
+   "at": "2026-09-02 21:25:21",
+   "ev": "PENDING_SKILL_CARD_REMOVED",
+   "lvl": 34,
+   "xp": 54101
+  },
+  {
+   "args": [
+    1,
+    50126,
+    1
+   ],
+   "at": "2026-09-02 21:25:21",
+   "ev": "PENDING_SKILL_CARD_REMOVED",
+   "lvl": 34,
+   "xp": 54101
+  },
+  {
+   "args": [
+    "CLAIM_SKILL_CARD_OK"
+   ],
+   "at": "2026-09-02 21:25:21",
+   "ev": "CLAIM_SKILL_CARD_RESULT",
+   "lvl": 34,
+   "xp": 54101
+  },
+  {
+   "args": [],
+   "at": "2026-09-02 21:35:45",
+   "ev": "WILDCARD_ROLL_READY",
+   "lvl": 35,
+   "xp": 11035
+  },
+  {
+   "args": [
+    41430,
+    2,
+    0
+   ],
+   "at": "2026-09-02 21:35:47",
+   "ev": "WILDCARD_ENTRY_LEARNED",
+   "lvl": 35,
+   "startingChoice": [],
+   "xp": 11035
+  },
+  {
+   "args": [
+    "CA_UNLEARN_OK"
+   ],
+   "at": "2026-09-02 21:36:00",
+   "ev": "WILDCARD_UNLEARN_ABILITY_RESULT",
+   "lvl": 35,
+   "xp": 11035
+  },
+  {
+   "args": [],
+   "at": "2026-09-02 21:36:00",
+   "ev": "WILDCARD_ROLL_READY",
+   "lvl": 35,
+   "xp": 11035
+  },
+  {
+   "args": [
+    40900,
+    1,
+    0
+   ],
+   "at": "2026-09-02 21:36:00",
+   "ev": "WILDCARD_ENTRY_LEARNED",
+   "lvl": 35,
+   "startingChoice": [],
+   "xp": 11035
+  },
+  {
+   "args": [
+    "CA_UNLEARN_OK"
+   ],
+   "at": "2026-09-02 21:36:09",
+   "ev": "WILDCARD_UNLEARN_ABILITY_RESULT",
+   "lvl": 35,
+   "xp": 11035
+  },
+  {
+   "args": [],
+   "at": "2026-09-02 21:36:09",
+   "ev": "WILDCARD_ROLL_READY",
+   "lvl": 35,
+   "xp": 11035
+  },
+  {
+   "args": [
+    36890,
+    1,
+    0
+   ],
+   "at": "2026-09-02 21:36:09",
+   "ev": "WILDCARD_ENTRY_LEARNED",
+   "lvl": 35,
+   "startingChoice": [],
+   "xp": 11035
+  },
+  {
+   "args": [
+    "CA_UNLEARN_OK"
+   ],
+   "at": "2026-09-02 21:36:17",
+   "ev": "WILDCARD_UNLEARN_ABILITY_RESULT",
+   "lvl": 35,
+   "xp": 11035
+  },
+  {
+   "args": [],
+   "at": "2026-09-02 21:36:17",
+   "ev": "WILDCARD_ROLL_READY",
+   "lvl": 35,
+   "xp": 11035
+  },
+  {
+   "args": [
+    40957,
+    1,
+    0
+   ],
+   "at": "2026-09-02 21:36:17",
+   "ev": "WILDCARD_ENTRY_LEARNED",
+   "lvl": 35,
+   "startingChoice": [],
+   "xp": 11035
+  },
+  {
+   "args": [
+    "CA_UNLEARN_OK"
+   ],
+   "at": "2026-09-02 21:36:22",
+   "ev": "WILDCARD_UNLEARN_ABILITY_RESULT",
+   "lvl": 35,
+   "xp": 11035
+  },
+  {
+   "args": [],
+   "at": "2026-09-02 21:36:22",
+   "ev": "WILDCARD_ROLL_READY",
+   "lvl": 35,
+   "xp": 11035
+  },
+  {
+   "args": [
+    40698,
+    3,
+    0
+   ],
+   "at": "2026-09-02 21:36:23",
+   "ev": "WILDCARD_ENTRY_LEARNED",
+   "lvl": 35,
+   "startingChoice": [],
+   "xp": 11035
+  },
+  {
+   "args": [
+    "CA_UNLEARN_OK"
+   ],
+   "at": "2026-09-02 21:36:35",
+   "ev": "WILDCARD_UNLEARN_ABILITY_RESULT",
+   "lvl": 35,
+   "xp": 11035
+  },
+  {
+   "args": [],
+   "at": "2026-09-02 21:36:35",
+   "ev": "WILDCARD_ROLL_READY",
+   "lvl": 35,
+   "xp": 11035
+  },
+  {
+   "args": [
+    40352,
+    5,
+    0
+   ],
+   "at": "2026-09-02 21:36:35",
+   "ev": "WILDCARD_ENTRY_LEARNED",
+   "lvl": 35,
+   "startingChoice": [],
+   "xp": 11035
+  },
+  {
+   "args": [
+    97885
+   ],
+   "at": "2026-09-02 21:43:16",
+   "ev": "SKILL_CARD_COLLECTION_ITEM_USED",
+   "lvl": 35,
+   "xp": 58891
+  },
+  {
+   "args": [
+    1,
+    11881,
+    1
+   ],
+   "at": "2026-09-02 21:43:16",
+   "ev": "PENDING_SKILL_CARD_ADDED",
+   "lvl": 35,
+   "xp": 58891
+  },
+  {
+   "args": [
+    2,
+    64953,
+    1
+   ],
+   "at": "2026-09-02 21:43:16",
+   "ev": "PENDING_SKILL_CARD_ADDED",
+   "lvl": 35,
+   "xp": 58891
+  },
+  {
+   "args": [
+    3,
+    11943,
+    1
+   ],
+   "at": "2026-09-02 21:43:16",
+   "ev": "PENDING_SKILL_CARD_ADDED",
+   "lvl": 35,
+   "xp": 58891
+  },
+  {
+   "args": [
+    4,
+    60,
+    1
+   ],
+   "at": "2026-09-02 21:43:16",
+   "ev": "PENDING_SKILL_CARD_ADDED",
+   "lvl": 35,
+   "xp": 58891
+  },
+  {
+   "args": [
+    5,
+    26996,
+    1
+   ],
+   "at": "2026-09-02 21:43:16",
+   "ev": "PENDING_SKILL_CARD_ADDED",
+   "lvl": 35,
+   "xp": 58891
+  },
+  {
+   "args": [
+    "PURCHASE_SEALED_CARD_OK"
+   ],
+   "at": "2026-09-02 21:43:16",
+   "ev": "PURCHASE_SEALED_CARD_RESULT",
+   "lvl": 35,
+   "xp": 58891
+  },
+  {
+   "args": [
+    5,
+    26996,
+    1
+   ],
+   "at": "2026-09-02 21:43:16",
+   "ev": "PENDING_SKILL_CARD_REMOVED",
+   "lvl": 35,
+   "xp": 58891
+  },
+  {
+   "args": [
+    4,
+    60,
+    1
+   ],
+   "at": "2026-09-02 21:43:16",
+   "ev": "PENDING_SKILL_CARD_REMOVED",
+   "lvl": 35,
+   "xp": 58891
+  },
+  {
+   "args": [
+    3,
+    11943,
+    1
+   ],
+   "at": "2026-09-02 21:43:16",
+   "ev": "PENDING_SKILL_CARD_REMOVED",
+   "lvl": 35,
+   "xp": 58891
+  },
+  {
+   "args": [
+    2,
+    64953,
+    1
+   ],
+   "at": "2026-09-02 21:43:16",
+   "ev": "PENDING_SKILL_CARD_REMOVED",
+   "lvl": 35,
+   "xp": 58891
+  },
+  {
+   "args": [
+    1,
+    11881,
+    1
+   ],
+   "at": "2026-09-02 21:43:16",
+   "ev": "PENDING_SKILL_CARD_REMOVED",
+   "lvl": 35,
+   "xp": 58891
+  },
+  {
+   "args": [
+    "CLAIM_SKILL_CARD_OK"
+   ],
+   "at": "2026-09-02 21:43:16",
+   "ev": "CLAIM_SKILL_CARD_RESULT",
+   "lvl": 35,
+   "xp": 58891
+  },
+  {
+   "args": [
+    1,
+    28948,
+    1
+   ],
+   "at": "2026-09-02 21:43:20",
+   "ev": "PENDING_SKILL_CARD_ADDED",
+   "lvl": 35,
+   "xp": 58891
+  },
+  {
+   "args": [
+    2,
+    53284,
+    3
+   ],
+   "at": "2026-09-02 21:43:20",
+   "ev": "PENDING_SKILL_CARD_ADDED",
+   "lvl": 35,
+   "xp": 58891
+  },
+  {
+   "args": [
+    3,
+    64562,
+    1
+   ],
+   "at": "2026-09-02 21:43:20",
+   "ev": "PENDING_SKILL_CARD_ADDED",
+   "lvl": 35,
+   "xp": 58891
+  },
+  {
+   "args": [
+    4,
+    53482,
+    3
+   ],
+   "at": "2026-09-02 21:43:20",
+   "ev": "PENDING_SKILL_CARD_ADDED",
+   "lvl": 35,
+   "xp": 58891
+  },
+  {
+   "args": [
+    5,
+    53524,
+    3
+   ],
+   "at": "2026-09-02 21:43:20",
+   "ev": "PENDING_SKILL_CARD_ADDED",
+   "lvl": 35,
+   "xp": 58891
+  },
+  {
+   "args": [
+    "PURCHASE_SEALED_CARD_OK"
+   ],
+   "at": "2026-09-02 21:43:20",
+   "ev": "PURCHASE_SEALED_CARD_RESULT",
+   "lvl": 35,
+   "xp": 58891
+  },
+  {
+   "args": [
+    5,
+    53524,
+    3
+   ],
+   "at": "2026-09-02 21:43:20",
+   "ev": "PENDING_SKILL_CARD_REMOVED",
+   "lvl": 35,
+   "xp": 58891
+  },
+  {
+   "args": [
+    4,
+    53482,
+    3
+   ],
+   "at": "2026-09-02 21:43:20",
+   "ev": "PENDING_SKILL_CARD_REMOVED",
+   "lvl": 35,
+   "xp": 58891
+  },
+  {
+   "args": [
+    3,
+    64562,
+    1
+   ],
+   "at": "2026-09-02 21:43:20",
+   "ev": "PENDING_SKILL_CARD_REMOVED",
+   "lvl": 35,
+   "xp": 58891
+  },
+  {
+   "args": [
+    2,
+    53284,
+    3
+   ],
+   "at": "2026-09-02 21:43:20",
+   "ev": "PENDING_SKILL_CARD_REMOVED",
+   "lvl": 35,
+   "xp": 58891
+  },
+  {
+   "args": [
+    1,
+    28948,
+    1
+   ],
+   "at": "2026-09-02 21:43:20",
+   "ev": "PENDING_SKILL_CARD_REMOVED",
+   "lvl": 35,
+   "xp": 58891
+  },
+  {
+   "args": [
+    "CLAIM_SKILL_CARD_OK"
+   ],
+   "at": "2026-09-02 21:43:20",
+   "ev": "CLAIM_SKILL_CARD_RESULT",
+   "lvl": 35,
+   "xp": 58891
+  },
+  {
+   "args": [],
+   "at": "2026-09-02 21:45:04",
+   "ev": "WILDCARD_ROLL_READY",
+   "lvl": 36,
+   "xp": 12252
+  },
+  {
+   "args": [
+    40876,
+    1,
+    0
+   ],
+   "at": "2026-09-02 21:45:06",
+   "ev": "WILDCARD_ENTRY_LEARNED",
+   "lvl": 36,
+   "startingChoice": [],
+   "xp": 12252
+  },
+  {
+   "args": [
+    97885
+   ],
+   "at": "2026-09-02 21:46:49",
+   "ev": "SKILL_CARD_COLLECTION_ITEM_USED",
+   "lvl": 36,
+   "xp": 12252
+  },
+  {
+   "args": [
+    1,
+    70124,
+    1
+   ],
+   "at": "2026-09-02 21:46:49",
+   "ev": "PENDING_SKILL_CARD_ADDED",
+   "lvl": 36,
+   "xp": 12252
+  },
+  {
+   "args": [
+    2,
+    12075,
+    1
+   ],
+   "at": "2026-09-02 21:46:49",
+   "ev": "PENDING_SKILL_CARD_ADDED",
+   "lvl": 36,
+   "xp": 12252
+  },
+  {
+   "args": [
+    3,
+    27536,
+    1
+   ],
+   "at": "2026-09-02 21:46:49",
+   "ev": "PENDING_SKILL_CARD_ADDED",
+   "lvl": 36,
+   "xp": 12252
+  },
+  {
+   "args": [
+    4,
+    26408,
+    1
+   ],
+   "at": "2026-09-02 21:46:49",
+   "ev": "PENDING_SKILL_CARD_ADDED",
+   "lvl": 36,
+   "xp": 12252
+  },
+  {
+   "args": [
+    5,
+    57,
+    1
+   ],
+   "at": "2026-09-02 21:46:49",
+   "ev": "PENDING_SKILL_CARD_ADDED",
+   "lvl": 36,
+   "xp": 12252
+  },
+  {
+   "args": [
+    "PURCHASE_SEALED_CARD_OK"
+   ],
+   "at": "2026-09-02 21:46:49",
+   "ev": "PURCHASE_SEALED_CARD_RESULT",
+   "lvl": 36,
+   "xp": 12252
+  },
+  {
+   "args": [
+    5,
+    57,
+    1
+   ],
+   "at": "2026-09-02 21:46:50",
+   "ev": "PENDING_SKILL_CARD_REMOVED",
+   "lvl": 36,
+   "xp": 12252
+  },
+  {
+   "args": [
+    4,
+    26408,
+    1
+   ],
+   "at": "2026-09-02 21:46:50",
+   "ev": "PENDING_SKILL_CARD_REMOVED",
+   "lvl": 36,
+   "xp": 12252
+  },
+  {
+   "args": [
+    3,
+    27536,
+    1
+   ],
+   "at": "2026-09-02 21:46:50",
+   "ev": "PENDING_SKILL_CARD_REMOVED",
+   "lvl": 36,
+   "xp": 12252
+  },
+  {
+   "args": [
+    2,
+    12075,
+    1
+   ],
+   "at": "2026-09-02 21:46:50",
+   "ev": "PENDING_SKILL_CARD_REMOVED",
+   "lvl": 36,
+   "xp": 12252
+  },
+  {
+   "args": [
+    1,
+    70124,
+    1
+   ],
+   "at": "2026-09-02 21:46:50",
+   "ev": "PENDING_SKILL_CARD_REMOVED",
+   "lvl": 36,
+   "xp": 12252
+  },
+  {
+   "args": [
+    "CLAIM_SKILL_CARD_OK"
+   ],
+   "at": "2026-09-02 21:46:50",
+   "ev": "CLAIM_SKILL_CARD_RESULT",
+   "lvl": 36,
+   "xp": 12252
+  },
+  {
+   "args": [
+    1,
+    63586,
+    1
+   ],
+   "at": "2026-09-02 21:46:58",
+   "ev": "PENDING_SKILL_CARD_ADDED",
+   "lvl": 36,
+   "xp": 12252
+  },
+  {
+   "args": [
+    2,
+    49932,
+    1
+   ],
+   "at": "2026-09-02 21:46:58",
+   "ev": "PENDING_SKILL_CARD_ADDED",
+   "lvl": 36,
+   "xp": 12252
+  },
+  {
+   "args": [
+    3,
+    49740,
+    1
+   ],
+   "at": "2026-09-02 21:46:58",
+   "ev": "PENDING_SKILL_CARD_ADDED",
+   "lvl": 36,
+   "xp": 12252
+  },
+  {
+   "args": [
+    4,
+    25945,
+    1
+   ],
+   "at": "2026-09-02 21:46:58",
+   "ev": "PENDING_SKILL_CARD_ADDED",
+   "lvl": 36,
+   "xp": 12252
+  },
+  {
+   "args": [
+    5,
+    25625,
+    1
+   ],
+   "at": "2026-09-02 21:46:58",
+   "ev": "PENDING_SKILL_CARD_ADDED",
+   "lvl": 36,
+   "xp": 12252
+  },
+  {
+   "args": [
+    "PURCHASE_SEALED_CARD_OK"
+   ],
+   "at": "2026-09-02 21:46:58",
+   "ev": "PURCHASE_SEALED_CARD_RESULT",
+   "lvl": 36,
+   "xp": 12252
+  },
+  {
+   "args": [
+    5,
+    25625,
+    1
+   ],
+   "at": "2026-09-02 21:46:58",
+   "ev": "PENDING_SKILL_CARD_REMOVED",
+   "lvl": 36,
+   "xp": 12252
+  },
+  {
+   "args": [
+    4,
+    25945,
+    1
+   ],
+   "at": "2026-09-02 21:46:58",
+   "ev": "PENDING_SKILL_CARD_REMOVED",
+   "lvl": 36,
+   "xp": 12252
+  },
+  {
+   "args": [
+    3,
+    49740,
+    1
+   ],
+   "at": "2026-09-02 21:46:58",
+   "ev": "PENDING_SKILL_CARD_REMOVED",
+   "lvl": 36,
+   "xp": 12252
+  },
+  {
+   "args": [
+    2,
+    49932,
+    1
+   ],
+   "at": "2026-09-02 21:46:58",
+   "ev": "PENDING_SKILL_CARD_REMOVED",
+   "lvl": 36,
+   "xp": 12252
+  },
+  {
+   "args": [
+    1,
+    63586,
+    1
+   ],
+   "at": "2026-09-02 21:46:58",
+   "ev": "PENDING_SKILL_CARD_REMOVED",
+   "lvl": 36,
+   "xp": 12252
+  },
+  {
+   "args": [
+    "CLAIM_SKILL_CARD_OK"
+   ],
+   "at": "2026-09-02 21:46:58",
+   "ev": "CLAIM_SKILL_CARD_RESULT",
+   "lvl": 36,
+   "xp": 12252
+  }
+ ],
+ "rollSpells": [
+  {
+   "entries": [
+    41430
+   ],
+   "kind": "leveled",
+   "lvl": 35,
+   "spells": [
+    6603,
+    107,
+    986203,
+    20599,
+    81,
+    674,
+    59752,
+    3273,
+    101101,
+    84421,
+    20864,
+    9930874,
+    3127,
+    84864,
+    58985,
+    84422,
+    979700,
+    84433,
+    84423,
+    3018,
+    20597,
+    20598,
+    2764,
+    5019,
+    84420,
+    93539,
+    91944,
+    280280,
+    286423,
+    2136,
+    2137,
+    2138,
+    8412,
+    19740,
+    19834,
+    19835,
+    19836,
+    10291,
+    291021,
+    53408,
+    8639,
+    1760,
+    910460,
+    954524,
+    954570,
+    60103,
+    907120,
+    6353,
+    6178,
+    11554,
+    12328
+   ],
+   "t": 50854.879
+  },
+  {
+   "entries": [
+    40900
+   ],
+   "kind": "leveled",
+   "lvl": 35,
+   "spells": [
+    6603,
+    107,
+    986203,
+    20599,
+    81,
+    674,
+    59752,
+    3273,
+    101101,
+    84421,
+    20864,
+    9930874,
+    3127,
+    84864,
+    58985,
+    84422,
+    979700,
+    84433,
+    84423,
+    3018,
+    20597,
+    20598,
+    2764,
+    5019,
+    84420,
+    93539,
+    91944,
+    280280,
+    286423,
+    2136,
+    2137,
+    2138,
+    8412,
+    19740,
+    19834,
+    19835,
+    19836,
+    10291,
+    291021,
+    53408,
+    8639,
+    1760,
+    910460,
+    954524,
+    954570,
+    60103,
+    907120,
+    6353,
+    6178,
+    11554,
+    12328
+   ],
+   "t": 50868.007
+  },
+  {
+   "entries": [
+    36890
+   ],
+   "kind": "leveled",
+   "lvl": 35,
+   "spells": [
+    6603,
+    107,
+    986203,
+    20599,
+    81,
+    674,
+    59752,
+    3273,
+    101101,
+    84421,
+    20864,
+    9930874,
+    3127,
+    84864,
+    58985,
+    84422,
+    979700,
+    84433,
+    84423,
+    3018,
+    20597,
+    20598,
+    2764,
+    5019,
+    84420,
+    93539,
+    91944,
+    280280,
+    286423,
+    2136,
+    2137,
+    2138,
+    8412,
+    19740,
+    19834,
+    19835,
+    19836,
+    10291,
+    291021,
+    53408,
+    8639,
+    1760,
+    910460,
+    954524,
+    954570,
+    60103,
+    907120,
+    6353,
+    6178,
+    11554,
+    12328
+   ],
+   "t": 50876.915
+  },
+  {
+   "entries": [
+    40957
+   ],
+   "kind": "leveled",
+   "lvl": 35,
+   "spells": [
+    6603,
+    107,
+    986203,
+    20599,
+    81,
+    674,
+    59752,
+    3273,
+    101101,
+    84421,
+    20864,
+    9930874,
+    3127,
+    84864,
+    58985,
+    84422,
+    979700,
+    84433,
+    84423,
+    3018,
+    20597,
+    20598,
+    2764,
+    5019,
+    84420,
+    93539,
+    91944,
+    280280,
+    286423,
+    2136,
+    2137,
+    2138,
+    8412,
+    19740,
+    19834,
+    19835,
+    19836,
+    10291,
+    291021,
+    53408,
+    8639,
+    1760,
+    910460,
+    954524,
+    954570,
+    60103,
+    907120,
+    6353,
+    6178,
+    11554,
+    12328
+   ],
+   "t": 50884.377
+  },
+  {
+   "entries": [
+    40698
+   ],
+   "kind": "leveled",
+   "lvl": 35,
+   "spells": [
+    6603,
+    107,
+    986203,
+    20599,
+    81,
+    674,
+    59752,
+    3273,
+    101101,
+    84421,
+    20864,
+    9930874,
+    3127,
+    84864,
+    58985,
+    84422,
+    979700,
+    84433,
+    84423,
+    3018,
+    20597,
+    20598,
+    2764,
+    5019,
+    84420,
+    93539,
+    91944,
+    280280,
+    286423,
+    2136,
+    2137,
+    2138,
+    8412,
+    19740,
+    19834,
+    19835,
+    19836,
+    10291,
+    291021,
+    53408,
+    8639,
+    1760,
+    910460,
+    954524,
+    954570,
+    60103,
+    907120,
+    6353,
+    6178,
+    11554,
+    12328
+   ],
+   "t": 50890.273
+  },
+  {
+   "entries": [
+    40352
+   ],
+   "kind": "leveled",
+   "lvl": 35,
+   "spells": [
+    6603,
+    107,
+    986203,
+    20599,
+    81,
+    674,
+    59752,
+    3273,
+    101101,
+    84421,
+    20864,
+    9930874,
+    3127,
+    84864,
+    58985,
+    84422,
+    979700,
+    84433,
+    84423,
+    3018,
+    20597,
+    20598,
+    2764,
+    5019,
+    84420,
+    93539,
+    91944,
+    280280,
+    286423,
+    2136,
+    2137,
+    2138,
+    8412,
+    19740,
+    19834,
+    19835,
+    19836,
+    10291,
+    291021,
+    53408,
+    8639,
+    1760,
+    910460,
+    954524,
+    954570,
+    60103,
+    907120,
+    6353,
+    6178,
+    11554,
+    12328
+   ],
+   "t": 50902.739
+  },
+  {
+   "entries": [
+    40876
+   ],
+   "kind": "leveled",
+   "lvl": 36,
+   "spells": [
+    6603,
+    107,
+    986203,
+    20599,
+    81,
+    674,
+    59752,
+    3273,
+    101101,
+    84421,
+    20864,
+    9930874,
+    3127,
+    84864,
+    58985,
+    84422,
+    979700,
+    84433,
+    84423,
+    3018,
+    20597,
+    20598,
+    2764,
+    5019,
+    84420,
+    93539,
+    91944,
+    280280,
+    286423,
+    2136,
+    2137,
+    2138,
+    8412,
+    19740,
+    19834,
+    19835,
+    19836,
+    10291,
+    291021,
+    53408,
+    8640,
+    1760,
+    910460,
+    954524,
+    954570,
+    60103,
+    907120,
+    6353,
+    6367,
+    6178,
+    11554,
+    12328
+   ],
+   "t": 51414.167
+  }
+ ],
+ "statics": {
+  "api": [
+   "AddAllDesiredFilter (function)",
+   "AddAllUndesiredFilter (function)",
+   "AddDesiredID (function)",
+   "AddUndesiredID (function)",
+   "CanAddDesiredID (function)",
+   "CanAddUndesiredID (function)",
+   "CanRepurchaseAbilityRolls (function)",
+   "CanRepurchaseAnyRolls (function)",
+   "CanRepurchaseRolls (function)",
+   "CanRepurchaseTalentRolls (function)",
+   "CanResetAbilities (function)",
+   "CanRollAbilities (function)",
+   "CanShowStartingChoice (function)",
+   "CanStartRapidRolling (function)",
+   "CanUseRapidRolling (function)",
+   "CancelRapidRolling (function)",
+   "ClearDesiredSpells (function)",
+   "ClearUndesiredSpells (function)",
+   "ContinueRapidRolling (function)",
+   "GetFilteredDesiredEntryAtIndex (function)",
+   "GetFilteredUndesiredEntryAtIndex (function)",
+   "GetMaxRepurchasableAbilityRolls (function)",
+   "GetMaxRepurchasableRolls (function)",
+   "GetMaxRepurchasableTalentRolls (function)",
+   "GetMaximumRapidRolls (function)",
+   "GetNextUnlearnedID (function)",
+   "GetNumFilteredDesiredEntries (function)",
+   "GetNumFilteredUndesiredEntries (function)",
+   "GetNumRepurchasableAbilityRolls (function)",
+   "GetNumRepurchasableRolls (function)",
+   "GetNumRepurchasableTalentRolls (function)",
+   "GetRapidRollAbilityBreakpointInfo (function)",
+   "GetRapidRollTalentBreakpointInfo (function)",
+   "GetRapidRollingState (function)",
+   "GetRepurchaseAbilityRollCost (function)",
+   "GetRepurchaseRollCost (function)",
+   "GetRepurchaseTalentRollCost (function)",
+   "GetRollIcons (function)",
+   "GetStartingChoiceEntries (function)",
+   "IsAwaitingRapidRollingTalentUpgradeRoll (function)",
+   "IsDesiredID (function)",
+   "IsRapidRollingEnabled (function)",
+   "IsRollRequestBlocked (function)",
+   "IsUndesiredID (function)",
+   "RemoveAllUndesiredAbilities (function)",
+   "RemoveAllUndesiredTalents (function)",
+   "RemoveDesiredID (function)",
+   "RemoveUndesiredID (function)",
+   "RepurchaseAbilityRolls (function)",
+   "RepurchaseRolls (function)",
+   "RepurchaseTalentRolls (function)",
+   "RerollUnlockedStartingAbilities (function)",
+   "ResetAbilities (function)",
+   "RollAbilities (function)",
+   "SetFilteredDesiredEntries (function)",
+   "SetFilteredUndesiredEntries (function)",
+   "SetRapidRollingSelections (function)",
+   "StartRapidRolling (function)",
+   "UnlearnAbility (function)",
+   "WillRollFirstNonStartingAbility (function)",
+   "WillRollStartingAbilities (function)"
+  ],
+  "auras": [
+   {
+    "kind": "HELPFUL",
+    "raw": {
+     "_array": [
+      "Potion of Experience",
+      "Rank 1",
+      "Interface\\Icons\\INV_Potion_26",
+      5,
+      null,
+      60000,
+      52795.184,
+      "player",
+      null,
+      1,
+      818068
+     ],
+     "n": 11
+    },
+    "rawCount": 11
+   },
+   {
+    "kind": "HELPFUL",
+    "raw": {
+     "_array": [
+      "PvE Mode",
+      "",
+      "Interface\\Icons\\achievement_guildperk_everyones_a_hero_rank2",
+      0,
+      null,
+      0,
+      0,
+      "player",
+      null,
+      null,
+      9931032
+     ],
+     "n": 11
+    },
+    "rawCount": 11
+   },
+   {
+    "kind": "HELPFUL",
+    "raw": {
+     "_array": [
+      "Blessing of Might",
+      "Rank 4",
+      "Interface\\Icons\\Spell_Holy_FistOfJustice",
+      0,
+      "Magic",
+      1800,
+      11061.113,
+      "player",
+      null,
+      1,
+      19836
+     ],
+     "n": 11
+    },
+    "rawCount": 11
+   },
+   {
+    "kind": "HELPFUL",
+    "raw": {
+     "_array": [
+      "Devotion Aura",
+      "Rank 5",
+      "Interface\\Icons\\Spell_Holy_DevotionAura",
+      0,
+      null,
+      0,
+      0,
+      "player",
+      null,
+      null,
+      1032
+     ],
+     "n": 11
+    },
+    "rawCount": 11
+   }
+  ],
+  "calls": {
+   "CanRepurchaseAnyRolls": {
+    "n": 0
+   },
+   "CanRepurchaseRolls": {
+    "n": 0
+   },
+   "CanRepurchaseTalentRolls": {
+    "n": 0
+   },
+   "CanRollAbilities": {
+    "_array": [
+     false
+    ],
+    "n": 1
+   },
+   "CanShowStartingChoice": {
+    "_array": [
+     false
+    ],
+    "n": 1
+   },
+   "CanStartRapidRolling": {
+    "_array": [
+     false,
+     "CAN_START_RAPID_ROLLING_NOT_MAX_LEVEL"
+    ],
+    "n": 2
+   },
+   "CanUseRapidRolling": {
+    "_array": [
+     false,
+     "CAN_USE_RAPID_ROLLING_NOT_MAX_LEVEL"
+    ],
+    "n": 2
+   },
+   "GetMaximumRapidRolls": {
+    "_array": [
+     5
+    ],
+    "n": 1
+   },
+   "GetNumRepurchasableRolls": {
+    "_array": [
+     0
+    ],
+    "n": 1
+   },
+   "GetNumRepurchasableTalentRolls": {
+    "_array": [
+     0
+    ],
+    "n": 1
+   },
+   "GetRapidRollAbilityBreakpointInfo": {
+    "_array": [
+     61,
+     150,
+     10
+    ],
+    "n": 3
+   },
+   "GetRapidRollTalentBreakpointInfo": {
+    "_array": [
+     37,
+     300,
+     10
+    ],
+    "n": 3
+   },
+   "GetRollIcons": {
+    "n": 0
+   },
+   "IsAwaitingRapidRollingTalentUpgradeRoll": {
+    "_array": [
+     false
+    ],
+    "n": 1
+   },
+   "IsRollRequestBlocked": {
+    "_array": [
+     false
+    ],
+    "n": 1
+   },
+   "WillRollFirstNonStartingAbility": {
+    "_array": [
+     false
+    ],
+    "n": 1
+   },
+   "WillRollStartingAbilities": {
+    "_array": [
+     false
+    ],
+    "n": 1
+   }
+  },
+  "rapidRollingState": {
+   "CanStart": false,
+   "CanStartReason": "CAN_START_RAPID_ROLLING_NOT_MAX_LEVEL",
+   "IsAbility": false,
+   "IsActive": false,
+   "IsDesired": false,
+   "LearnedEntryID": 0,
+   "NewRank": 0,
+   "Phase": "Idle",
+   "PreRollRank": 0,
+   "Reason": "",
+   "RollCount": 0,
+   "SessionID": 0,
+   "StopCode": "STOP_RAPID_ROLLING_NONE",
+   "TargetEntryID": 0
+  },
+  "repurchaseRollCost": {
+   "noArg": {
+    "n": 0
+   }
+  },
+  "repurchaseTalentRollCost": {
+   "noArg": {
+    "n": 0
+   }
+  },
+  "startingChoice": [],
+  "strings": {
+   "CAN_START_RAPID_ROLLING_CANNOT_USE_RAPID_ROLLING": "You cannot use rapid rolling right now.",
+   "CAN_START_RAPID_ROLLING_MISSING_ABILITY_TOKENS": "You do not have enough tokens to start rolling.",
+   "CAN_START_RAPID_ROLLING_MISSING_TALENT_TOKENS": "You do not have enough tokens to start rolling.",
+   "CAN_START_RAPID_ROLLING_NEXT_UNDESIRED_ENTRY_NOT_FOUND": "Next undesired entry not found.",
+   "CAN_START_RAPID_ROLLING_NEXT_UNDESIRED_ENTRY_NOT_VALID": "The next undesired entry is not valid.",
+   "CAN_START_RAPID_ROLLING_NEXT_UNDESIRED_ENTRY_SPELL_TAG": "Issue with the spell tag for the next undesired entry.",
+   "CAN_START_RAPID_ROLLING_NEXT_UNDESIRED_ENTRY_SUGGESTION": "Issue with the suggestion for the next undesired entry.",
+   "CAN_START_RAPID_ROLLING_NOT_ENABLED": "Rapid rolling is not enabled.",
+   "CAN_START_RAPID_ROLLING_NOT_MAX_LEVEL": "You must be at max level to start rapid rolling.",
+   "CAN_START_RAPID_ROLLING_NOT_WILDCARD": "You are not in Wildcard mode.",
+   "CAN_START_RAPID_ROLLING_NO_DESIRED_ABILITIES": "There are no desired abilities available for rolling.",
+   "CAN_START_RAPID_ROLLING_NO_DESIRED_ENTRIES": "There are no desired entries to roll.",
+   "CAN_START_RAPID_ROLLING_NO_DESIRED_TALENTS": "There are no desired talents available for rolling.",
+   "CAN_START_RAPID_ROLLING_NO_UNDESIRED_ENTRIES": "There are no undesired entries to remove.",
+   "CAN_START_RAPID_ROLLING_TOO_HIGH_COUNT": "You have too many rolls to start rapid rolling.",
+   "CAN_START_RAPID_ROLLING_TOO_LOW_COUNT": "You do not have enough rolls to start rapid rolling.",
+   "CAN_START_RAPID_ROLLING_UNBLOCKED_SKILL_CARDS": "You cannot begin rolling until you have used all of your skill cards.",
+   "CAN_START_RAPID_ROLLING_UNSPENT_ABILITY_ESSENCE": "You have unspent ability essence.",
+   "CAN_START_RAPID_ROLLING_UNSPENT_TALENT_ESSENCE": "You have unspent talent essence.",
+   "CAN_USE_RAPID_ROLLING_NOT_ENABLED": "Rapid rolling is not enabled.",
+   "CAN_USE_RAPID_ROLLING_NOT_MAX_LEVEL": "You must be at max level to use rapid rolling.",
+   "CAN_USE_RAPID_ROLLING_NOT_WILDCARD": "You are not in Wildcard mode.",
+   "CAN_USE_RAPID_ROLLING_UNSPENT_ABILITY_ESSENCE": "You have unspent ability essence.",
+   "CAN_USE_RAPID_ROLLING_UNSPENT_TALENT_ESSENCE": "You have unspent talent essence.",
+   "CA_RAPID_ROLLING": "Rapid Rolling",
+   "CA_RAPID_ROLLING_TEXT": "Quickly use your Scrolls of Fortune to reroll for your desired spell and talent.",
+   "RAPID_ROLL_FAILED": "Rapid Roll Failed",
+   "RAPID_ROLL_THIS_BUILD": "Rapid Roll This Build",
+   "RAPID_ROLL_UNAVAILABLE": "You must have no pending rolls and be level: %d.",
+   "RAPID_ROLL_WALKTHROUGH1": "Select spells you want the dice to stop rolling on.",
+   "RAPID_ROLL_WALKTHROUGH2": "Spells selected |cffffd100do not|r have an increased chance of being rolled!|n|n|cff00d1ffBe sure to select everything you want!|r",
+   "RAPID_ROLL_WALKTHROUGH3": "You can also select groups of spells, such as |cff00d1ffSuggested Talents|r or |cff00d1ffSuggested Abilities|r to stop on any spell that may be good for your build!",
+   "RAPID_ROLL_WALKTHROUGH4": "Select spells you no longer want in your build.",
+   "RAPID_ROLL_WALKTHROUGH5": "The last spell selected here will be the next spell to be unlearned!",
+   "RAPID_ROLL_WALKTHROUGH6": "As you spend scrolls, either through rapid rolling or regular rolling, this bar will fill up.|n|nWhen the bar fills you will be able to rapid roll with even more scrolls at once.",
+   "RAPID_ROLL_WALKTHROUGH7": "The Hero Architect has many builds created by other Heroes! Builds you have recently viewed will appear here where you're be able to import them for your Desired Spells and Unlearn Spells.",
+   "WC_RAPID_ROLL_DESIRED": "|cffFFFFFFDesired|r",
+   "WC_RAPID_ROLL_SCROLLS_SPENT": "Scrolls Used: %s",
+   "WILDCARD_ABILITY_UNLOCKED": "Ability Unlocked!",
+   "WILDCARD_ALL_ABILITIES_ARE_LOCKED": "Please unlock one or more abilities to roll!",
+   "WILDCARD_CHANGE_STARTING_ABILITIES": "Reroll 4 starters",
+   "WILDCARD_DESIRED_ABILITY_UNLOCKED": "Desired Ability Unlocked!",
+   "WILDCARD_DESIRED_TALENT_UNLOCKED": "Desired Talent Unlocked!",
+   "WILDCARD_DICE_HINT": "You can roll Abilities anytime at levels |cffFFFFFF1-9|r\nusing %s in your bags.",
+   "WILDCARD_DICE_USAGE_ERROR": "You cannot use the dice after rolling your first ability.",
+   "WILDCARD_HINT_GENERAL": "|cffFFFFFFClick|r the Dice to reveal a spell",
+   "WILDCARD_KEEP_ABILITIES": "Keep Abilities",
+   "WILDCARD_LOCK_HINT": "If Ability is |cffFFFFFFlocked|r then |cffFFFFFFRoll Abilities|r button will not roll it.",
+   "WILDCARD_MODE": "Wildcard",
+   "WILDCARD_MODE_DESC": "Prepare to embrace the unexpected in Wildcard Mode, where the power of chance shapes your destiny. Here, you'll be granted a random set of abilities from an array of classes, challenging you to craft the most formidable build possible from the hand you've been dealt.\n\nAt the outset, you'll roll four random spells from all classes, and you're free to reroll these starting spells at will. As you grow stronger and ascend in levels, starting at level 10, you'll gain a new random ability every two levels, continually reshaping your strategy and gameplay.\n\nRemember, your powers may be random, but your talents are entirely in your control. Assign talent points to any class specialization of your choice, bringing your unique, ever-changing build to life. Plus, the Scrolls of Fortune you earn along your journey offer the chance to reroll abilities you're less fond of, refining your Wildcard build to perfection.\n\nDive into the unpredictable, exhilarating world of Wildcard Mode, where you have the chance to create a hero unlike any other. Will you rise to the challenge and master the power of chance? Only the roll of the dice will tell.",
+   "WILDCARD_REVEAL_NEW_SPELL_DIALOGUE": "Reveal a new spell",
+   "WILDCARD_ROLLS_RECOVERY_ALREADY_RECOVERED": "This roll has already been recovered",
+   "WILDCARD_ROLLS_RECOVERY_BAD_ENTRY": "Requested Recovery of a bad Character Advancement Entry",
+   "WILDCARD_ROLLS_RECOVERY_BAD_RANK": "Requested Recovery of a bad Character Advancement Rank",
+   "WILDCARD_ROLLS_RECOVERY_DAILY_LIMIT": "You have reached your daily recovery limit. Try again later.",
+   "WILDCARD_ROLLS_RECOVERY_ID_MISMATCH": "Recovery ID mismatch!",
+   "WILDCARD_ROLLS_RECOVERY_NOT_ENOUGH_TOKENS": "Not enough tokens to recover this roll",
+   "WILDCARD_ROLLS_RECOVERY_OUT_OF_RANGE": "Recovery Request out of bounds",
+   "WILDCARD_ROLLS_RECOVERY_PENDING": "You have a pending recovery already!",
+   "WILDCARD_ROLLS_RECOVERY_WRONG_SPECIALIZATION": "Requested Recovery for the wrong specialization",
+   "WILDCARD_ROLLS_TOO_LOW_RANK": "Requested Recovery has too low of a rank",
+   "WILDCARD_ROLL_ABILITIES": "Roll Abilities",
+   "WILDCARD_SOF_HELP": "Silas Darkmoon in your capital city offers Scrolls of Fortune while leveling and at end-game that can be used to reroll any of your spells or talents! These scrolls are also found in quests, the Manastorm, dungeons, battlegrounds, High-risk, and raids.",
+   "WILDCARD_SOF_HELP_TITLE": "You can reroll this later! Earn Scrolls of Fortune to unlock rerolls!",
+   "WILDCARD_SOF_REROLLS_AVAILABLE": "Rerolls available: %d",
+   "WILDCARD_SOF_REROLL_LIMIT_DESC": "While you have unspent Essence, you can use %d of your %d Scrolls of Fortune. Spend your Essence to unlock the rest.",
+   "WILDCARD_STARTING_HINT": "|cffFFFFFFClick|r the Dice to roll Abilities",
+   "WILDCARD_TALENT_UNLOCKED": "Talent Unlocked!",
+   "WILDCARD_UNLEARN_AND_ROLL": "Reroll"
+  },
+  "tokens": {
+   "scroll": {
+    "count": 3,
+    "name": "Scroll of Fortune I",
+    "tokenType": "TOKEN_TYPE_SCROLL_OF_FORTUNE_I"
+   },
+   "specID": 1,
+   "talentScroll": {
+    "count": 31,
+    "name": "Scroll of Fortune I: Talents",
+    "tokenType": "TOKEN_TYPE_SCROLL_OF_FORTUNE_I_TALENTS"
+   }
+  }
+ }
+}

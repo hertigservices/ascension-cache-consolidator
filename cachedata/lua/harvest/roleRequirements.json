@@ -1,0 +1,11 @@
+{
+ "7": [
+  {
+   "ConditionName": "Earthen Guardian",
+   "ConditionTypeName": "SpellKnown",
+   "ConditionValue": 1182001,
+   "Met": false,
+   "Role": 2
+  }
+ ]
+}
