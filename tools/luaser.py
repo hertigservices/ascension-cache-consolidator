@@ -115,14 +115,31 @@ def _tokens(src):
     yield "eof", ""
 
 
+class Redacted(str):
+    """A placeholder a submitter left behind when they scrubbed a file by hand.
+
+    `{redacted}` is not valid Lua, so a strict parser rejects the whole file --
+    and the files people redact are exactly the ones they were careful with, so
+    refusing them is the wrong failure. It is kept as a distinct type rather
+    than an empty string so a caller can never mistake it for real data.
+    """
+    __slots__ = ()
+
+    def __repr__(self):
+        return "<redacted>"
+
+
 class _Parser:
     def __init__(self, src):
         self._it = _tokens(src)
         self._tok = next(self._it)
+        self._ahead = next(self._it)
 
     def _next(self):
         t = self._tok
-        self._tok = next(self._it)
+        # The stream yields one "eof"; with a lookahead buffer we can be asked
+        # for the token after it, so eof has to repeat rather than raise.
+        self._tok, self._ahead = self._ahead, next(self._it, ("eof", ""))
         return t
 
     def _expect(self, kind, text=None):
@@ -151,6 +168,8 @@ class _Parser:
                 return False
             if text == "nil":
                 return None
+            if text.lower() in ("redacted", "scrubbed", "removed"):
+                return Redacted(text.lower())
             raise LuaError(f"bare identifier {text!r} is not a value")
         raise LuaError(f"not a value: {text!r}")
 
@@ -179,9 +198,13 @@ class _Parser:
                 self._next()
 
     def _peek_is_assign(self):
-        # `name = v` is a key; a bare `name` would be an identifier, which the
-        # client never emits as an array value.
-        return True
+        """True when the identifier under the cursor is a key (`name = v`).
+
+        Without this lookahead a bare identifier -- which the client never
+        writes, but a hand-redacted file does -- is read as a key, and the
+        parser then fails on the `}` where it wanted `=`.
+        """
+        return self._ahead[0] == "punct" and self._ahead[1] == "="
 
 
 def loads(src):
@@ -264,6 +287,8 @@ def _write(v, out, depth):
             _write(v.hash[k], out, depth + 1)
             out.append(",\n")
         out.append(pad + "}")
+    elif isinstance(v, Redacted):
+        out.append("{" + str(v) + "}")
     elif isinstance(v, str):
         out.append(_q(v))
     elif v is None:

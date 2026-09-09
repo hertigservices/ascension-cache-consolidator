@@ -277,7 +277,11 @@ def run_merge():
     print(f"{len(files)} SavedVariables files match a known spec")
     for key, path in files:
         sid = sha256(path)
-        if sid in state["sources"]:
+        prev = state["sources"].get(sid)
+        # A file that failed to parse is retried on every run: the usual reason
+        # for the failure is a gap in our parser, so improving the parser has to
+        # be enough to pick the file up without hand-clearing the store.
+        if prev is not None and not prev.get("error"):
             skipped += 1
             continue
         try:

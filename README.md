@@ -98,7 +98,8 @@ format:
   combat log events. This is *observed server behaviour*, so no cache file can contain
   it: 3,161 creatures across 115 zones, including Ascension's custom ones.
 - **AIO** — the framework Ascension uses to push addon code to the client at login.
-  The client caches what it received, which makes this the custom UI's own source.
+  The client caches what it received, which makes this the custom UI's own source:
+  25 files, including the Character Advancement panel at 139 KB of Lua.
 
 These merge differently from caches, because they are accumulators rather than
 statements: a cache record is a fact the server stated, but `amountMin` is the smallest
