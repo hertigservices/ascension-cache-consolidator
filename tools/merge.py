@@ -27,7 +27,7 @@ ones append, so the store is safe to interrupt.
 import os, sys, json, struct, hashlib, collections, time
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-import wdblib, modes, config
+import wdblib, modes, config, intake
 
 STORE   = config.STORE
 SOURCES = config.SOURCES
@@ -73,9 +73,16 @@ def write_tsv(path, cols, rows):
 
 
 def group_of(path):
-    """The folder that directly contains the .wdb == the realm/mode unit."""
-    parent = os.path.basename(os.path.dirname(os.path.abspath(path)))
-    return "enUS (realm root)" if parent == "enUS" else parent
+    """The provenance group for one .wdb. Deliberately not implemented here.
+
+    This was a second copy of intake's rule, and a second copy of a rule is a
+    bug waiting for someone to change one of them. When intake started keeping
+    separate submissions apart -- several people zip from above the realm
+    folder and shared one label -- this copy did not, so the keys the merge
+    builds no longer matched the keys intake writes, and the merge quietly saw
+    nothing new to do.
+    """
+    return intake.group_of(path)
 
 
 def sha256_file(path):

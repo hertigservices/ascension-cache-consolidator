@@ -55,7 +55,7 @@ independent submissions corroborate it.
 | `season-10-wildcard` | wildcard | 4,993 | 3,424 | 24,002 | 243 | 248 | 8 | 567 |
 | `season-9` | season-9 | 5,169 | 5,009 | 19,848 | 459 | 213 | 3 | 478 |
 | `stress-test` | stress-test | 1,603 | 1,013 | 9,553 | 87 | 33 | 2 | 172 |
-| `unknown` | unknown | 2,968 | 2,037 | 0 | 19 | 176 | 0 | 445 |
+| `unknown` | unknown | 2,989 | 2,039 | 65 | 19 | 176 | 0 | 445 |
 | `warcraft-reborn` | warcraft-reborn | 3,402 | 2,648 | 39,189 | 750 | 147 | 9 | 443 |
 
 ### `unknown` is not a game mode

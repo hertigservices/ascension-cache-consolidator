@@ -139,6 +139,33 @@ the most corroborated one.
 **Not in this file:** the `AIO_sv` branch — action bar layouts and frame
 positions, keyed by character name.
 
+## The world catalogue (`catalogue/`)
+
+Plain tab-separated lists of **things that exist in the world**: 7,651 objects and 548 creatures, each with one example
+position, how many separate uploads saw it, and every zone it turned
+up in.
+
+These did not come from anybody's cache. Players walked the world with
+a dump addon running and sent in what it wrote, which makes this the
+one part of the dataset that is an *observation* rather than a
+recording of what a server said.
+
+> **It is a catalogue, not a spawn table.** Only the first sighting of
+> each object was recorded, common props like trees and chairs were
+> filtered out before it ever reached us, some of the dumps are
+> partial, and it is a snapshot that predates the newer zones. Load it
+> into a `gameobject` table and you will get a world that is mostly
+> empty and confidently wrong. `catalogue/README.md` gives the full
+> list of what it can and cannot tell you.
+
+> Objects and creatures are **separate id spaces** and are kept in
+> separate files. Creature 1622 and GameObject 1622 are unrelated
+> things; 34 ids exist in both.
+
+These two are not gzipped, for the same reason `sources.tsv` is not:
+they are small enough to open, grep and read without unpacking
+anything.
+
 ## Everything is gzipped
 
 Every data file here ends in `.gz`. That is not a preference — uncompressed
@@ -173,6 +200,7 @@ told your client, so it is not ours to discard.
 | `raw/*.pack.gz` | `[entry u32][size u32][payload]` records | any language; no header to skip |
 | `raw/*.index.tsv.gz` | one row per stored record with its sha1 and provenance | text editor, after unpacking |
 | `sources.tsv` | every submitted file: realm, mode, capture date, counts | text editor (this one is not compressed) |
+| `catalogue/*.tsv` | objects and creatures observed in the world | text editor, Excel (not compressed either) |
 
 The `.wdb` files are the ones to use if you just want a better cache. The TSVs
 are for importing into a database. The `raw/` packs are for writing your own

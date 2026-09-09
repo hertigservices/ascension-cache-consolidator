@@ -66,6 +66,19 @@ MODE_TABLE = {
 # AFTER the dash, which the mode's own internal hyphen never has.
 SPLIT = re.compile(r"\s*-\s+")
 
+# A group whose folder name states no realm or mode -- "enUS", "WDB", a loose
+# drop -- carries the submission it came from in trailing brackets, so that
+# "enUS (realm root) [WDB__f8cd0267]" and "enUS (realm root) [zkb6p7w]" stay
+# separate provenance units.  Thirteen different people zipped from above the
+# realm folder; sharing one label meant one identification would be stamped
+# onto all thirteen at once.  See intake.label_for.
+QUALIFIER = re.compile(r"\s*\[[^\]]+\]$")
+
+
+def base_group(group):
+    """A group name with its submission qualifier removed."""
+    return QUALIFIER.sub("", group).strip()
+
 
 def _load_json():
     if os.path.exists(MODES_JSON):
@@ -85,20 +98,28 @@ def classify(group):
     `source` says how the mode was decided: "path", "override", or "unknown"
     (a caller may later overwrite it with "inferred" after fingerprinting)."""
     user = _load_json()
+    # The fully qualified name is tried first so one specific submission can be
+    # hand-corrected in modes.json without touching the others that share its
+    # folder name; everything after falls back to the bare name.
+    bare = base_group(group)
     if group in user:
         u = user[group]
         realm, mode = u.get("realm", ""), u.get("mode", UNKNOWN)
         how = "modes.json"
-    elif group in OVERRIDES:
-        realm, mode = OVERRIDES[group]
+    elif bare in user:
+        u = user[bare]
+        realm, mode = u.get("realm", ""), u.get("mode", UNKNOWN)
+        how = "modes.json"
+    elif bare in OVERRIDES:
+        realm, mode = OVERRIDES[bare]
         how = "override"
     else:
-        parts = SPLIT.split(group, 1)
+        parts = SPLIT.split(bare, 1)
         if len(parts) == 2 and parts[1].strip():
             realm, mode = parts[0].strip(), parts[1].strip()
             how = "path"
         else:
-            realm, mode = group.strip(), UNKNOWN
+            realm, mode = bare.strip(), UNKNOWN
             how = "unknown"
     if mode not in MODE_TABLE:
         # a mode we have never seen: keep the label, derive a slug, no family

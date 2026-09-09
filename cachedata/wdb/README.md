@@ -40,7 +40,7 @@ corrects it the next time the server sends that entry.
 | `season-10-wildcard` | 4,993 | 3,424 | 24,002 | 243 | 248 | 8 | 567 |
 | `season-9` | 5,169 | 5,009 | 19,848 | 459 | 213 | 3 | 478 |
 | `stress-test` | 1,603 | 1,013 | 9,553 | 87 | 33 | 2 | 172 |
-| `unknown` | 2,968 | 2,037 | — | 19 | 176 | — | 445 |
+| `unknown` | 2,989 | 2,039 | 65 | 19 | 176 | — | 445 |
 | `warcraft-reborn` | 3,402 | 2,648 | 39,189 | 750 | 147 | 9 | 443 |
 
 Counts are entries, not file sizes; the files on disk are `.wdb.gz`.

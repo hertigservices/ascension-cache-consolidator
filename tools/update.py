@@ -5,9 +5,11 @@
   1. intake   extract archives, hash-dedup whole files, update ledger + MANIFEST
   2. merge    fold every record into the union store, dedup identical payloads,
               keep genuine variants, identify unlabelled submissions by fingerprint
-  3. export   write the decoded per-mode / union / raw views
-  4. rebuild  write merged, client-loadable .wdb files per game mode
-  5. audit    scan everything about to be published for player data
+  3. catalogue  turn the submitted world dumps into a list of objects and
+                creatures that exist -- a catalogue, never a spawn table
+  4. export   write the decoded per-mode / union / raw views
+  5. rebuild  write merged, client-loadable .wdb files per game mode
+  6. audit    scan everything about to be published for player data
 
 Every stage is idempotent, so re-running after a bad drop is safe and cheap.
 The audit is the gate: a non-zero exit means DO NOT PUBLISH until it is explained.
@@ -22,6 +24,11 @@ STAGES = [("intake",  "intake.py"),
           # before export because the file guide describes its output too, and
           # before the audit so that output is covered by the publish gate.
           ("lua",     "luamerge.py"),
+          # The world dumps are observations, not cache files -- nobody's client
+          # wrote them, players walked the world with a dump addon running. They
+          # need no merge store, only a recompute from the files on disk, so they
+          # sit here: after the caches, before the guide that describes them.
+          ("catalogue", "ingest_gameobjects.py"),
           ("export",  "export.py"),
           ("rebuild", "rebuild.py"),
           ("audit",   "audit_publish.py")]

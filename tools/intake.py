@@ -147,23 +147,81 @@ def quarantine(out, fn, why):
     print(f"  !! {fn} failed to extract; partial output quarantined at {dest}")
     return dest
 
+# Folder names that state neither realm nor mode. A submission that lands in one
+# of these is unidentified by its path, and several different submissions land in
+# each -- so these, and only these, get the submission appended.
+AMBIGUOUS = {"enUS (realm root)", "WDB", "(root)"}
+
+
+# Path segments that are our own filing, not anybody's submission: the inbox
+# tidy bucket and the year-month folders inside it.
+TIDY = re.compile(r"^(?:archive|\d{4}-\d{2})$")
+
+
+def submission_segment(rel):
+    """The first segment of a relative path that names a submission.
+
+    Skipping the tidy bucket matters for more than tidiness. The same upload is
+    reachable both as `<stem>/enUS/itemcache.wdb` under the extract directory
+    and as `archive/2026-09/<stem>/enUS/itemcache.wdb` once the inbox has been
+    swept, and the two must produce the same answer -- otherwise a file's group
+    changes depending on which path the walk happened to reach it by.
+    """
+    for seg in rel.split("/")[:-1]:
+        if not TIDY.match(seg):
+            return seg
+    return ""
+
+
+def qualify(grp, submission):
+    """Keep two submissions apart when their folder name cannot.
+
+    Everyone who zips from above the realm folder produces the same group name,
+    and thirteen separate submissions currently share `enUS (realm root)`. That
+    matters because the mode is recovered by fingerprinting, and merge.py
+    records one verdict PER GROUP -- so a confident identification of one
+    upload would be applied to all thirteen, labelling twelve other people's
+    caches with a mode nobody measured.
+
+    Appending the submission makes each one its own provenance unit, so each is
+    identified on its own evidence or stays honestly unknown. Groups that name
+    a realm and mode are left alone: their name is already the answer.
+    """
+    return f"{grp} [{submission}]" if grp in AMBIGUOUS and submission else grp
+
+
+def group_of(path):
+    """The provenance group for one .wdb -- the single source of truth.
+
+    merge.py used to work this out for itself with its own copy of the rule.
+    The two then had to be changed together, and when only one was, the group
+    names in the ledger and the group names in the merge store silently stopped
+    matching: the merge saw an unchanged set of keys and did nothing at all.
+    One rule, called from both places, so that cannot happen again.
+    """
+    return label_for(path)[1]
+
+
 def label_for(path):
     """Return (provenance_label, group). Group = the realm/character folder that
     directly contains the wdb (the meaningful unit), collapsing the generic 'enUS'
-    container and '(root)' loose drops."""
+    container and '(root)' loose drops, then qualifying those by submission."""
     ap = os.path.abspath(path)
     parent = os.path.basename(os.path.dirname(ap))
     grp = parent if parent not in ("enUS",) else "enUS (realm root)"
     ex = os.path.abspath(EXTRACT)
     if ap.startswith(ex):
         rel = os.path.relpath(ap, ex).replace("\\", "/")
-        return "archive:" + rel, grp
+        return "archive:" + rel, qualify(grp, submission_segment(rel))
     for root in SCAN_ROOTS:
         ra = os.path.abspath(root)
         if ap.startswith(ra):
             rel = os.path.relpath(ap, ra).replace("\\", "/")
+            # A bare file at the scan root has no containing submission to name,
+            # so it gets no qualifier -- one per file would be fragmentation,
+            # not provenance.
             if "/" not in rel: grp = "(root)"
-            return "loose:" + rel, grp
+            return "loose:" + rel, qualify(grp, submission_segment(rel))
     return ap.replace("\\", "/"), grp
 
 def scan():
@@ -184,6 +242,13 @@ def scan():
                 if h in ledger:
                     srcs = ledger[h]["sources"]
                     if lbl not in srcs: srcs.append(lbl)
+                    # Entries filed before submissions were kept apart still
+                    # carry the bare ambiguous label.  Upgrade in place, and
+                    # only ever in that direction: a file can be seen at more
+                    # than one path, and letting the group change freely would
+                    # make it flip between runs.
+                    if ledger[h].get("group") in AMBIGUOUS and grp not in AMBIGUOUS:
+                        ledger[h]["group"] = grp
                     continue
                 info = wdblib.inspect(p.replace("\\", "/"))
                 ledger[h] = {

@@ -325,6 +325,7 @@ def write_file_guide(out, stats):
         L += [head, "", f"*Stored from:* `{opcode}`", "", what, "",
               f"**Not in this file:** {notnot}", ""]
     L += lua_guide_section()
+    L += catalogue_guide_section()
     L += ["## Everything is gzipped\n",
           "Every data file here ends in `.gz`. That is not a preference — uncompressed",
           "this dataset is about 756 MB and its largest single file is a 254 MB",
@@ -356,7 +357,9 @@ def write_file_guide(out, stats):
           "| `raw/*.index.tsv.gz` | one row per stored record with its sha1 and provenance | "
           "text editor, after unpacking |",
           "| `sources.tsv` | every submitted file: realm, mode, capture date, counts | "
-          "text editor (this one is not compressed) |\n",
+          "text editor (this one is not compressed) |",
+          "| `catalogue/*.tsv` | objects and creatures observed in the world | "
+          "text editor, Excel (not compressed either) |\n",
           "The `.wdb` files are the ones to use if you just want a better cache. The TSVs",
           "are for importing into a database. The `raw/` packs are for writing your own",
           "decoder without having to re-collect anything.\n"]
@@ -365,6 +368,53 @@ def write_file_guide(out, stats):
           "| `lua/AIO_Client.lua` | addon SavedVariables, plain Lua | a text editor |\n"]
     with open(f"{out}/FILE-GUIDE.md", "w", encoding="utf-8", newline="\n") as f:
         f.write("\n".join(L) + "\n")
+
+
+def catalogue_guide_section():
+    """The `catalogue/` files are the only part of this dataset that is an
+    observation rather than a recording, and a reader has to be told that
+    before they build on it. Everything else here is bytes a server sent to a
+    client; these are notes a player took while walking around."""
+    d = os.path.join(config.OUT, "catalogue")
+    if not os.path.isdir(d):
+        return []
+    rows, ids = {}, {}
+    for name in ("gameobjects", "creatures"):
+        p = os.path.join(d, name + ".tsv")
+        if os.path.exists(p):
+            with io.open(p, encoding="utf-8") as f:
+                next(f, None)
+                ids[name] = {ln.split("\t", 1)[0] for ln in f if ln.strip()}
+            rows[name] = len(ids[name])
+    if not rows:
+        return []
+    # Measured, not remembered: the overlap is the proof that these two id
+    # spaces must stay apart, so it must not be a number that can go stale.
+    both = len(ids.get("gameobjects", set()) & ids.get("creatures", set()))
+    L = ["## The world catalogue (`catalogue/`)\n",
+         "Plain tab-separated lists of **things that exist in the world**: "
+         f"{rows.get('gameobjects', 0):,} objects and "
+         f"{rows.get('creatures', 0):,} creatures, each with one example",
+         "position, how many separate uploads saw it, and every zone it turned",
+         "up in.\n",
+         "These did not come from anybody's cache. Players walked the world with",
+         "a dump addon running and sent in what it wrote, which makes this the",
+         "one part of the dataset that is an *observation* rather than a",
+         "recording of what a server said.\n",
+         "> **It is a catalogue, not a spawn table.** Only the first sighting of",
+         "> each object was recorded, common props like trees and chairs were",
+         "> filtered out before it ever reached us, some of the dumps are",
+         "> partial, and it is a snapshot that predates the newer zones. Load it",
+         "> into a `gameobject` table and you will get a world that is mostly",
+         "> empty and confidently wrong. `catalogue/README.md` gives the full",
+         "> list of what it can and cannot tell you.\n",
+         "> Objects and creatures are **separate id spaces** and are kept in",
+         "> separate files. Creature 1622 and GameObject 1622 are unrelated",
+         f"> things; {both} ids exist in both.\n",
+         "These two are not gzipped, for the same reason `sources.tsv` is not:",
+         "they are small enough to open, grep and read without unpacking",
+         "anything.\n"]
+    return L
 
 
 def lua_guide_section():
