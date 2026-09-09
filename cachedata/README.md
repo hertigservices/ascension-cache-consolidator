@@ -1,6 +1,6 @@
 # Ascension client cache — merged dataset
 
-_Merged from 825 distinct submitted cache files, the newest captured 2026-09-09._
+_Merged from 856 distinct submitted cache files, the newest captured 2026-09-09._
 
 Community-submitted `Cache\WDB` folders from the Ascension WoW client, merged
 at the **record** level. Identical records collapse to one row no matter how
@@ -34,13 +34,13 @@ independent submissions corroborate it.
 
 | cache | distinct records | union entries |
 |---|---:|---:|
-| creaturecache | 22,707 | 21,189 |
-| gameobjectcache | 14,571 | 14,480 |
-| itemcache | 587,021 | 551,803 |
-| itemnamecache | 2,680 | 2,675 |
-| npccache | 1,968 | 1,946 |
+| creaturecache | 26,393 | 22,567 |
+| gameobjectcache | 15,662 | 15,497 |
+| itemcache | 642,435 | 551,983 |
+| itemnamecache | 2,934 | 2,905 |
+| npccache | 2,008 | 1,978 |
 | pagetextcache | 220 | 220 |
-| questcache | 20,760 | 18,552 |
+| questcache | 21,383 | 18,553 |
 
 ## Game modes
 
@@ -49,14 +49,14 @@ independent submissions corroborate it.
 | `coa-alpha` | conquest-of-azeroth | 1,359 | 1,400 | 0 | 0 | 54 | 1 | 119 |
 | `coa-beta` | conquest-of-azeroth | 3,406 | 3,121 | 13,931 | 39 | 225 | 11 | 558 |
 | `conquest-of-azeroth` | conquest-of-azeroth | 16,799 | 12,225 | 77,373 | 2,165 | 1,532 | 196 | 3,144 |
-| `free-pick` | free-pick | 5,722 | 5,193 | 30,533 | 370 | 268 | 7 | 821 |
+| `free-pick` | free-pick | 6,083 | 5,213 | 33,746 | 701 | 268 | 7 | 831 |
 | `live-qa` | free-pick | 0 | 0 | 398 | 0 | 0 | 0 | 210 |
 | `season-10-freepick` | free-pick | 11,896 | 8,533 | 548,845 | 631 | 393 | 27 | 18,552 |
 | `season-10-wildcard` | wildcard | 4,993 | 3,424 | 24,002 | 243 | 248 | 8 | 567 |
-| `season-9` | season-9 | 5,169 | 5,009 | 19,848 | 459 | 213 | 3 | 478 |
+| `season-9` | season-9 | 8,484 | 7,448 | 36,327 | 818 | 283 | 3 | 962 |
 | `stress-test` | stress-test | 1,603 | 1,013 | 9,553 | 87 | 33 | 2 | 172 |
 | `unknown` | unknown | 2,989 | 2,039 | 65 | 19 | 176 | 0 | 445 |
-| `warcraft-reborn` | warcraft-reborn | 3,402 | 2,648 | 39,189 | 750 | 147 | 9 | 443 |
+| `warcraft-reborn` | warcraft-reborn | 5,126 | 3,851 | 47,032 | 824 | 223 | 15 | 688 |
 
 ### `unknown` is not a game mode
 
