@@ -51,6 +51,14 @@ MODE_TABLE = {
     "Stress Test":         ("stress-test",         "stress-test",         ""),
     "Development":         ("development",         "conquest-of-azeroth", ""),
     "Live QA":             ("live-qa",             "free-pick",           ""),
+    # CoA's pre-release realms.  Same family as live CoA -- it is the same
+    # ruleset -- but a separate slug on purpose: a beta item is not evidence
+    # about the live one, and folding them would hide the retunes between them.
+    "CoA Beta":            ("coa-beta",            "conquest-of-azeroth", ""),
+    "CoA Alpha - Development": ("coa-alpha",       "conquest-of-azeroth", ""),
+    # A public test realm exists to carry values that differ from live, so it is
+    # its own mode.  Folding it into CoA would corrupt both directions at once.
+    "CoA PTR":             ("coa-ptr",             "conquest-of-azeroth", ""),
     UNKNOWN:               (UNKNOWN,               UNKNOWN,               ""),
 }
 

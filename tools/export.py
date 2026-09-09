@@ -18,8 +18,20 @@ Three views over the same merged records, because they answer different question
 
 Winner rule within a view: newest last_captured, ties broken on sha1 so output is
 stable.  Losing variants are never deleted -- they stay in raw/ and in the index.
+
+EVERYTHING BULKY IS GZIPPED
+---------------------------
+Uncompressed this dataset is ~756 MB and its largest single file is a 254 MB
+itemcache -- GitHub warns over 50 MB and hard-rejects over 100 MB, so it simply
+could not be published.  Gzipped it is ~104 MB with nothing over 16 MB, and the
+reader needs no tooling we do not already ship: `gzip -d`, any language's
+standard library, or `tools/unpack.py`, which also drops a mode's caches
+straight into a client cache folder.
+
+mtime=0 on every write, because gzip otherwise stamps the clock into its header
+and an unchanged rebuild would then show up as a diff in every single file.
 """
-import os, sys, gzip, json, struct, time, collections
+import os, io, sys, gzip, json, struct, time, contextlib, collections
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import wdblib, modes, merge, scrub, config
@@ -52,6 +64,33 @@ DECODERS = {
 }
 
 PROV = ["_modes", "_captured", "_sources"]
+
+GZ = ".gz"
+
+
+def write_gz(path, data):
+    """Write bytes to a deterministic gzip file. `path` already ends in .gz."""
+    os.makedirs(os.path.dirname(path), exist_ok=True)
+    with gzip.GzipFile(path, "wb", 9, mtime=0) as g:
+        g.write(data)
+    return path
+
+
+@contextlib.contextmanager
+def gz_text(path):
+    """Text writer onto a deterministic gzip file, streaming.
+
+    Streaming rather than building the whole view and then compressing it: the
+    union itemcache view alone is over 100 MB of text.
+    """
+    os.makedirs(os.path.dirname(path), exist_ok=True)
+    with gzip.GzipFile(path, "wb", 9, mtime=0) as g:
+        w = io.TextIOWrapper(g, encoding="utf-8", newline="\n")
+        try:
+            yield w
+        finally:
+            w.flush()
+            w.detach()          # the GzipFile context manager closes it
 
 # Plain-language purpose of every cache file, for someone arriving with no context.
 # (opcode the client stored, what the file is for, what it does NOT contain)
@@ -140,9 +179,8 @@ def write_view(path, cache, winners, note_cols=True):
     and is counted, not silently written."""
     fn, cols = DECODERS[cache]
     allcols = list(cols) + (PROV if note_cols else [])
-    os.makedirs(os.path.dirname(path), exist_ok=True)
     bad = inexact = 0
-    with open(path, "w", encoding="utf-8", newline="\n") as f:
+    with gz_text(path + GZ) as f:
         f.write("\t".join(allcols) + "\n")
         for entry in sorted(winners):
             sha1, r, payload = winners[entry]
@@ -164,6 +202,34 @@ def write_view(path, cache, winners, note_cols=True):
     return len(winners), bad, inexact
 
 
+def prune(root, keep, protect=()):
+    """Delete anything under `root` this run did not write.
+
+    Output directories are per game mode, and a mode can stop existing -- a
+    folder that used to classify as `unknown` gets a real label, or a submission
+    is withdrawn.  Without this the old directory survives forever and we publish
+    a mode the current data does not support, holding records that are now filed
+    correctly somewhere else.  A reader has no way to tell the stale copy from
+    the live one, so it has to go.
+    """
+    if not os.path.isdir(root):
+        return []
+    removed = []
+    keep = {os.path.normcase(os.path.abspath(p)) for p in keep}
+    protect = {os.path.normcase(p) for p in protect}
+    for dp, _dirs, files in os.walk(root, topdown=False):
+        for fn in files:
+            if os.path.normcase(fn) in protect:
+                continue
+            p = os.path.join(dp, fn)
+            if os.path.normcase(os.path.abspath(p)) not in keep:
+                os.remove(p)
+                removed.append(os.path.relpath(p, root).replace("\\", "/"))
+        if dp != root and not os.listdir(dp):
+            os.rmdir(dp)
+    return removed
+
+
 def main():
     t0 = time.time()
     os.makedirs(OUT, exist_ok=True)
@@ -175,6 +241,7 @@ def main():
     slugs = sorted({s["slug"] for s in srcs if s["slug"] and s["records"] != "0"})
     stats = collections.defaultdict(dict)      # cache -> view -> (rows, bad)
     mode_rows = collections.defaultdict(dict)  # slug -> cache -> rows
+    written = []                               # every path this run produced
 
     for cache in caches:
         recs = load_cache(cache)
@@ -183,29 +250,29 @@ def main():
         # ---- union -----------------------------------------------------------
         w = pick_winners(recs)
         stats[cache]["union"] = write_view(f"{OUT}/union/{cache}.tsv", cache, w)
+        written.append(f"{OUT}/union/{cache}.tsv{GZ}")
         # ---- per mode --------------------------------------------------------
         for slug in slugs:
             wm = pick_winners(recs, mode=slug)
             if not wm:
                 continue
             write_view(f"{OUT}/by-mode/{slug}/{cache}.tsv", cache, wm)
+            written.append(f"{OUT}/by-mode/{slug}/{cache}.tsv{GZ}")
             mode_rows[slug][cache] = len(wm)
         # ---- raw, deterministic ---------------------------------------------
         os.makedirs(f"{OUT}/raw", exist_ok=True)
         buf = bytearray()
         for entry, sha1, r, payload in recs:      # already sorted (entry, sha1)
             buf += struct.pack("<II", entry, len(payload)) + payload
-        # mtime=0 so an unchanged store gzips to an identical file (no git churn)
-        with gzip.GzipFile(f"{OUT}/raw/{cache}.pack.gz", "wb", 9, mtime=0) as g:
-            g.write(bytes(buf))
-        merge.write_tsv(f"{OUT}/raw/{cache}.index.tsv",
-                        ["entry", "sha1", "size", "modes", "first_captured",
-                         "last_captured", "n_sources"],
-                        [{"entry": e, "sha1": s, "size": r["size"],
-                          "modes": r["modes"], "first_captured": r["first_captured"],
-                          "last_captured": r["last_captured"],
-                          "n_sources": len(r["srcs"].split(","))}
-                         for e, s, r, _p in recs])
+        write_gz(f"{OUT}/raw/{cache}.pack.gz", bytes(buf))
+        with gz_text(f"{OUT}/raw/{cache}.index.tsv{GZ}") as f:
+            f.write("\t".join(["entry", "sha1", "size", "modes", "first_captured",
+                                "last_captured", "n_sources"]) + "\n")
+            for e, s, r, _p in recs:
+                f.write(f"{e}\t{s}\t{r['size']}\t{r['modes']}\t"
+                        f"{r['first_captured']}\t{r['last_captured']}\t"
+                        f"{len(r['srcs'].split(','))}\n")
+        written += [f"{OUT}/raw/{cache}.pack.gz", f"{OUT}/raw/{cache}.index.tsv{GZ}"]
         stats[cache]["records"] = len(recs)
         rows, bad, inexact = stats[cache]["union"]
         flag = "" if not (bad or inexact) else f"  !! {bad} failed, {inexact} inexact"
@@ -226,6 +293,10 @@ def main():
     merge.write_tsv(f"{OUT}/sources.tsv", merge.SRC_COLS, pub_srcs)
     write_docs(OUT, caches, slugs, stats, mode_rows, srcs)
     write_file_guide(OUT, stats)
+
+    for root in (f"{OUT}/by-mode", f"{OUT}/union", f"{OUT}/raw"):
+        for gone in prune(root, written):
+            print(f"  pruned stale {os.path.basename(root)}/{gone}")
     print(f"\nexported -> {OUT}  ({time.time()-t0:.0f}s)")
 
 
@@ -254,20 +325,38 @@ def write_file_guide(out, stats):
         L += [head, "", f"*Stored from:* `{opcode}`", "", what, "",
               f"**Not in this file:** {notnot}", ""]
     L += lua_guide_section()
-    L += ["## File formats in this repository\n",
+    L += ["## Everything is gzipped\n",
+          "Every data file here ends in `.gz`. That is not a preference — uncompressed",
+          "this dataset is about 756 MB and its largest single file is a 254 MB",
+          "itemcache, and GitHub refuses to store any file over 100 MB. Compressed the",
+          "whole thing is about 104 MB.\n",
+          "Gzip is not an archive format like `.zip`; each `.gz` holds exactly one file,",
+          "so `itemcache.wdb.gz` unpacks to `itemcache.wdb` and nothing else. Open one",
+          "with 7-Zip, with `gunzip file.gz` on Mac or Linux, or straight from code",
+          "(`gzip.open` in Python, `zcat` in a shell pipeline) without unpacking at all.\n",
+          "To put a mode's caches into your own game, use the tool in this repository:\n",
+          "```",
+          "python tools/unpack.py                          list what is here",
+          "python tools/unpack.py --mode <mode>            unpack one mode",
+          "python tools/unpack.py --mode <mode> --into DIR ...into your cache folder",
+          "```\n",
+          "It refuses to overwrite an existing cache unless you pass `--force`, and keeps",
+          "a `.bak` when it does. Your own cache is the only record of what your realm",
+          "told your client, so it is not ours to discard.\n",
+          "## File formats in this repository\n",
           "| file | format | read it with |",
           "|---|---|---|",
-          "| `wdb/<mode>/*.wdb` | the client's own binary cache format | the game client, "
-          "or any WDB reader |",
-          "| `by-mode/<mode>/*.tsv` | tab-separated text, one row per entry | Excel, "
-          "`pandas`, `LOAD DATA INFILE` |",
-          "| `union/*.tsv` | same, widest coverage across all modes | as above |",
-          "| `raw/*.pack.gz` | gzipped `[entry u32][size u32][payload]` records | any "
+          "| `wdb/<mode>/*.wdb.gz` | the client's own binary cache format | `tools/unpack.py`, "
+          "then the game client |",
+          "| `by-mode/<mode>/*.tsv.gz` | tab-separated text, one row per entry | Excel, "
+          "`pandas` (reads `.gz` directly), `LOAD DATA INFILE` |",
+          "| `union/*.tsv.gz` | same, widest coverage across all modes | as above |",
+          "| `raw/*.pack.gz` | `[entry u32][size u32][payload]` records | any "
           "language; no header to skip |",
-          "| `raw/*.index.tsv` | one row per stored record with its sha1 and provenance | "
-          "text editor |",
+          "| `raw/*.index.tsv.gz` | one row per stored record with its sha1 and provenance | "
+          "text editor, after unpacking |",
           "| `sources.tsv` | every submitted file: realm, mode, capture date, counts | "
-          "text editor |\n",
+          "text editor (this one is not compressed) |\n",
           "The `.wdb` files are the ones to use if you just want a better cache. The TSVs",
           "are for importing into a database. The `raw/` packs are for writing your own",
           "decoder without having to re-collect anything.\n"]
@@ -347,8 +436,8 @@ def write_docs(out, caches, slugs, stats, mode_rows, srcs):
         if s["slug"]:
             fam[s["slug"]] = modes.MODE_TABLE.get(s["mode"], (s["slug"], s["slug"], ""))[1]
     L = ["# Ascension client cache — merged dataset\n",
-         f"_Regenerated {time.strftime('%Y-%m-%d %H:%M')} from "
-         f"{len({s['sha256'] for s in srcs})} distinct submitted cache files._\n",
+         f"_Merged from {len({s['sha256'] for s in srcs})} distinct submitted cache "
+         f"files, the newest captured {max((s['captured'] for s in srcs), default='?')[:10]}._\n",
          "Community-submitted `Cache\\WDB` folders from the Ascension WoW client, merged",
          "at the **record** level. Identical records collapse to one row no matter how",
          "many people submitted them; genuinely different records for the same entry are",
@@ -357,11 +446,18 @@ def write_docs(out, caches, slugs, stats, mode_rows, srcs):
          "## Layout\n",
          "| path | what it is |",
          "|---|---|",
-         "| `by-mode/<mode>/<cache>.tsv` | what a client on that mode was sent. **Use this for values.** |",
-         "| `union/<cache>.tsv` | widest coverage, newest capture wins. Use for existence, not stats. |",
+         "| `wdb/<mode>/<cache>.wdb.gz` | merged caches in the client's own format. Drop them into your game. |",
+         "| `by-mode/<mode>/<cache>.tsv.gz` | what a client on that mode was sent. **Use this for values.** |",
+         "| `union/<cache>.tsv.gz` | widest coverage, newest capture wins. Use for existence, not stats. |",
          "| `raw/<cache>.pack.gz` | lossless payloads, `[entry u32][size u32][payload]`. |",
-         "| `raw/<cache>.index.tsv` | per record: sha1, size, modes, capture dates, corroboration count. |",
-         "| `sources.tsv` | every submitted file: realm, mode, capture date, record count. |\n",
+         "| `raw/<cache>.index.tsv.gz` | per record: sha1, size, modes, capture dates, corroboration count. |",
+         "| `sources.tsv` | every submitted file: realm, mode, capture date, record count. |",
+         "| `lua/` | merged addon SavedVariables, and the server-pushed UI code. |\n",
+         "**The data files are gzipped.** Uncompressed this dataset is ~756 MB and its",
+         "largest file is a 254 MB itemcache; GitHub rejects anything over 100 MB. Each",
+         "`.gz` holds one file — open it with 7-Zip, `gunzip`, or directly from code.",
+         "`python tools/unpack.py --mode <mode> --into <your cache folder>` does the",
+         "whole job for a game mode, without overwriting the cache you already have.\n",
          "`_modes` / `_captured` / `_sources` columns on each row carry provenance:",
          "which modes produced that exact record, its newest capture date, and how many",
          "independent submissions corroborate it.\n",
@@ -376,6 +472,13 @@ def write_docs(out, caches, slugs, stats, mode_rows, srcs):
     for slug in slugs:
         row = " | ".join(f"{mode_rows[slug].get(c, 0):,}" for c in caches)
         L.append(f"| `{slug}` | {fam.get(slug, slug)} | {row} |")
+    L += ["", "### `unknown` is not a game mode\n",
+          "It is the records we could not attribute: submissions that arrived without a",
+          "realm folder, and whose contents do not identify one. Creature, gameobject",
+          "and NPC records score identically against every mode we have measured --",
+          "which is exactly why they cannot identify one -- so those are safe to use",
+          "anywhere. Quest text can and does differ between modes, so treat",
+          "`unknown/questcache` as a starting point rather than an authority.\n"]
     L += ["", "`free-pick`, `season-10-freepick` and `live-qa` are the same ruleset in",
           "different seasons — compare them, don't assume they agree; the item tuning",
           "genuinely changed between seasons.\n",

@@ -16,8 +16,13 @@ and git sees no diff.
 
 Every file written is re-parsed and compared payload-by-payload against what went in;
 a mismatch is a hard failure, not a warning.
+
+They are published gzipped -- see export.py; the merged season-10-freepick
+itemcache alone is 254 MB, past GitHub's hard limit.  The gzip is verified to
+decompress back to the exact bytes that were verified as a cache, so the two
+proofs meet: what the reader unpacks is what we parsed.
 """
-import os, sys, struct, collections, time
+import os, sys, gzip, struct, collections, time
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import wdblib, merge, export
@@ -44,29 +49,25 @@ def header_for(cache, slug, srcs):
     return None, None
 
 
-def write_wdb(path, header, winners):
-    os.makedirs(os.path.dirname(path), exist_ok=True)
+def build_wdb(header, winners):
+    """The exact bytes a client would find on disk."""
     buf = bytearray(header)
     for entry in sorted(winners):
         _sha1, _r, payload = winners[entry]
         buf += struct.pack("<II", entry, len(payload)) + payload
     buf += b"\x00" * 8                      # terminator the client walks to
-    with open(path, "wb") as f:
-        f.write(bytes(buf))
-    return len(buf)
+    return bytes(buf)
 
 
-def verify(path, winners):
-    """Re-parse what we just wrote and compare every payload. Returns (ok, detail)."""
-    info = wdblib.inspect(path)
+def verify(b, winners, path="<memory>"):
+    """Re-parse what we just built and compare every payload. Returns (ok, detail)."""
+    info = wdblib.inspect(path, data=b)
     if not info.standard:
         return False, "header not recognised after write"
     if info.records != len(winners):
         return False, f"record count {info.records} != {len(winners)}"
     if not info.clean_end:
         return False, "no clean terminator"
-    with open(path, "rb") as f:
-        b = f.read()
     for entry, size, payload in wdblib.iter_records(b):
         want = winners.get(entry)
         if want is None:
@@ -85,6 +86,7 @@ def main():
 
     built = collections.defaultdict(dict)
     failures = []
+    written = []
     for cache in caches:
         recs = export.load_cache(cache)
         if not recs:
@@ -97,18 +99,28 @@ def main():
             if header is None:
                 failures.append(f"{slug}/{cache}: no header donor")
                 continue
-            p = f"{OUT}/{slug}/{cache}.wdb"
-            size = write_wdb(p, header, w)
-            ok, detail = verify(p, w)
+            p = f"{OUT}/{slug}/{cache}.wdb.gz"
+            data = build_wdb(header, w)
+            export.write_gz(p, data)
+            written.append(p)
+            ok, detail = verify(data, w, p)
+            if ok:
+                # The compression is the new failure mode this packaging adds, so
+                # prove it rather than trusting it: what unpacks must be the exact
+                # bytes that just passed the cache check.
+                with gzip.open(p, "rb") as g:
+                    if g.read() != data:
+                        ok, detail = False, "gzip did not round-trip to the same bytes"
             if not ok:
                 failures.append(f"{slug}/{cache}: {detail}")
-            built[slug][cache] = (len(w), size, ok)
+            built[slug][cache] = (len(w), len(data), os.path.getsize(p), ok)
 
-    print(f"{'mode':<22}{'cache':<18}{'entries':>9}{'size':>12}  verified")
+    print(f"{'mode':<22}{'cache':<18}{'entries':>9}{'cache bytes':>14}"
+          f"{'.gz':>12}  verified")
     for slug in sorted(built):
         for cache in sorted(built[slug]):
-            n, size, ok = built[slug][cache]
-            print(f"{slug:<22}{cache:<18}{n:>9}{size:>12,}  "
+            n, size, gz, ok = built[slug][cache]
+            print(f"{slug:<22}{cache:<18}{n:>9}{size:>14,}{gz:>12,}  "
                   f"{'OK' if ok else 'FAILED'}")
     if failures:
         print("\nFAILURES:")
@@ -118,15 +130,26 @@ def main():
         print("\nall rebuilt caches re-parsed and matched payload-for-payload")
 
     write_readme(built)
+    # A mode that no longer exists must not leave a stale .wdb behind: it would
+    # look exactly like a current one and hand someone a cache we cannot vouch
+    # for.  README.md is this run's own output, so it is protected.
+    for gone in export.prune(OUT, written, protect=("README.md",)):
+        print(f"  pruned stale wdb/{gone}")
     print(f"\nwdb -> {OUT}  ({time.time()-t0:.0f}s)")
 
 
 def write_readme(built):
     L = ["# Merged client caches (.wdb)\n",
-         "One folder per game mode. Each `.wdb` is the union of every record that mode",
+         "One folder per game mode. Each file is the union of every record that mode",
          "has produced across all submitted caches, in the client's own format.\n",
          "## Using them\n",
-         "Copy the files into your own cache folder:\n",
+         "They are stored gzipped, because the largest is 254 MB uncompressed and",
+         "GitHub refuses any file over 100 MB. Unpack a mode straight into your own",
+         "cache folder with the tool in this repository:\n",
+         "```",
+         "python tools/unpack.py --mode <mode> --into \"C:/.../WDB/enUS/<Your Realm> - <Mode>\"",
+         "```\n",
+         "Or do it by hand — `gunzip` each file, then copy it into:\n",
          "```",
          "World of Warcraft\\Cache\\WDB\\enUS\\<Your Realm> - <Mode>\\",
          "```\n",
@@ -144,6 +167,11 @@ def write_readme(built):
         L.append(f"| `{slug}` | " +
                  " | ".join(f"{built[slug][c][0]:,}" if c in built[slug] else "—"
                             for c in allc) + " |")
+    L += ["", "Counts are entries, not file sizes; the files on disk are `.wdb.gz`.\n",
+          "`unknown` is not a game mode. It is what arrived with no realm folder and",
+          "could not be identified from its contents -- creature, gameobject and NPC",
+          "records look the same in every mode, which is precisely why they cannot",
+          "name one. Those are safe to use anywhere; its quest text may not be."]
     L += ["", "`itemtextcache` is deliberately never published: it holds the text of mail",
           "and letters the player read, which is other people's writing, not game data.\n"]
     with open(f"{OUT}/README.md", "w", encoding="utf-8", newline="\n") as f:

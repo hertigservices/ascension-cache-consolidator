@@ -68,10 +68,19 @@ def iter_records(b, header_len=HEADER_LEN):
         yield entry, size, b[off+8:off+8+size]
         off += 8 + size
 
-def inspect(path):
-    """Header-parse a .wdb and count records without loading meaning. Never raises."""
-    with open(path, "rb") as f:
-        b = f.read()
+def inspect(path, data=None):
+    """Header-parse a .wdb and count records without loading meaning. Never raises.
+
+    Pass `data` to inspect bytes already in hand.  A cache that is published
+    gzipped never exists as a plain file on disk, and materialising one just to
+    re-read it would cost a 254 MB round trip through the filesystem for no
+    extra proof; `path` is then only a label for the report.
+    """
+    if data is None:
+        with open(path, "rb") as f:
+            b = f.read()
+    else:
+        b = data
     if len(b) < 12:
         return WdbInfo(path=path, standard=False, note="too small", records=0,
                        payload_bytes=0, magic="", cache="?", label="?", build=0,

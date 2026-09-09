@@ -41,6 +41,11 @@ IDX_COLS = ["entry", "sha1", "size", "offset", "modes", "srcs",
 # fingerprint inference thresholds for submissions zipped from above the realm folder
 INFER_MIN_SHARED = 500
 INFER_MIN_AGREE  = 0.90
+# How far ahead of the runner-up the winner must be to count as an identification
+# rather than a coincidence.  See infer_mode: the caches that cannot distinguish
+# modes score an exact 0.0000% margin, and the cache that can never drops below
+# 0.04%, so anything in between separates the two cleanly.
+INFER_MIN_MARGIN = 0.0001
 
 
 def read_tsv(path, cols):
@@ -114,16 +119,44 @@ def build_profiles(index):
 
 
 def infer_mode(cache, fingerprint, profiles):
-    """fingerprint = {entry: sha1} of one unknown source. Return (slug, agree, shared)."""
-    best = (None, 0.0, 0)
+    """fingerprint = {entry: sha1} of one unknown source.
+
+    Returns (slug, agree, shared, margin), or (None, ...) when this cache cannot
+    tell the modes apart.
+
+    The margin -- how far the winner is ahead of the best rival -- is the whole
+    point.  Agreement alone identifies nothing, because most caches are identical
+    across modes: creatures and gameobjects are not retuned per mode, so every
+    mode scores 100% and the "winner" is just whichever profile happened to
+    overlap most, which is always the largest mode.  Measured over the
+    submissions whose folder name states their mode, creaturecache and
+    gameobjectcache produce a 0.0000% margin every single time, while itemcache
+    is never below 0.04% when it is right.  Items are what a mode actually
+    changes, so items are what can recognise one.
+
+    A tie is therefore not a weak answer to be taken anyway; it is the absence of
+    an answer, and it gets reported as unknown.
+    """
+    scored = []
     for slug, prof in profiles.get(cache, {}).items():
         shared = [e for e in fingerprint if e in prof]
         if len(shared) < INFER_MIN_SHARED:
             continue
         agree = sum(1 for e in shared if fingerprint[e] in prof[e]) / len(shared)
-        if agree > best[1]:
-            best = (slug, agree, len(shared))
-    return best
+        scored.append((agree, len(shared), slug))
+    if not scored:
+        return (None, 0.0, 0, 0.0)
+    scored.sort(reverse=True)
+    agree, shared, slug = scored[0]
+    rival = next((a for a, _n, s in scored[1:] if s != slug), None)
+    if rival is None:
+        # Only one mode has enough overlap to compare against. Nothing contests
+        # the verdict, so treat the whole agreement as the margin.
+        return (slug, agree, shared, agree)
+    margin = agree - rival
+    if margin < INFER_MIN_MARGIN:
+        return (None, agree, shared, margin)
+    return (slug, agree, shared, margin)
 
 
 def load_store():
@@ -196,8 +229,11 @@ def main():
         if row["slug"] != modes.UNKNOWN and key in fingerprints:
             for e, s1 in fingerprints[key].items():
                 profiles[row["cache"]][row["slug"]][e].add(s1)
-    # Infer per GROUP, keeping whichever of its files gives the most evidence, so a
-    # submission with no itemcache is still identified from its creaturecache.
+    # Infer per GROUP, keeping whichever of its files DISCRIMINATES best -- not
+    # whichever has the most entries. A creaturecache overlapping 6,000 entries
+    # is worse evidence than an itemcache overlapping 900, because the creature
+    # records are the same in every mode and the item records are not. Ranking by
+    # evidence size picks the uninformative cache precisely because it is bigger.
     inferred = {}
     for key, row, recs in pending:
         if row["slug"] != modes.UNKNOWN:
@@ -205,20 +241,21 @@ def main():
         fp = fingerprints.get(key)
         if not fp:
             continue
-        slug, agree, shared = infer_mode(row["cache"], fp, profiles)
+        slug, agree, shared, margin = infer_mode(row["cache"], fp, profiles)
         if slug and agree >= INFER_MIN_AGREE:
             prev = inferred.get(row["group"])
-            if prev is None or shared > prev[2]:
-                inferred[row["group"]] = (slug, agree, shared)
+            if prev is None or margin > prev[3]:
+                inferred[row["group"]] = (slug, agree, shared, margin)
     # apply per GROUP, so a group's other files inherit the verdict
     for key, row, recs in pending:
         if row["slug"] == modes.UNKNOWN and row["group"] in inferred:
-            slug, agree, shared = inferred[row["group"]]
+            slug, agree, shared, margin = inferred[row["group"]]
             row["slug"] = slug
             row["mode"] = slug
             row["mode_source"] = f"inferred:{agree:.3f}/{shared}"
-    for g, (slug, agree, shared) in sorted(inferred.items()):
-        print(f"  inferred mode for {g!r}: {slug} ({agree:.1%} over {shared} entries)")
+    for g, (slug, agree, shared, margin) in sorted(inferred.items()):
+        print(f"  inferred mode for {g!r}: {slug} "
+              f"({agree:.1%} over {shared} entries, {margin:.2%} ahead of the next)")
 
     # ---- merge records into the packs -------------------------------------------
     added = collections.Counter(); dup = collections.Counter()

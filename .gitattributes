@@ -1,1 +1,15 @@
 * text=auto eol=lf
+
+# The published caches are binary. `text=auto` would normally detect that, but a
+# .wdb misread as text would have its CRLF bytes rewritten and stop loading in
+# the client -- a corruption nobody would notice until they tried to play. Say so
+# explicitly rather than relying on the guess.
+*.wdb  binary
+*.gz   binary
+*.png  binary
+
+# The .lua and .tsv outputs are written with LF and must arrive that way: the
+# tool re-generates them byte-for-byte, and a checkout that flipped the line
+# endings would show every file as modified on the next run.
+*.lua  text eol=lf
+*.tsv  text eol=lf

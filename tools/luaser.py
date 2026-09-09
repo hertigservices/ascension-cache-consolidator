@@ -132,8 +132,10 @@ class Redacted(str):
 class _Parser:
     def __init__(self, src):
         self._it = _tokens(src)
-        self._tok = next(self._it)
-        self._ahead = next(self._it)
+        # Both must tolerate running out immediately: an empty file yields only
+        # the "eof" token, and priming a two-token buffer from it would raise.
+        self._tok = next(self._it, ("eof", ""))
+        self._ahead = next(self._it, ("eof", ""))
 
     def _next(self):
         t = self._tok
@@ -317,6 +319,42 @@ def dump(globals_dict, path):
 
 
 # -------------------------------------------------------------------- helpers
+
+def to_py(v):
+    """Plain-Python view of a parsed tree: dicts, lists and scalars.
+
+    A table with only an array part becomes a list; otherwise it becomes a dict
+    with the array items folded in under keys 1..n. That is Lua's own view of a
+    table, and it is the shape the database-ingest path consumes.
+
+    The structural `Table` is what the *writer* needs (it has to know which
+    entries were bare array values to put them back that way), so callers that
+    republish should stay on `load`/`loads` and only reach for this when they
+    want data rather than a document.
+    """
+    if isinstance(v, Table):
+        if v.array and not v.hash:
+            return [to_py(x) for x in v.array]
+        out = {k: to_py(x) for k, x in v.hash.items()}
+        for i, x in enumerate(v.array, 1):
+            out.setdefault(i, to_py(x))
+        return out
+    return v
+
+
+# Names kept from the parser this one replaced, so its callers did not have to
+# change shape when the two were folded together.
+LuaSVError = LuaError
+
+
+def parse(text):
+    """-> {globalName: plain python} for every top-level assignment."""
+    return {k: to_py(v) for k, v in loads(text).items()}
+
+
+def parse_file(path):
+    return {k: to_py(v) for k, v in load(path).items()}
+
 
 def walk(v, path=()):
     """Yield (path, value) for every leaf, for auditing what a tree contains."""

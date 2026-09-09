@@ -33,6 +33,10 @@ WDB_QUARANTINE = {"itemtextcache", "wowcache"}
 LUA_SCRUB = {
     "mobspells.lua":   "mob ability observations (profileKeys/profiles dropped)",
     "aio_client.lua":  "server-pushed addon code (AIO_sv character state dropped)",
+    "auctionator_price_database.lua":
+        "auction prices per realm and mode (AUCTIONATOR_TOONS dropped)",
+    "gathermate2.lua": "gather node positions by zone (GatherMate2DB profiles dropped)",
+    "coasniff.lua":    "custom client event names and their argument shapes",
 }
 
 EMAIL     = re.compile(r"[\w.+-]+@[\w-]+\.[\w.-]+")

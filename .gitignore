@@ -4,7 +4,7 @@ _inbox/
 extracted/
 merged/
 merged.prev/
-cachedata/
+# cachedata/ is PUBLISHED -- the consolidated data is the point of this repo.
 ledger.json
 MANIFEST.md
 config.json
