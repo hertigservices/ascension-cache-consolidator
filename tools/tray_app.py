@@ -516,9 +516,9 @@ class Watcher(threading.Thread):
             self.app.log("still being written; will look again shortly")
             return
         self.app.prepare_inbox(self.pristine)
-        self.consolidate_and_settle_up(gone)
+        self.consolidate_and_settle_up(gone, now)
 
-    def consolidate_and_settle_up(self, gone):
+    def consolidate_and_settle_up(self, gone, processed):
         rc = self.app.runner.run(self.app.state["push"], "auto-consolidate")
         if rc is None:
             return                      # a manual run holds the lock; try later
@@ -543,6 +543,24 @@ class Watcher(threading.Thread):
         after = inbox_fingerprint()
         for p in gone:
             self.handled.pop(p, None)
+        # Everything this run actually saw, that still has the same size and
+        # mtime it had when the run started, has now been consolidated.
+        #
+        # This line is what stops the watcher looping. The two rules below only
+        # recognise a file once it has been MOVED into archive/ or renamed by
+        # prepare_inbox -- and both of those go through root_files(), which is
+        # files-only. Drop a FOLDER into the inbox and nothing ever moves or
+        # renames it, so none of its contents were ever recorded as handled,
+        # every poll saw them as new, and the whole pipeline ran again on the
+        # same folder for as long as it sat there. Measured: one extracted
+        # submission folder triggered eight full runs in an hour.
+        #
+        # Comparing against the pre-run fingerprint rather than just taking
+        # `after` wholesale keeps the original intent intact: a file that
+        # arrived or changed mid-run does not match and stays looking new.
+        for p, v in processed.items():
+            if after.get(p) == v:
+                self.handled[p] = v
         for p, v in after.items():
             if p not in self.handled and p.replace("\\", "/").startswith("archive/"):
                 self.handled[p] = v     # our own tidy move, not a new arrival
