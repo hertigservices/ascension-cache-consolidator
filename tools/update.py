@@ -17,6 +17,11 @@ import os, sys, subprocess, time
 HERE = os.path.dirname(os.path.abspath(__file__))
 STAGES = [("intake",  "intake.py"),
           ("merge",   "merge.py"),
+          # A .lua submission is a tree whose branches need opposite treatment,
+          # not a flat record list, so it merges in its own stage.  It runs
+          # before export because the file guide describes its output too, and
+          # before the audit so that output is covered by the publish gate.
+          ("lua",     "luamerge.py"),
           ("export",  "export.py"),
           ("rebuild", "rebuild.py"),
           ("audit",   "audit_publish.py")]

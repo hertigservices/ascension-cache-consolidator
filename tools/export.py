@@ -253,6 +253,7 @@ def write_file_guide(out, stats):
             head += f"  — {n:,} distinct records held"
         L += [head, "", f"*Stored from:* `{opcode}`", "", what, "",
               f"**Not in this file:** {notnot}", ""]
+    L += lua_guide_section()
     L += ["## File formats in this repository\n",
           "| file | format | read it with |",
           "|---|---|---|",
@@ -270,8 +271,74 @@ def write_file_guide(out, stats):
           "The `.wdb` files are the ones to use if you just want a better cache. The TSVs",
           "are for importing into a database. The `raw/` packs are for writing your own",
           "decoder without having to re-collect anything.\n"]
+    L += ["| `lua/MobSpells.lua` | addon SavedVariables, plain Lua | a text editor, or "
+          "the addon itself |",
+          "| `lua/AIO_Client.lua` | addon SavedVariables, plain Lua | a text editor |\n"]
     with open(f"{out}/FILE-GUIDE.md", "w", encoding="utf-8", newline="\n") as f:
         f.write("\n".join(L) + "\n")
+
+
+def lua_guide_section():
+    """The `lua/` outputs are not caches, and the difference matters to a reader:
+    they are addon files, they were merged field-by-field rather than record-by-
+    record, and unlike the caches they cannot be split per game mode."""
+    state = {}
+    sp = os.path.join(config.STORE, "lua", "state.json")
+    if os.path.exists(sp):
+        with open(sp, encoding="utf-8") as f:
+            state = json.load(f)
+    if not state.get("mobspells") and not state.get("aio"):
+        return []
+    L = ["## The addon files (`lua/`)\n",
+         "These did not come from `Cache\\WDB`. They are addon **SavedVariables** — the",
+         "file an addon writes when you log out — and they are published in that same",
+         "format, so you can drop one into your account's own SavedVariables folder",
+         "and the addon will read it.\n",
+         "They are merged differently from the caches. A cache record is a fact the",
+         "server stated, so two copies either agree or are separate variants. An addon",
+         "entry is an *accumulator*: `amountMin` is the smallest hit that player ever",
+         "saw. So numeric ranges are widened to cover every submission, observed flags",
+         "are OR'd together, and only identity fields are expected to agree.\n",
+         "> **These cannot be split by game mode.** The client files its caches in a",
+         "> per-mode folder, which is what makes the per-mode `.wdb` sections possible.",
+         "> These addons store one table for the whole account with no record of which",
+         "> realm or mode an observation came from, so the merged file blends them.\n"]
+    ms = state.get("mobspells") or {}
+    if ms:
+        mobs = sum(len(v) for v in ms.values())
+        spells = sum(len(m.get("spells", {})) for v in ms.values() for m in v.values())
+        L += [f"### `lua/MobSpells.lua` — {mobs:,} creatures across {len(ms):,} zones, "
+              f"{spells:,} spell records", "",
+              "What mobs actually cast, and how hard it hit: spell id, damage school,",
+              "the observed damage range, swing speeds, and whether that ability was",
+              "ever seen to crit, miss, get dodged, parried, blocked or resisted.",
+              "",
+              "This is the only data here that was never sent as a query response — it is",
+              "*observed server behaviour*, reconstructed from combat log events, which",
+              "is precisely the part that no cache file can contain.",
+              "",
+              "**Not in this file:** the `profileKeys` and `profiles` branches, which key",
+              "settings by `<Character> - <Realm> - <Mode>`; and the per-record `lastGUID`",
+              "and `lastTime` fields, which name a specific mob instance in a specific",
+              "play session and mean nothing outside it.", ""]
+    aio = state.get("aio") or {}
+    if aio:
+        builds = sum(len(v) for v in aio.values())
+        L += [f"### `lua/AIO_Client.lua` — {len(aio):,} server-pushed addon files"
+              + (f", {builds:,} distinct builds seen" if builds != len(aio) else ""), "",
+              "AIO is the framework Ascension uses to push addon code from the server to",
+              "the client at login; the client caches what it received here. So this is",
+              "the custom UI itself — the source of the panels that do not exist in a",
+              "stock 3.3.5a client.",
+              "",
+              "Entries are keyed by filename and deduplicated on the code's own hash, so",
+              "one entry per distinct build. Where more than one build of a file was",
+              "submitted, `AIO_Client.variants.json` lists them all and the `.lua` carries",
+              "the most corroborated one.",
+              "",
+              "**Not in this file:** the `AIO_sv` branch — action bar layouts and frame",
+              "positions, keyed by character name.", ""]
+    return L
 
 
 def write_docs(out, caches, slugs, stats, mode_rows, srcs):

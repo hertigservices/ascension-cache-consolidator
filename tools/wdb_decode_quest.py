@@ -19,7 +19,9 @@ import os, sys, struct, hashlib
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import wdblib, config
 
-SCAN = [config.EXTRACT] + config.EXTRA_SCAN_ROOTS
+# SCAN_ROOTS, not EXTRA_SCAN_ROOTS: the latter omits _inbox, so a bare .wdb dropped
+# straight in there was ledgered by intake and then silently skipped at decode time.
+SCAN = [config.EXTRACT] + config.SCAN_ROOTS
 OUT_TSV = config.WORK + "/decoded/quest.tsv"
 OUT_REP = config.WORK + "/decoded/quest_report.md"
 

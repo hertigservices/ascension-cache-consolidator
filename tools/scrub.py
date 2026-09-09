@@ -24,10 +24,15 @@ WDB_PUBLISH = {"itemcache", "creaturecache", "gameobjectcache", "questcache",
                "npccache", "pagetextcache", "itemnamecache"}
 WDB_QUARANTINE = {"itemtextcache", "wowcache"}
 
-# Addon saved-variables that are game knowledge rather than player state.
+# Addon saved-variables with a branch of game knowledge in them.  These are
+# SCRUB rather than PUBLISH because the file is a tree and only part of it is
+# publishable: MobSpells keeps its observed mob data but its profileKeys branch
+# is literally "<Character> - <Realm> - <Mode>", and AIO keeps the addon code the
+# server pushed but its AIO_sv branch is hotbars keyed by character name.
+# luamerge.py performs that branch-level scrub; this table only records policy.
 LUA_SCRUB = {
-    "mobspells.lua":   "mob ability observations",
-    "aio_client.lua":  "server-pushed addon code",
+    "mobspells.lua":   "mob ability observations (profileKeys/profiles dropped)",
+    "aio_client.lua":  "server-pushed addon code (AIO_sv character state dropped)",
 }
 
 EMAIL     = re.compile(r"[\w.+-]+@[\w-]+\.[\w.-]+")
@@ -40,7 +45,15 @@ def classify(path):
     """(policy, reason) for one submitted file, from its path and name."""
     p = path.replace("\\", "/")
     low = os.path.basename(p).lower()
+    if low.endswith(".lua.bak"):
+        low = low[:-4]
 
+    # A .lua we have an explicit merge spec for is judged on its own merits even
+    # inside a WTF tree: the merger reads only the named server-data branch and
+    # never the surrounding path, so being filed under an account login does not
+    # make the mob table itself player data.  Everything else in WTF is refused.
+    if low in LUA_SCRUB:
+        return SCRUB, LUA_SCRUB[low]
     if "/wtf/" in p.lower() or p.lower().startswith("wtf/"):
         return QUARANTINE, ("WTF config tree: keyed by account login and character "
                             "name, and carries chat, macros and combat logs")
@@ -53,9 +66,7 @@ def classify(path):
                 return QUARANTINE, "holds the text of mail and letters the player read"
             return QUARANTINE, "undocumented client cache; contents unverified"
         return QUARANTINE, f"unrecognised .wdb ({stem})"
-    if low.endswith(".lua"):
-        if low in LUA_SCRUB:
-            return SCRUB, LUA_SCRUB[low]
+    if low.endswith((".lua", ".lua.bak")):
         return QUARANTINE, "addon saved variables: may hold character state"
     if low.endswith(".json") or low.endswith(".loc"):
         return PUBLISH, "client content data shipped by the server"
