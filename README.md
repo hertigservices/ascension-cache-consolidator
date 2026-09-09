@@ -8,6 +8,9 @@ Built for [Project Ascension](https://ascension.gg)'s 3.3.5a client, where serve
 game data is not public and the client's own cache is the only record of it that
 players hold.
 
+**Have cache files of your own?** See [CONTRIBUTING.md](CONTRIBUTING.md) — `tools/contribute.py` packages a submission from your install, keeps only the
+parts that are game data, and shows you the list before it writes anything.
+
 ## The problem it solves
 
 The client writes a cache record every time the server tells it about something — an
@@ -196,6 +199,12 @@ CLEAN. So it has its own test, `test_audit.py`, with cases it must catch and cas
 must let through — the second list exists because a gate that refuses its own
 documentation gets "fixed" by loosening it, which is how a real leak escapes six months
 later.
+
+The same allow-list runs on the contributor's own machine: `tools/contribute.py` reads
+an install and packages only recognised game content, so a submission never has to
+travel through anyone else's hands carrying a `WTF` tree. [CONTRIBUTING.md](CONTRIBUTING.md)
+explains it without assuming the reader writes code, and gives a by-hand route for
+people who would rather not run a script.
 
 ## Correctness
 
