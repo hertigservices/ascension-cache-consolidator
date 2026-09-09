@@ -59,6 +59,7 @@ WHY IT REFUSES TO RUN ELEVATED
 import ctypes
 import hashlib
 import json
+import io
 import os
 import queue
 import re
@@ -81,6 +82,9 @@ REPO = os.environ.get(
     os.path.join(os.path.dirname(config.WORK), "ascension-cache-consolidator"))
 UPSTREAM_URL = "https://github.com/hertigservices/ascension-cache-consolidator"
 DONE_DIR = os.path.join(config.INBOX, "archive")
+# Everything the window shows is appended here too, so a run that failed
+# while nobody was watching can still be read back afterwards.
+LOG_PATH = os.path.join(config.WORK, "tray_app.log")
 
 APP_NAME = "Cache Consolidator"
 RUN_KEY = r"Software\Microsoft\Windows\CurrentVersion\Run"
@@ -598,9 +602,32 @@ class App(object):
     # ---- logging (safe from any thread) ------------------------------
 
     def log(self, line):
+        """Put a line in the window, and also on disk.
+
+        The window is the only place a run has ever reported itself, which
+        is fine while somebody is watching it and useless afterwards: a run
+        that failed overnight leaves nothing to read in the morning, and a
+        run that is merely slow looks exactly like one that died. The file
+        answers both, after the fact.
+
+        It is opened and closed per line rather than held open. This is a
+        few lines a minute, so the cost is nothing, and a held handle would
+        lose its buffered tail the moment the app was killed -- which is
+        exactly the case the log exists for.
+        """
         stamp = time.strftime("%H:%M:%S")
-        for part in str(line).split("\n"):
-            self.logq.put("" if not part.strip() else "%s  %s" % (stamp, part))
+        parts = [("" if not p.strip() else "%s  %s" % (stamp, p))
+                 for p in str(line).split("\n")]
+        for part in parts:
+            self.logq.put(part)
+        try:
+            day = time.strftime("%Y-%m-%d")
+            with io.open(LOG_PATH, "a", encoding="utf-8",
+                         errors="replace") as f:
+                for part in parts:
+                    f.write((day + " " + part if part else "") + "\n")
+        except Exception:
+            pass    # a log that cannot be written must never stop a run
 
     # ---- filing ------------------------------------------------------
 

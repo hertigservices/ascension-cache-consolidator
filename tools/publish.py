@@ -71,7 +71,10 @@ def stream(cmd, cwd=None, every=10):
             continue
         tail.append(line)
         del tail[:-40]
-        m = re.match(r"^([A-Za-z][A-Za-z ]+):\s+(\d+)%", line)
+        # The server echoes its own progress back prefixed "remote: ";
+        # strip that before matching or those lines are never thinned,
+        # and on a large push they are the noisiest of the lot.
+        m = re.match(r"^(?:remote:\s*)?([A-Za-z][A-Za-z ]+):\s+(\d+)%", line)
         if m:
             phase, pct = m.group(1), int(m.group(2))
             if pct - last.get(phase, -every) < every and pct != 100:
