@@ -85,6 +85,15 @@ Two things go wrong with the obvious approach:
 
 So the test has to be built to rule both of those out.
 
+> **A realm built from this data can never test it.** This is the version of
+> the first trap that does not announce itself. If a realm's `item_template`
+> was populated from this dataset — or from the same harvest it came from —
+> then its server can answer for *every* id we publish, and no mode and no
+> choice of probe will ever fix that. We measured exactly this case: on one
+> such realm, **0 of 548,845** published items were unknown to the server.
+> Every probe would resolve at step 1, and the honest reading is *Inconclusive*
+> every time. Test against a realm whose database has a different provenance.
+
 ### The design
 
 `python tools/gametest.py` picks two sets of item ids for you:
