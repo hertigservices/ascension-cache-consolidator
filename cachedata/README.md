@@ -1,0 +1,86 @@
+# Ascension client cache — merged dataset
+
+_Merged from 525 distinct submitted cache files, the newest captured 2026-09-09._
+
+Community-submitted `Cache\WDB` folders from the Ascension WoW client, merged
+at the **record** level. Identical records collapse to one row no matter how
+many people submitted them; genuinely different records for the same entry are
+kept as variants rather than overwritten, because Ascension tunes the same
+entry differently per game mode and between patches.
+
+## Layout
+
+| path | what it is |
+|---|---|
+| `wdb/<mode>/<cache>.wdb.gz` | merged caches in the client's own format. Drop them into your game. |
+| `by-mode/<mode>/<cache>.tsv.gz` | what a client on that mode was sent. **Use this for values.** |
+| `union/<cache>.tsv.gz` | widest coverage, newest capture wins. Use for existence, not stats. |
+| `raw/<cache>.pack.gz` | lossless payloads, `[entry u32][size u32][payload]`. |
+| `raw/<cache>.index.tsv.gz` | per record: sha1, size, modes, capture dates, corroboration count. |
+| `sources.tsv` | every submitted file: realm, mode, capture date, record count. |
+| `lua/` | merged addon SavedVariables, and the server-pushed UI code. |
+
+**The data files are gzipped.** Uncompressed this dataset is ~756 MB and its
+largest file is a 254 MB itemcache; GitHub rejects anything over 100 MB. Each
+`.gz` holds one file — open it with 7-Zip, `gunzip`, or directly from code.
+`python tools/unpack.py --mode <mode> --into <your cache folder>` does the
+whole job for a game mode, without overwriting the cache you already have.
+
+`_modes` / `_captured` / `_sources` columns on each row carry provenance:
+which modes produced that exact record, its newest capture date, and how many
+independent submissions corroborate it.
+
+## Coverage per cache type
+
+| cache | distinct records | union entries |
+|---|---:|---:|
+| creaturecache | 20,140 | 18,759 |
+| gameobjectcache | 13,608 | 13,526 |
+| itemcache | 581,614 | 551,644 |
+| itemnamecache | 2,457 | 2,452 |
+| npccache | 1,537 | 1,523 |
+| pagetextcache | 144 | 144 |
+| questcache | 20,240 | 18,552 |
+
+## Game modes
+
+| mode | family | creaturecache | gameobjectcache | itemcache | itemnamecache | npccache | pagetextcache | questcache |
+|---|---|---:|---:|---:|---:|---:|---:|---:|
+| `coa-alpha` | conquest-of-azeroth | 1,359 | 1,400 | 0 | 0 | 54 | 1 | 119 |
+| `coa-beta` | conquest-of-azeroth | 3,392 | 3,120 | 13,385 | 39 | 221 | 11 | 556 |
+| `conquest-of-azeroth` | conquest-of-azeroth | 15,717 | 11,581 | 68,064 | 1,995 | 1,190 | 121 | 2,778 |
+| `free-pick` | free-pick | 2,872 | 2,982 | 22,883 | 256 | 143 | 7 | 413 |
+| `live-qa` | free-pick | 0 | 0 | 398 | 0 | 0 | 0 | 210 |
+| `season-10-freepick` | free-pick | 8,347 | 6,022 | 548,629 | 204 | 92 | 23 | 18,552 |
+| `season-10-wildcard` | wildcard | 4,150 | 3,040 | 19,172 | 158 | 200 | 7 | 455 |
+| `season-9` | season-9 | 5,098 | 4,981 | 19,638 | 449 | 212 | 3 | 406 |
+| `stress-test` | stress-test | 1,003 | 381 | 8,736 | 15 | 19 | 1 | 101 |
+| `unknown` | unknown | 2,968 | 2,037 | 0 | 19 | 176 | 0 | 445 |
+| `warcraft-reborn` | warcraft-reborn | 2,729 | 2,297 | 37,036 | 620 | 118 | 9 | 260 |
+
+### `unknown` is not a game mode
+
+It is the records we could not attribute: submissions that arrived without a
+realm folder, and whose contents do not identify one. Creature, gameobject
+and NPC records score identically against every mode we have measured --
+which is exactly why they cannot identify one -- so those are safe to use
+anywhere. Quest text can and does differ between modes, so treat
+`unknown/questcache` as a starting point rather than an authority.
+
+
+`free-pick`, `season-10-freepick` and `live-qa` are the same ruleset in
+different seasons — compare them, don't assume they agree; the item tuning
+genuinely changed between seasons.
+
+## Caveats
+
+- Capture date is the cache file's mtime: when that player's client last wrote
+  it, an upper bound on record age. There is no per-record timestamp in a WDB.
+- A cache only holds what that player actually looked at, so every submission
+  is a partial view. Coverage grows as more are merged.
+- Submissions zipped from above the realm folder lose their mode. Those are
+  re-identified by payload fingerprint against known-mode data and marked
+  `inferred:<agreement>/<entries compared>` in `sources.tsv`.
+- Strings are decoded UTF-8 first (the client writes UTF-8); a latin1 read
+  mangles every apostrophe and accent.
+
