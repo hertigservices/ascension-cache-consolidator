@@ -290,6 +290,32 @@ def scan_json(node, parts, seen, depth=0):
             scan_json(v, parts + ["[]"], seen, depth + 1)
 
 
+def artifact_keys(o, trail, out, depth=0):
+    """Find keys the published data should not contain at all.
+
+    Every other check here asks whether the data still holds what it should.
+    This asks the opposite, because the opposite happened: the Lua tables these
+    files come from carry an "_array" sidecar beside the real entries, and one
+    of them was published inside advancement.json's entries{} looking exactly
+    like a node -- a list of 3,075 elements whose first element was None.  It
+    went out in a push.  Nothing was watching for a key that should not exist.
+
+    An underscore prefix is the whole rule.  It is crude, and it is free: the
+    published tree contains no such key anywhere today, so it raises nothing
+    until something like this leaks again.
+    """
+    if depth > 20:
+        return
+    if isinstance(o, dict):
+        for k, v in o.items():
+            if isinstance(k, str) and k.startswith("_"):
+                out.append("/".join(trail[-2:] + [k]))
+            artifact_keys(v, trail + [str(k)[:20]], out, depth + 1)
+    elif isinstance(o, list):
+        for v in o:
+            artifact_keys(v, trail, out, depth + 1)
+
+
 def check_json(path, rel, expect, fails, notes, counts):
     try:
         obj = json.loads(read_text(path))
@@ -311,6 +337,17 @@ def check_json(path, rel, expect, fails, notes, counts):
             scan_json(v, ["*"], seen, 1)
     else:
         scan_json(obj, [], seen)
+    art = []
+    artifact_keys(obj, [], art)
+    for where in sorted(set(art)):
+        full = "%s:%s" % (rel, where)
+        why = explained(expect, full)
+        if why:
+            notes.append(("explained", full, "serializer artifact",
+                          " ".join(why.split())))
+        else:
+            fails.append(("ARTIFACT KEY", full,
+                          "a key the published data should not contain"))
     for key, lens in sorted(seen.items()):
         if not key:
             continue
@@ -413,7 +450,7 @@ def main(argv=None):
                   "records counts." % len(fails))
 
     if not fails:
-        print("\nCLEAN: no dead columns, no dead branches, nothing shrank")
+        print("\nCLEAN: no dead columns, no dead branches, no stray keys, nothing shrank")
         return 0
 
     by_kind = collections.defaultdict(list)

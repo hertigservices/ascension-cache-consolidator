@@ -178,6 +178,31 @@ def main():
         fails, _n, _c = run(os.path.join(tmp, "b"), exp)
         check("more rows than the baseline is fine",
               not keyed(fails, "SHRANK"), repr(fails))
+
+        # ---- 9. a serializer artifact published as data ---------------------
+        # This is the one that got out. advancement.json's entries{} carried an
+        # "_array" key holding a list of 3,075 elements whose first element was
+        # None -- Lua table scaffolding sitting where a node should be -- and it
+        # was pushed. Every other check here asks whether the data still holds
+        # what it should; nothing asked whether it holds something it must not.
+        print(chr(10) + "9. serializer scaffolding published as data")
+        os.makedirs(os.path.join(tmp, "f"), exist_ok=True)
+        with io.open(os.path.join(tmp, "f", "adv.json"), "w",
+                     encoding="utf-8") as f:
+            json.dump({"entries": {"101": {"ID": 101, "Name": "Real"},
+                                   "_array": [None, None, None]}}, f)
+        fails, _n, _c = run(os.path.join(tmp, "f"), {})
+        art = keyed(fails, "ARTIFACT KEY")
+        check("the stray key is reported",
+              any("_array" in k for k in art), repr(fails))
+        check("the real entry is not", not any("101" in k for k in art), repr(art))
+        # It has to be explainable like every other finding, or the first
+        # legitimate underscore key turns the gate into something to switch off.
+        exp = {"constant": {"adv.json:entries/_array": "kept on purpose"},
+               "counts": {}}
+        fails, notes, _c = run(os.path.join(tmp, "f"), exp)
+        check("an explained one drops to a note",
+              not keyed(fails, "ARTIFACT KEY"), repr(fails))
     finally:
         shutil.rmtree(tmp, ignore_errors=True)
 
