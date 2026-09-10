@@ -428,6 +428,22 @@ def main(argv=None):
             say(k, msg, 52)
         if len(items) > 25:
             print("  ... and %d more" % (len(items) - 25))
+    if "UNREADABLE" in by_kind:
+        # Every time this has fired for real, the bytes were fine and something
+        # was still writing them -- a second pipeline run, or the tray
+        # publishing while a shell run exported into the same tree.  Corruption
+        # and a half-written file are the same EOFError, so say so here rather
+        # than let the next reader spend an afternoon on a damaged archive that
+        # does not exist.
+        for line in textwrap.wrap(
+                "UNREADABLE usually means SOMETHING IS WRITING THAT FILE RIGHT "
+                "NOW, not that it is damaged: a truncated read and a "
+                "concurrent write are the same error. Check for another "
+                "pipeline or tray run first, then re-test the file once the "
+                "disk is quiet -- publish.py takes a lock to stop exactly that "
+                "overlap, so a run started outside it is the usual culprit.", 72):
+            print("  " + line)
+
     print("\nEach one is either a bug in the decoder or a fact about the game.")
     print("Decide which, fix it or write the reason into %s"
           % os.path.relpath(EXPECT, os.path.dirname(HERE)).replace("\\", "/"))

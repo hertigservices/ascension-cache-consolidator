@@ -121,7 +121,7 @@ def settled(prev):
 
 def consolidate():
     print(f"\n{'='*70}\n== consolidating\n{'='*70}", flush=True)
-    r = subprocess.run([sys.executable, os.path.join(HERE, "update.py")])
+    r = subprocess.run([sys.executable, "-B", os.path.join(HERE, "update.py")])
     return r.returncode == 0
 
 
@@ -195,7 +195,7 @@ def audit():
     for target in targets:
         if not os.path.exists(target):
             continue
-        r = subprocess.run([sys.executable,
+        r = subprocess.run([sys.executable, "-B",
                             os.path.join(HERE, "audit_publish.py"), target])
         ok = ok and r.returncode == 0
     # The other half of the gate. audit_publish asks whether the tree contains
@@ -203,12 +203,12 @@ def audit():
     # supposed to. Both have to pass, because the dataset has already been
     # published once with every vendor price silently zeroed and nothing in
     # here noticed -- see the header of audit_columns.py.
-    r = subprocess.run([sys.executable,
+    r = subprocess.run([sys.executable, "-B",
                         os.path.join(HERE, "audit_columns.py"), DATA])
     ok = ok and r.returncode == 0
     # The gate itself is only worth as much as its own test.
     for t in ("test_audit.py", "test_columns.py"):
-        r = subprocess.run([sys.executable, os.path.join(HERE, t)],
+        r = subprocess.run([sys.executable, "-B", os.path.join(HERE, t)],
                            capture_output=True, text=True)
         if r.returncode != 0:
             print(r.stdout + r.stderr)
@@ -270,7 +270,100 @@ def describe(status):
     return ", ".join(f"{v} {k}" for k, v in sorted(counts.items()))
 
 
+LOCK = os.path.join(config.WORK, "publish.lock")
+
+
+def _pid_alive(pid):
+    """Windows has no kill(pid, 0); ask the task list instead.
+
+    Wrong answers here are not symmetric. Reporting a dead holder as alive
+    wedges publishing until someone deletes a file by hand; reporting a live
+    holder as dead lets two runs collide, which is the thing being prevented.
+    So anything unexpected -- tasklist missing, output unreadable -- is treated
+    as ALIVE and the run backs off.
+    """
+    try:
+        out = subprocess.run(["tasklist", "/FI", "PID eq %d" % pid, "/NH"],
+                             capture_output=True, text=True, timeout=20).stdout
+    except (OSError, subprocess.SubprocessError):
+        return True
+    return str(pid) in out
+
+
+class Lock(object):
+    """One publish at a time, across processes, held from intake to commit.
+
+    tray_app.py already serialises its OWN runs, but that lock lives inside one
+    process, so it says nothing about a publish.py started from a shell -- and
+    on 2026-09-09 those two ran together: two export.py writing the same
+    union/*.tsv.gz, and union/itemcache.tsv.gz read back mid-write as a
+    truncated gzip. It was caught, but by luck of ordering rather than by
+    design, and the failure it can produce is the quiet kind: a second writer
+    that lands between the gate and the commit replaces a file the gate has
+    already blessed with one that is complete, valid, and stale.
+
+    An integrity check cannot see that. Only exclusion can, which is why this
+    is a lock and not another audit.
+    """
+
+    def __enter__(self):
+        me = "%d\n%s\n%s\n" % (os.getpid(), time.strftime("%Y-%m-%d %H:%M:%S"),
+                               " ".join(sys.argv))
+        for attempt in (1, 2):
+            try:
+                fd = os.open(LOCK, os.O_CREAT | os.O_EXCL | os.O_WRONLY)
+                os.write(fd, me.encode("utf-8"))
+                os.close(fd)
+                self.held = True
+                return self
+            except FileExistsError:
+                try:
+                    with io.open(LOCK, encoding="utf-8") as f:
+                        who = f.read().strip().splitlines()
+                except OSError:
+                    who = []
+                pid = int(who[0]) if who and who[0].isdigit() else 0
+                if attempt == 1 and pid and not _pid_alive(pid):
+                    # A killed or crashed run leaves its lock behind. Say so out
+                    # loud -- silently stealing a lock is how a real collision
+                    # gets mistaken for a stale one.
+                    print("publish.lock held by pid %d, which is gone -- "
+                          "taking it over (was: %s)"
+                          % (pid, " | ".join(who[1:]) or "no detail"))
+                    try:
+                        os.unlink(LOCK)
+                    except OSError:
+                        pass
+                    continue
+                print("\n!! another publish is already running -- pid %s, "
+                      "started %s" % (who[0] if who else "?",
+                                      who[1] if len(who) > 1 else "?"))
+                print("   %s" % (who[2] if len(who) > 2 else ""))
+                print("   Refusing to run two at once: they share "
+                      "%s and the repository." % config.OUT)
+                print("   Wait for it to finish, or kill it and retry.")
+                self.held = False
+                return self
+        self.held = False
+        return self
+
+    def __exit__(self, *exc):
+        if self.held:
+            try:
+                os.unlink(LOCK)
+            except OSError:
+                pass
+        return False
+
+
 def publish(push):
+    with Lock() as lock:
+        if not lock.held:
+            return False
+        return _publish(push)
+
+
+def _publish(push):
     if not consolidate():
         print("\n!! the pipeline did not finish; nothing published")
         return False

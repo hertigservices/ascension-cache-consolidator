@@ -11,7 +11,7 @@ through six months later.
 
     python test_audit.py
 """
-import os, sys, gzip, shutil, tempfile
+import os, sys, gzip, shutil, tempfile, subprocess
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import audit_publish
@@ -95,6 +95,47 @@ COMPRESSED = [
 ]
 
 
+
+def check_ignored():
+    """The gate skips what git ignores -- but only that.
+
+    audit_publish stopped scanning gitignored files because a stray
+    __pycache__ entry, which cannot be committed by any route, was failing the
+    gate and blocking every publish. Narrowing a gate is exactly the move that
+    lets a leak through six months later, so the hole gets tested, not just the
+    fix: an untracked file that git does NOT ignore is publishable by
+    `git add -A`, and must still fail.
+
+    Builds its own repository rather than borrowing the real one, so it neither
+    depends on nor disturbs the tree it is guarding.
+    """
+    results = []
+    d = tempfile.mkdtemp()
+    try:
+        try:
+            subprocess.run(["git", "init", "-q", d], check=True,
+                           capture_output=True, timeout=60)
+        except (OSError, subprocess.SubprocessError):
+            # No git means git_ignored() can never answer, so it skips nothing
+            # and the gate stays at its old, stricter behaviour. Nothing to prove.
+            print("  ok    git-ignore      : git unavailable, narrowing is inert")
+            return []
+        with open(os.path.join(d, ".gitignore"), "w") as f:
+            f.write("junk/" + chr(10))
+        os.mkdir(os.path.join(d, "junk"))
+        with open(os.path.join(d, "junk", "leak.bin"), "wb") as f:
+            f.write(MUST_FAIL["local-path"])
+        results.append(("an ignored file is skipped", audit_publish.main(d) == 0))
+
+        with open(os.path.join(d, "loose.txt"), "wb") as f:
+            f.write(MUST_FAIL["local-path"])
+        results.append(("an untracked but publishable file still fails",
+                        audit_publish.main(d) == 1))
+    finally:
+        shutil.rmtree(d, ignore_errors=True)
+    return results
+
+
 def main():
     bad = 0
     for name, body in sorted(MUST_FAIL.items()):
@@ -109,7 +150,11 @@ def main():
         ok = check_gz(body, rc, trunc)
         bad += not ok
         print(f"  {'ok  ' if ok else 'FAIL'}  compressed      : {label}")
-    n = len(MUST_FAIL) + len(MUST_PASS) + len(COMPRESSED)
+    extra = check_ignored()
+    for label, ok in extra:
+        bad += not ok
+        print(f"  {'ok  ' if ok else 'FAIL'}  git-ignore      : {label}")
+    n = len(MUST_FAIL) + len(MUST_PASS) + len(COMPRESSED) + len(extra)
     print(f"\n{n - bad}/{n} "
           + ("- the publish gate is working" if not bad
              else f"- {bad} BROKEN, do not publish"))
