@@ -1,5 +1,3 @@
-> Tool commands in this guide now run from the [canonical cache component](https://github.com/hertigservices/Ascension_preservation/tree/main/tools/cache-consolidator). Dataset paths remain in this data repository.
-
 # Using the data: getting it into a client and onto a server
 
 This is the "so what" document. The dataset under `cachedata/` is a record of
@@ -12,14 +10,50 @@ halves are separate:
 
 | half | tool | what it changes | needs |
 |---|---|---|---|
-| client | `tools/install.py` | `Cache\WDB\...\*.wdb` and addon SavedVariables in your game folder | Python 3, the game closed |
-| server | `tools/import_world.py` | `*_template` tables in an AzerothCore world database | Python 3, the `mysql` command-line client, a world DB you own |
+| client | `install.py` | `Cache\WDB\...\*.wdb` and addon SavedVariables in your game folder | Python 3, the game closed |
+| server | `import_world.py` | `*_template` tables in an AzerothCore world database | Python 3, the `mysql` command-line client, a world DB you own |
+
+**Both tools live in a different repository from this data.** Getting them is
+the next section, and it is the one step people skip.
 
 Neither needs the other. A client with the caches installed shows names and
 tooltips for everything in the dataset on *any* realm, including one that has
 never heard of the item. A server with the tables imported can `.additem` an
 Ascension item and the client will ask it for the tooltip and get one. Doing
 both is what makes the two agree.
+
+## Before anything else: get the tools
+
+This repository holds the **data**. The two tools that install it live in
+the preservation repository, under `tools/cache-consolidator/`. Nothing in
+this repository will run on its own, so start here:
+
+```
+git clone https://github.com/hertigservices/Ascension_preservation
+cd Ascension_preservation/tools/cache-consolidator
+```
+
+No git? Use the green **Code → Download ZIP** button on that page, unzip
+it, and open the `tools/cache-consolidator` folder inside.
+
+**Every command in this guide is run from that folder** — that is why they
+all start with `python -B tools/...`. If you get `can't open file` or
+`No such file or directory`, you are in the wrong folder; nothing is
+broken.
+
+You do **not** need to download this data repository by hand. `install.py --fetch`
+pulls it for you (about 120 MB). If you would rather have a checkout of it — and you need one for the server half, which cannot
+download — clone it too and remember the path to its `cachedata` folder:
+
+```
+git clone https://github.com/hertigservices/ascension-data
+```
+
+The tools no longer look for `cachedata` beside themselves. With no
+`--data`, they look in `%LOCALAPPDATA%\AscensionPreservation\cache\cachedata`
+(on Linux and macOS, `~/AscensionPreservation/cache/cachedata`), which is
+where the maintainer's own copy lives and is empty on a fresh machine. So
+on the commands below, either use `--fetch` or pass `--data`.
 
 ## What the data can and cannot show
 
@@ -82,10 +116,21 @@ the client is able to draw.
 
 ## Step 1 — client: `install.py`
 
+From `Ascension_preservation/tools/cache-consolidator`:
+
 ```
-python -B tools/install.py                       # find the client, show the plan
-python -B tools/install.py --write               # do it (game must be closed)
+python -B tools/install.py --fetch               # download the data, find the client, show the plan
+python -B tools/install.py --fetch --write       # do it (game must be closed)
 python -B tools/install.py --undo                # put the replaced files back
+```
+
+`--fetch` downloads all 120 MB every time it is passed, and puts the result
+in `<your client folder>/cachedata-download`. So pass it once, then point
+later runs at what it left behind — or at your own checkout:
+
+```
+python -B tools/install.py --data "C:/Games/Ascension/cachedata-download" --write
+python -B tools/install.py --data path/to/ascension-data/cachedata --write
 ```
 
 Or double-click `tools/Install Caches.cmd`, which runs the plan and then asks.
@@ -152,8 +197,8 @@ silently erase an install of these caches if the numbers do not line up.
 So make them agree, one way or the other:
 
 ```
-python -B tools/install.py --cache-version 16 --write      # rewrite the headers to match the server
-python -B tools/import_world.py ... --set-cache-version 16 # or tell the server what the files say
+python -B tools/install.py --data DATA --cache-version 16 --write      # rewrite the headers to match the server
+python -B tools/import_world.py --data DATA --set-cache-version 16 ... # or tell the server what the files say
 ```
 
 or set `ClientCacheVersion = N` in `worldserver.conf`. `install.py` prints the
@@ -163,11 +208,17 @@ deletion done by hand.
 
 ## Step 2 — server: `import_world.py`
 
+Also from `Ascension_preservation/tools/cache-consolidator`. This half needs
+a real copy of this repository, and it has no `--fetch` of its own. What
+`install.py --fetch` downloads will **not** do: it keeps only `wdb/` and
+`lua/`, and the server half reads `union/` and `by-mode/`. Clone or unzip
+this repository, and let `DATA` below stand for its `cachedata` folder:
+
 ```
-python -B tools/import_world.py --ask-password                        # preview only
-python -B tools/import_world.py --ask-password --apply                # write
-python -B tools/import_world.py --source conquest-of-azeroth --ask-password --apply
-python -B tools/import_world.py --list-sources
+python -B tools/import_world.py --data DATA --list-sources            # which game modes are published
+python -B tools/import_world.py --data DATA --ask-password            # preview only
+python -B tools/import_world.py --data DATA --ask-password --apply    # write
+python -B tools/import_world.py --data DATA --source conquest-of-azeroth --ask-password --apply
 ```
 
 Defaults are AzerothCore's: database `acore_world`, user `acore`, host
