@@ -45,8 +45,17 @@ live site.
 
 The 406,560,614-byte source archive is preserved in the
 [`exiles-db-mirror-2026-08-29`](https://github.com/hertigservices/ascension-data/releases/tag/exiles-db-mirror-2026-08-29)
-release, together with the mirrored assets not republished in the tree —
-creature portrait renders, dungeon floor maps, and the icons a client already has.
+release, together with the mirrored assets not republished in the tree. Creature
+portrait renders and dungeon floor maps are attached there as separate tarballs
+so they can be taken without extracting 13.75 GB; the icons a client already has
+are not attached at all.
+
+**The archive contains a working offline server.** Extract it, run
+`START_EXILES_DB.bat` (or `py -3 offline_exiles.py serve --port 8080 --open`)
+from the `ExilesOfflineDB` folder, and the whole site comes back up at
+`http://localhost:8080` — search, browsing and every internal link — served from
+`data/offline_site.sqlite` and the mirrored pages. For reading the data rather
+than processing it, that is far easier than anything in this directory.
 
 ## Creature spawn coordinates
 
