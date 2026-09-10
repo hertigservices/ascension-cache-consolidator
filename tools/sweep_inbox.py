@@ -140,7 +140,7 @@ def tree_hashes(root):
     out = set()
     for dp, _d, fs in os.walk(root):
         for fn in fs:
-            if fn == intake.SRCMARK:
+            if fn in (intake.SRCMARK, intake.SRCHASH):
                 continue
             try:
                 out.add(sha256(os.path.join(dp, fn)))
@@ -174,11 +174,24 @@ def member_hashes(path):
         return None
 
 
+def hashed_extraction(stem, path, digest=None):
+    """Find intake's verified extraction for this exact archive, not its name."""
+    digest = digest or sha256(path)
+    for name in (stem, "%s__%s" % (stem, digest[:8])):
+        out = os.path.join(intake.EXTRACT, name)
+        if intake.occupied(out) and intake._marker(out, intake.SRCHASH) == digest:
+            return out
+    return None
+
+
 def extracted_source(stem, group):
     """Which file in `group` produced extracted/<stem>/, or None if unclear."""
     out = os.path.join(intake.EXTRACT, stem)
     if not (os.path.isdir(out) and os.listdir(out)):
         return None
+    digest = intake._marker(out, intake.SRCHASH)
+    if digest:
+        return next((p for p in group if sha256(p) == digest), None)
     disk = tree_hashes(out)
     for p in group:
         mh = member_hashes(p)
@@ -213,8 +226,11 @@ def collisions(archives=None):
     for stem, paths in sorted(by_dir.items()):
         if len(paths) < 2:
             continue
-        if len({sha256(p) for p in paths}) < 2:
+        digests = {p: sha256(p) for p in paths}
+        if len(set(digests.values())) < 2:
             continue                      # identical bytes; nothing is lost
+        if all(hashed_extraction(stem, p, digests[p]) for p in paths):
+            continue                      # intake already separated them by hash
         out.append((stem, paths, extracted_source(stem, paths)))
     return out
 
@@ -230,7 +246,7 @@ def fix_collisions(log=print, apply=True):
                 log("      %s" % rel(p))
             continue
         for p in paths:
-            if p == source:
+            if p == source or hashed_extraction(stem, p):
                 continue
             new = unique_name(p)
             if not apply:

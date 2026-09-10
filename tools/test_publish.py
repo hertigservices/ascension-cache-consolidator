@@ -1,5 +1,6 @@
 """Publisher ownership and supervisor retry regressions; uses disposable repos."""
 import io
+import hashlib
 import os
 from pathlib import Path
 import subprocess
@@ -10,6 +11,7 @@ from unittest.mock import Mock, patch
 
 import publish
 import tray_app
+import sweep_inbox
 
 
 class PublishOwnershipTests(unittest.TestCase):
@@ -199,6 +201,58 @@ class ArrivalTests(unittest.TestCase):
                                                   label='manual test')
                 self.assertTrue((inbox / 'changed.zip').exists())
                 self.assertNotIn('changed.zip', watcher.handled)
+
+
+class SweepCollisionTests(unittest.TestCase):
+    def setUp(self):
+        self.tmp = tempfile.TemporaryDirectory(prefix='sweep-test-')
+        self.addCleanup(self.tmp.cleanup)
+        self.root = Path(self.tmp.name)
+        self.extracted = self.root / 'extracted'
+        self.extracted.mkdir()
+        self.inputs = []
+        for name, data in [('one', b'first archive'), ('two', b'second archive')]:
+            folder = self.root / name
+            folder.mkdir()
+            archive = folder / 'WDB.7z'
+            archive.write_bytes(data)
+            self.inputs.append(str(archive))
+        p = patch.object(sweep_inbox.intake, 'EXTRACT', str(self.extracted))
+        p.start()
+        self.addCleanup(p.stop)
+
+    def mark(self, name, archive):
+        folder = self.extracted / name
+        folder.mkdir()
+        (folder / '.intake-source').write_text('WDB.7z')
+        (folder / '.intake-sha256').write_text(sweep_inbox.sha256(archive))
+        (folder / 'data.wdb').write_bytes(b'payload')
+        return folder
+
+    def test_two_hash_verified_7z_extractions_are_not_a_collision(self):
+        self.mark('WDB', self.inputs[0])
+        self.mark('WDB__' + sweep_inbox.sha256(self.inputs[1])[:8], self.inputs[1])
+        self.assertEqual(sweep_inbox.collisions(self.inputs), [])
+
+    def test_unprocessed_7z_still_reports_the_correct_original(self):
+        self.mark('WDB', self.inputs[0])
+        collisions = sweep_inbox.collisions(self.inputs)
+        self.assertEqual(len(collisions), 1)
+        self.assertEqual(collisions[0][2], self.inputs[0])
+
+    def test_hash_suffix_alone_does_not_prove_extraction(self):
+        self.mark('WDB', self.inputs[0])
+        self.mark('WDB__' + sweep_inbox.sha256(self.inputs[1])[:8], self.inputs[0])
+        self.assertEqual(len(sweep_inbox.collisions(self.inputs)), 1)
+
+    def test_ambiguous_legacy_7z_stays_unresolved(self):
+        folder = self.extracted / 'WDB'
+        folder.mkdir()
+        (folder / '.intake-source').write_text('WDB.7z')
+        (folder / 'data.wdb').write_bytes(b'payload')
+        collisions = sweep_inbox.collisions(self.inputs)
+        self.assertEqual(len(collisions), 1)
+        self.assertIsNone(collisions[0][2])
 
 if __name__ == '__main__':
     unittest.main()
