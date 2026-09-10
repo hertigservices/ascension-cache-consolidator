@@ -13,3 +13,6 @@
 # endings would show every file as modified on the next run.
 *.lua  text eol=lf
 *.tsv  text eol=lf
+
+# Immutable supplemental snapshots retain the reviewed artifact bytes, including JSON.
+supplemental/bisbeard/** -text

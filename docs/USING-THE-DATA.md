@@ -1,3 +1,5 @@
+> Tool commands in this guide now run from the [canonical cache component](https://github.com/hertigservices/Ascension_preservation/tree/main/tools/cache-consolidator). Dataset paths remain in this data repository.
+
 # Using the data: getting it into a client and onto a server
 
 This is the "so what" document. The dataset under `cachedata/` is a record of

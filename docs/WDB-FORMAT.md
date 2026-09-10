@@ -1,3 +1,5 @@
+> Tool commands in this guide now run from the [canonical cache component](https://github.com/hertigservices/Ascension_preservation/tree/main/tools/cache-consolidator). Dataset paths remain in this data repository.
+
 # The WDB cache format (client build 12340)
 
 Everything here was verified empirically against real client caches, by requiring that

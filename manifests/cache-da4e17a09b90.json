@@ -1,0 +1,1103 @@
+{
+  "schema": 1,
+  "snapshot": "cache-da4e17a09b90",
+  "files": [
+    {
+      "path": "cachedata/by-mode/coa-alpha/creaturecache.tsv.gz",
+      "bytes": 34489,
+      "sha256": "8c6148d41d27d8817f328e0a2e9b3073cb7b655401b5b098768dfb0dfd68c87a"
+    },
+    {
+      "path": "cachedata/by-mode/coa-alpha/gameobjectcache.tsv.gz",
+      "bytes": 20855,
+      "sha256": "781e4d2b8c0b6677bc6ec411244dd5eb7b883c89acb92dc3402ff29cfd92f4df"
+    },
+    {
+      "path": "cachedata/by-mode/coa-alpha/npccache.tsv.gz",
+      "bytes": 6329,
+      "sha256": "2ae112f9b3d7af651cdd11a77c18f8f3d0515ee3e2c9c1bc2d3b3eae86d1ccd3"
+    },
+    {
+      "path": "cachedata/by-mode/coa-alpha/pagetextcache.tsv.gz",
+      "bytes": 395,
+      "sha256": "9b9ef830011fe86f139b1dffa330f541a88004fa167a54065dc723c33702cfa6"
+    },
+    {
+      "path": "cachedata/by-mode/coa-alpha/questcache.tsv.gz",
+      "bytes": 26682,
+      "sha256": "59cc7041ef86ee82c48c2f076cdadc73805a8896081f5f04426d8f284a016223"
+    },
+    {
+      "path": "cachedata/by-mode/coa-beta/creaturecache.tsv.gz",
+      "bytes": 119929,
+      "sha256": "545b6a00139b7e0d997060ae46e8bf66fe0f67b683d4f5ddad04fa5b29180612"
+    },
+    {
+      "path": "cachedata/by-mode/coa-beta/gameobjectcache.tsv.gz",
+      "bytes": 70990,
+      "sha256": "61c1f2ba8c460b1cd50e7e7bb05876bd2239698e729e6841e7e2827a1cdf4b7a"
+    },
+    {
+      "path": "cachedata/by-mode/coa-beta/itemcache.tsv.gz",
+      "bytes": 644781,
+      "sha256": "7b621a9d07577726346a232c140aa31827136de0c12e8d3ed752f07c7e62ded0"
+    },
+    {
+      "path": "cachedata/by-mode/coa-beta/itemnamecache.tsv.gz",
+      "bytes": 1073,
+      "sha256": "dbcf9135e9e2323108697b589ed92caed1d9187efc2a76499e39d10c669fcd56"
+    },
+    {
+      "path": "cachedata/by-mode/coa-beta/npccache.tsv.gz",
+      "bytes": 35421,
+      "sha256": "7aac60bc1fdd5c105700ade296dbd689b86afa6921327d5f439b00fe057adc25"
+    },
+    {
+      "path": "cachedata/by-mode/coa-beta/pagetextcache.tsv.gz",
+      "bytes": 3981,
+      "sha256": "35a1fa262c1cf697e8bd38aa4efd367ce7778212654e5d6f0176b1ce7f219726"
+    },
+    {
+      "path": "cachedata/by-mode/coa-beta/questcache.tsv.gz",
+      "bytes": 159408,
+      "sha256": "6a68ab79476620e3db9f7de0b8aeee339d8df04912910f518524eea5391e720a"
+    },
+    {
+      "path": "cachedata/by-mode/conquest-of-azeroth/creaturecache.tsv.gz",
+      "bytes": 371386,
+      "sha256": "73ca51813e2dcd033243390c8fbcced177f04b94fb8855c80d25c44b2fe21df6"
+    },
+    {
+      "path": "cachedata/by-mode/conquest-of-azeroth/gameobjectcache.tsv.gz",
+      "bytes": 196220,
+      "sha256": "78e83d6d90b2fddc6a7c5bb5bb98c349d4705602f5a26bcfb4402ce07b07c5b5"
+    },
+    {
+      "path": "cachedata/by-mode/conquest-of-azeroth/itemcache.tsv.gz",
+      "bytes": 3118684,
+      "sha256": "3a9333da1e24c1549df4c9807216c0bbd3a6e472e17e840b01577293e340c918"
+    },
+    {
+      "path": "cachedata/by-mode/conquest-of-azeroth/itemnamecache.tsv.gz",
+      "bytes": 23981,
+      "sha256": "980c27ac5dcbe3f50651e01235cb8178df7848da8dea7ff9ee6849c6ac9a4a55"
+    },
+    {
+      "path": "cachedata/by-mode/conquest-of-azeroth/npccache.tsv.gz",
+      "bytes": 179486,
+      "sha256": "a1ea938ae235b3ee534158985441a20486c754ee1740343aae4726ceadba167c"
+    },
+    {
+      "path": "cachedata/by-mode/conquest-of-azeroth/pagetextcache.tsv.gz",
+      "bytes": 47830,
+      "sha256": "f0ac2f819286cd676fe54f5bfd348993c204ae099c1de94bd46c4459c8acbc2a"
+    },
+    {
+      "path": "cachedata/by-mode/conquest-of-azeroth/questcache.tsv.gz",
+      "bytes": 690736,
+      "sha256": "b122d5bf4d5532508ea5cedd9b9503e1ed4f935fe028c0de2c8b38fae0b0b842"
+    },
+    {
+      "path": "cachedata/by-mode/free-pick/creaturecache.tsv.gz",
+      "bytes": 146639,
+      "sha256": "4ead8faef0965add642895ad5666357a686b42e8f9fc740fbf1064c205833925"
+    },
+    {
+      "path": "cachedata/by-mode/free-pick/gameobjectcache.tsv.gz",
+      "bytes": 84702,
+      "sha256": "865c777efeb7d75909c5e80264bd9fdd180c33424ac765b02b5148c6aef7ed67"
+    },
+    {
+      "path": "cachedata/by-mode/free-pick/itemcache.tsv.gz",
+      "bytes": 1349768,
+      "sha256": "11f9814b1aa570d38aeefed67e2193d4c45ecba01eddabc99838ce2ae76ad537"
+    },
+    {
+      "path": "cachedata/by-mode/free-pick/itemnamecache.tsv.gz",
+      "bytes": 8672,
+      "sha256": "035df3eac120b7897752da72f83e20dfc9dbd8713af31953d1e9f090c83c6845"
+    },
+    {
+      "path": "cachedata/by-mode/free-pick/npccache.tsv.gz",
+      "bytes": 26079,
+      "sha256": "ab94c4cb1b00500b036e3486e49b1dfadac98cc08f598f329dcc733a20a7aa2f"
+    },
+    {
+      "path": "cachedata/by-mode/free-pick/pagetextcache.tsv.gz",
+      "bytes": 4569,
+      "sha256": "90b3d142564271fbdb7a88a9e308bd4348a15d7474d18f69c3d1bc88ae0a27e5"
+    },
+    {
+      "path": "cachedata/by-mode/free-pick/questcache.tsv.gz",
+      "bytes": 203462,
+      "sha256": "e722ec5cea93cfba26ec73a4182fe9011a53c25c29ef3b2beccb1830f48b0f00"
+    },
+    {
+      "path": "cachedata/by-mode/live-qa/itemcache.tsv.gz",
+      "bytes": 12235,
+      "sha256": "0aaeb6825424de1f9c2a52d1e046f338553f612425d9e7e3167e2082ca106602"
+    },
+    {
+      "path": "cachedata/by-mode/live-qa/questcache.tsv.gz",
+      "bytes": 54629,
+      "sha256": "54894fb1f624455b71e82f8a44effb512d6564f32e89ac14374d6302972cbad0"
+    },
+    {
+      "path": "cachedata/by-mode/season-10-freepick/creaturecache.tsv.gz",
+      "bytes": 265896,
+      "sha256": "7f5b704b656a9daee541be420466346b858622ca7b461fdfc34a139791921459"
+    },
+    {
+      "path": "cachedata/by-mode/season-10-freepick/gameobjectcache.tsv.gz",
+      "bytes": 135678,
+      "sha256": "848434d23089f5696a24d8380e000a90b966f2391f82bfc91eb80d84142cf30a"
+    },
+    {
+      "path": "cachedata/by-mode/season-10-freepick/itemcache.tsv.gz",
+      "bytes": 14105429,
+      "sha256": "3f4a9f16ce70a446f4b94473200906e7a21ee64c0d54219cf5362f8760fa1970"
+    },
+    {
+      "path": "cachedata/by-mode/season-10-freepick/itemnamecache.tsv.gz",
+      "bytes": 7273,
+      "sha256": "f695e5dcb46c73b235bee30a7acd0c70c355d6e5595c5eeffc33ff708bd831b7"
+    },
+    {
+      "path": "cachedata/by-mode/season-10-freepick/npccache.tsv.gz",
+      "bytes": 44334,
+      "sha256": "bbd0a52aab9c3079c0fe93d8a59cbdda82c9003c36d2194b4836c30740fcdfa3"
+    },
+    {
+      "path": "cachedata/by-mode/season-10-freepick/pagetextcache.tsv.gz",
+      "bytes": 7419,
+      "sha256": "e08f84a9d7c095f67df8504cddcf31e4295cf67e8502c4d102dcbf233b8c6f25"
+    },
+    {
+      "path": "cachedata/by-mode/season-10-freepick/questcache.tsv.gz",
+      "bytes": 2612784,
+      "sha256": "bf11c4c99930bf9fb695e047f8ecdd27203e4d4c0966c3233e762cf06844e611"
+    },
+    {
+      "path": "cachedata/by-mode/season-10-wildcard/creaturecache.tsv.gz",
+      "bytes": 120012,
+      "sha256": "4240f04799bbabe059fab083ddaf37051e6ae6fb0f8b504a771ea1b6dfbd1cc7"
+    },
+    {
+      "path": "cachedata/by-mode/season-10-wildcard/gameobjectcache.tsv.gz",
+      "bytes": 57454,
+      "sha256": "d6d63b1040150359292514c341950336a41284b4838855f99c194697c277d8de"
+    },
+    {
+      "path": "cachedata/by-mode/season-10-wildcard/itemcache.tsv.gz",
+      "bytes": 1014337,
+      "sha256": "302ff4844ad17a4cf0a14f43885d4ee5a64cde65cf5c23685aab0efafe1da7f7"
+    },
+    {
+      "path": "cachedata/by-mode/season-10-wildcard/itemnamecache.tsv.gz",
+      "bytes": 3250,
+      "sha256": "1a2c6c9aa1d3fa026b09dbafdf18783d6853e1227279b660587494c12d7dd9a3"
+    },
+    {
+      "path": "cachedata/by-mode/season-10-wildcard/npccache.tsv.gz",
+      "bytes": 30867,
+      "sha256": "96f994b1dd972ed32df290414eb1b7b0c150d2cd9dffd099ff06c5021a8c79ef"
+    },
+    {
+      "path": "cachedata/by-mode/season-10-wildcard/pagetextcache.tsv.gz",
+      "bytes": 3039,
+      "sha256": "bf393a22a5c589bfc10644e1a39bc26dbbb11c90cfbe32bc8bf889f9e35c5a62"
+    },
+    {
+      "path": "cachedata/by-mode/season-10-wildcard/questcache.tsv.gz",
+      "bytes": 133096,
+      "sha256": "9177daba35d7b32b2d2d447662d48d593d6fabecdcc9510b74bd25e37721a576"
+    },
+    {
+      "path": "cachedata/by-mode/season-9/creaturecache.tsv.gz",
+      "bytes": 187985,
+      "sha256": "a68c27e133c09f2165dc0ae201cad1323f823ad74ff6f3c0480f6690a14ead5e"
+    },
+    {
+      "path": "cachedata/by-mode/season-9/gameobjectcache.tsv.gz",
+      "bytes": 108627,
+      "sha256": "749994a99d499023af5baf7de253ab266d6d9a35ed47e83600da4fbfba21e6c4"
+    },
+    {
+      "path": "cachedata/by-mode/season-9/itemcache.tsv.gz",
+      "bytes": 1281905,
+      "sha256": "a5f619cc1484610f840d93d625702e9aef92e1cc7c7242dee2c48ef718ef93aa"
+    },
+    {
+      "path": "cachedata/by-mode/season-9/itemnamecache.tsv.gz",
+      "bytes": 8774,
+      "sha256": "01b71e5131631e5ab8e60e894601fe524c99527f1a9495dd9a2ff0b628d1c7fa"
+    },
+    {
+      "path": "cachedata/by-mode/season-9/npccache.tsv.gz",
+      "bytes": 28429,
+      "sha256": "e83473e9a08f6f55799fef487e788252153c847bbfbb9ca5c798f50983b6487a"
+    },
+    {
+      "path": "cachedata/by-mode/season-9/pagetextcache.tsv.gz",
+      "bytes": 737,
+      "sha256": "5d266723ca0e55d54723b5d66109561263fb150d1039819719619ff164b60672"
+    },
+    {
+      "path": "cachedata/by-mode/season-9/questcache.tsv.gz",
+      "bytes": 184496,
+      "sha256": "6f62d872c640b22374464e62fe810706b4556ae0457d7afa4d2c87a847e88737"
+    },
+    {
+      "path": "cachedata/by-mode/stress-test/creaturecache.tsv.gz",
+      "bytes": 41873,
+      "sha256": "2abe3608a49130c1f4bcf388ebd748a8c8b8d986a638f6d767d3c4a90799b992"
+    },
+    {
+      "path": "cachedata/by-mode/stress-test/gameobjectcache.tsv.gz",
+      "bytes": 17625,
+      "sha256": "187294c5571b2c3b4c72c293244a37ca610b577c298e6c99e590b0c21cb7639c"
+    },
+    {
+      "path": "cachedata/by-mode/stress-test/itemcache.tsv.gz",
+      "bytes": 419869,
+      "sha256": "599426640afe32965bf5add63c26348690ada8f2a82b56f586f940ee52d90949"
+    },
+    {
+      "path": "cachedata/by-mode/stress-test/itemnamecache.tsv.gz",
+      "bytes": 1489,
+      "sha256": "788b8c5e6e6d9482abcd59dca7cef91819be10b6f17619177ac21c8a0b98e866"
+    },
+    {
+      "path": "cachedata/by-mode/stress-test/npccache.tsv.gz",
+      "bytes": 4099,
+      "sha256": "989f9f286dc4aed547a7c6eda0a9ee37a9cea5e331b5bff2fd62e4510b36af9b"
+    },
+    {
+      "path": "cachedata/by-mode/stress-test/pagetextcache.tsv.gz",
+      "bytes": 694,
+      "sha256": "a52552111ee47acf7a54fc6ac18fcad410771fa7a92f41b023386ffda261bb05"
+    },
+    {
+      "path": "cachedata/by-mode/stress-test/questcache.tsv.gz",
+      "bytes": 35912,
+      "sha256": "a62f59ecfdb7d7ce41539305bf783fa4027817638da79f3a0e7f9c8ce7505534"
+    },
+    {
+      "path": "cachedata/by-mode/unknown/creaturecache.tsv.gz",
+      "bytes": 69597,
+      "sha256": "890c2644085c3fb81de3c2291fbcd1a5b1a4fdab7a558f53c1117fbb446e653b"
+    },
+    {
+      "path": "cachedata/by-mode/unknown/gameobjectcache.tsv.gz",
+      "bytes": 33510,
+      "sha256": "a1ad476f8a752c4414a5aee4758a2c1455e92c3ae9ac030557cf2d52a84de594"
+    },
+    {
+      "path": "cachedata/by-mode/unknown/itemcache.tsv.gz",
+      "bytes": 3101,
+      "sha256": "e770c2165cb448ce4b1fa61b69e5cd277817471398c2d68e82901ad86a330da9"
+    },
+    {
+      "path": "cachedata/by-mode/unknown/itemnamecache.tsv.gz",
+      "bytes": 483,
+      "sha256": "f36d334d10392d2e260ade49b707276d5c3bc159ff9b5e30227c508964c10495"
+    },
+    {
+      "path": "cachedata/by-mode/unknown/npccache.tsv.gz",
+      "bytes": 20536,
+      "sha256": "a16beb82e58ee4078686005276bad26f235ec0c3ed799bf971cdfe8cbafb0611"
+    },
+    {
+      "path": "cachedata/by-mode/unknown/questcache.tsv.gz",
+      "bytes": 109844,
+      "sha256": "811c12f6ad1e2b78486c90f47f73db71ce2e0f3381c01038f43cd8e23b64deaa"
+    },
+    {
+      "path": "cachedata/by-mode/warcraft-reborn/creaturecache.tsv.gz",
+      "bytes": 117128,
+      "sha256": "86c91dc3a972aa92afc74baa5a1d8c1531c35e67d66eeeb03b018d50d27e7d31"
+    },
+    {
+      "path": "cachedata/by-mode/warcraft-reborn/gameobjectcache.tsv.gz",
+      "bytes": 62135,
+      "sha256": "4b528b1f7fa6f1f7971bbd6c694bb2f9783ee23b95eec12761ab06b9028b5160"
+    },
+    {
+      "path": "cachedata/by-mode/warcraft-reborn/itemcache.tsv.gz",
+      "bytes": 1894992,
+      "sha256": "f7c567e1ef2b85649046002bbbec7f817c271a3f68772112bf8a9680738e3e3b"
+    },
+    {
+      "path": "cachedata/by-mode/warcraft-reborn/itemnamecache.tsv.gz",
+      "bytes": 9548,
+      "sha256": "07d489833432e6c2ecc7c9bf7c9124b214db0a03ac45799b4cf7b4ca77cafdd7"
+    },
+    {
+      "path": "cachedata/by-mode/warcraft-reborn/npccache.tsv.gz",
+      "bytes": 24424,
+      "sha256": "d9031f7208269eb21ea7657ae03d60fba7175d57bb26112b0d5d488351c2ddac"
+    },
+    {
+      "path": "cachedata/by-mode/warcraft-reborn/pagetextcache.tsv.gz",
+      "bytes": 2870,
+      "sha256": "385a1092d23d3611b3281299f67a32b8c8949e22d246833ba662a7d54437ce0a"
+    },
+    {
+      "path": "cachedata/by-mode/warcraft-reborn/questcache.tsv.gz",
+      "bytes": 159117,
+      "sha256": "af2bb18f8266a710e6f306a8d2b0b22904702b723cea6a5601439e1b397638c0"
+    },
+    {
+      "path": "cachedata/catalogue/creatures.tsv",
+      "bytes": 56657,
+      "sha256": "33bde548d480deb131cfae42b5b69bab043a553d32a508c8a9e5bf497abdb0b2"
+    },
+    {
+      "path": "cachedata/catalogue/gameobjects.tsv",
+      "bytes": 1147224,
+      "sha256": "3f67d2213533b16a8f226fb98441340a156094dc512fda1f1f5f2e35fe27eade"
+    },
+    {
+      "path": "cachedata/catalogue/README.md",
+      "bytes": 4816,
+      "sha256": "33964094c4173b0789209bbc94a17929331e8343b5b5a00ba16aaec27633bee7"
+    },
+    {
+      "path": "cachedata/FILE-GUIDE.md",
+      "bytes": 9869,
+      "sha256": "a005009aa80699f92017e9f3192fb9dbad466e77ee1aeb8cab6f98dc34e2fade"
+    },
+    {
+      "path": "cachedata/lua/addons/BC_Client.lua",
+      "bytes": 59488,
+      "sha256": "92558a0edee02d29b706936d0f8be5cdd0d72109d68ca2b22872b1ea04f237df"
+    },
+    {
+      "path": "cachedata/lua/addons/Blizz_interface_improvements.lua",
+      "bytes": 20546,
+      "sha256": "9cbf7b7a4972e5184ffeb95d252355e70c264937374f6429ed0b584b43ecb070"
+    },
+    {
+      "path": "cachedata/lua/addons/ButtonTemplates.lua",
+      "bytes": 2678,
+      "sha256": "769efb062fab6d8d2b6ae43be68b5858acd0fe804e5a22eb33feaa0e0549f229"
+    },
+    {
+      "path": "cachedata/lua/addons/CAO_Client.lua",
+      "bytes": 248889,
+      "sha256": "19ed9364197e572a16263b67830a18c9a3ba30440c5e60f55cdb8e21ff9ef670"
+    },
+    {
+      "path": "cachedata/lua/addons/CAO_Client_Tutorial.lua",
+      "bytes": 83785,
+      "sha256": "00b628d67e001b85bb0ea0f518d78bea8b8ae284c85e46acf1297bc814409f5e"
+    },
+    {
+      "path": "cachedata/lua/addons/CharFrameEdit.lua",
+      "bytes": 37818,
+      "sha256": "ca45d04de928141c45eeb459149ffe3129a32d1af03668b50f3a4a49ca596d59"
+    },
+    {
+      "path": "cachedata/lua/addons/ChatChannelsC.lua",
+      "bytes": 282,
+      "sha256": "867c1e1c5405faad46dd4a9fe481fb8a3f6c14ecbb34af5e0cbd56d4cecea14e"
+    },
+    {
+      "path": "cachedata/lua/addons/CheckpointDeathClient.lua",
+      "bytes": 2502,
+      "sha256": "3b7bd77f9aee490f33e1a11d00f2a8a5169b485454b3932867536a1b090820b5"
+    },
+    {
+      "path": "cachedata/lua/addons/Client_LocalizationStuff.lua",
+      "bytes": 58739,
+      "sha256": "65b705944052b66c56756defe2574c450ee9c79840ece91baf7f1cccf1e3ba1a"
+    },
+    {
+      "path": "cachedata/lua/addons/ClientCharacterAdvancement.lua",
+      "bytes": 141937,
+      "sha256": "8da8d4d05c341769ed3839f939759eb01bb6bb23e652cdb178ff92bbeec69c72"
+    },
+    {
+      "path": "cachedata/lua/addons/ClientEBB.lua",
+      "bytes": 36430,
+      "sha256": "d0e97a9e17b0dd0901628ab7d746f820ba0ccee419f2ea35744d136345fbc0ba"
+    },
+    {
+      "path": "cachedata/lua/addons/ClientResets.lua",
+      "bytes": 15110,
+      "sha256": "0dcbf73ae790bb24f07dc11e68de60a5fa977b4fa961996d47cf9698cb303831"
+    },
+    {
+      "path": "cachedata/lua/addons/ClientStatAllocation.lua",
+      "bytes": 13681,
+      "sha256": "0b295f06e5b5bf759b09cb165c56c4965b80453ddb26e6eab92321a60bef6e24"
+    },
+    {
+      "path": "cachedata/lua/addons/CollectionController.lua",
+      "bytes": 11765,
+      "sha256": "528ad6db3203f621721857265701da888cf3bbddb7e26cdcbccae00ee0383871"
+    },
+    {
+      "path": "cachedata/lua/addons/DraftMode_Client.lua",
+      "bytes": 79761,
+      "sha256": "91c9e1e304c7a13de9d0c476bedf8ebee467f692e5a4b4a72a83115ee5b090be"
+    },
+    {
+      "path": "cachedata/lua/addons/EnchantReRollC.lua",
+      "bytes": 66397,
+      "sha256": "b6c78c751b5817780fdfbd37e823a61b575ac657348a0a6e65d32801bdd065bb"
+    },
+    {
+      "path": "cachedata/lua/addons/HotBarSaverClient.lua",
+      "bytes": 4429,
+      "sha256": "9d042e291ce8d48b130cd67259bef3a9662eac5bbdf3b56f0b2d4eda5b3430e4"
+    },
+    {
+      "path": "cachedata/lua/addons/HybridScrollFrame.lua",
+      "bytes": 3282,
+      "sha256": "a61c756b1afe145d6ce18ca564463e4d67456cfe8e7d51cbf6b07d6a815e65c5"
+    },
+    {
+      "path": "cachedata/lua/addons/IconSelector.lua",
+      "bytes": 6969,
+      "sha256": "3467b3bb7749dd03ebfd9b3ae44e245d9bd76a1ff01b3fd3d2aebdd0c3683a71"
+    },
+    {
+      "path": "cachedata/lua/addons/InspectClient.lua",
+      "bytes": 2028,
+      "sha256": "8b1e64f3e7e932c541bbd4153783f126ea18f2e56521d7d8e6e2b17bd97f8740"
+    },
+    {
+      "path": "cachedata/lua/addons/LeaveGroup.lua",
+      "bytes": 143,
+      "sha256": "c1a13dc61c561a5e706a829db7f974a59b24046702ef46f10b50de40e49289c8"
+    },
+    {
+      "path": "cachedata/lua/addons/LevelUpDisplay_Ascension_Client.lua",
+      "bytes": 28543,
+      "sha256": "4b6ca5073a9e4c2f93ffb1a33551d927af7aad0de3400f0f74ff51053773946f"
+    },
+    {
+      "path": "cachedata/lua/addons/Misc_DeathResFrame.lua",
+      "bytes": 3014,
+      "sha256": "b68ca8c4177438d6da333d94b879197667a2d0b452ae239ab92b046c804720a3"
+    },
+    {
+      "path": "cachedata/lua/addons/NewbieHelp_Client.lua",
+      "bytes": 26129,
+      "sha256": "aec97bb79ac05d369211c09d6a99f588f27b431315a34b41cf53b90f2b651c76"
+    },
+    {
+      "path": "cachedata/lua/addons/PatchVersionCompareC.lua",
+      "bytes": 2000,
+      "sha256": "91b6a30c2addd11f4e381bbe0fae65c45ff4bd112a8ba41020815f3741eb5992"
+    },
+    {
+      "path": "cachedata/lua/addons/PersonalBankClient.lua",
+      "bytes": 1318,
+      "sha256": "519652829e1eb1fa9f93fde4987b9631a0e9d04940bc957743bddd244581fa0a"
+    },
+    {
+      "path": "cachedata/lua/addons/PlayerFramePrestigeC.lua",
+      "bytes": 4255,
+      "sha256": "75a19af7f71639d17e20bb7544d9846af7f872b6cd48502200e42636fd2313a3"
+    },
+    {
+      "path": "cachedata/lua/addons/RandomMode_Client.lua",
+      "bytes": 20147,
+      "sha256": "ac668c9a6d4f08a77d26e16a8c6f6a170344d90c47938b8959c42d16db216d44"
+    },
+    {
+      "path": "cachedata/lua/addons/SeasonalCollectionC.lua",
+      "bytes": 131503,
+      "sha256": "afe81ff771487b1ef0ed97a0b1da2bc1ae742772f7a855e259009a0795875ab4"
+    },
+    {
+      "path": "cachedata/lua/addons/StoreCollectionC.lua",
+      "bytes": 57312,
+      "sha256": "c7bd9c5743784d22e4372d289598f075f2a0db3f313d0914b70c21823f9c7d71"
+    },
+    {
+      "path": "cachedata/lua/addons/SwitchSpecClient.lua",
+      "bytes": 8142,
+      "sha256": "d2e23291a7e34f4c4910ed49d5e679d87382f70f6592dd3a3ecfea4ba489d527"
+    },
+    {
+      "path": "cachedata/lua/addons/TomeCollectionsC.lua",
+      "bytes": 33610,
+      "sha256": "c342ebea95e8d5656ed6eaa18fc8ed6c0aa1249a0763698b2dc6d70616c4a48f"
+    },
+    {
+      "path": "cachedata/lua/addons/TooltipCorrector.lua",
+      "bytes": 22380,
+      "sha256": "a6a717837485a903ff1dd750570f3a6529f6c278ebc8f6d8c609a7b69496688b"
+    },
+    {
+      "path": "cachedata/lua/addons/UnlearnSkillClient.lua",
+      "bytes": 1713,
+      "sha256": "16f6015799a5a6a5d33a0f60f1b79c6454c04da2dd7b97e158a8b1728eddd5c4"
+    },
+    {
+      "path": "cachedata/lua/ADDONS-PROVENANCE.md",
+      "bytes": 4169,
+      "sha256": "41623d33a50d975a81841a9a4ac89bf3185e08f8c2af69aadfa354adb8959a6a"
+    },
+    {
+      "path": "cachedata/lua/AIO_Client.lua",
+      "bytes": 1287701,
+      "sha256": "c6beb031a3e9eedbebd8a335289755f40f9d0d274ac45433889c9864c40d18f0"
+    },
+    {
+      "path": "cachedata/lua/AIO_Client.variants.json",
+      "bytes": 1716,
+      "sha256": "006b39ca0441514411a597902fe6e1a6d56fb16fd638b088860880146ea4555d"
+    },
+    {
+      "path": "cachedata/lua/Auctionator_Price_Database.lua",
+      "bytes": 42685,
+      "sha256": "02b8f486c8efa812341346c908a1a995d0e2021a492d76b12a0d0295ad53969a"
+    },
+    {
+      "path": "cachedata/lua/coa-client-events.json",
+      "bytes": 462,
+      "sha256": "5cfacfd95be9d804cc850fa9b5bb993a38140b443f94df3c8b39ff43414e77b0"
+    },
+    {
+      "path": "cachedata/lua/GatherMate2.lua",
+      "bytes": 15440,
+      "sha256": "311d56332bac86f165cbc9b4e5f710d21c5117e1a65c558337f3ce15ca38b8e6"
+    },
+    {
+      "path": "cachedata/lua/harvest/advancement.tsv",
+      "bytes": 9193432,
+      "sha256": "32e73581838f536f0844914dd543870aca892cc4657d6d531bb63a02bddc9705"
+    },
+    {
+      "path": "cachedata/lua/harvest/apiSurfaces.json",
+      "bytes": 63912,
+      "sha256": "cb260df74f4b516fd9b2394fbb6a0a220e9b997214b67dbc0ef4fcdf6c783d87"
+    },
+    {
+      "path": "cachedata/lua/harvest/battlegrounds.json",
+      "bytes": 6797,
+      "sha256": "fcc8fd325986cbf278d821822d63177c331cd886d3ae02786c70b53225cf7c88"
+    },
+    {
+      "path": "cachedata/lua/harvest/byRealm.json",
+      "bytes": 4581942,
+      "sha256": "15e098f77de13476384cfe48a211fa11e78e264800b93cb3006206418d58b1d8"
+    },
+    {
+      "path": "cachedata/lua/harvest/dungeons.json",
+      "bytes": 186989,
+      "sha256": "dce5cdf2a1bacfdb161a3defed74f37f19b38e4d884053923d2191e00016c914"
+    },
+    {
+      "path": "cachedata/lua/harvest/enums.json",
+      "bytes": 40937,
+      "sha256": "2642c572dff1068f3d017d018a176c98a3f9c00a55b68317af5f31d077d8c702"
+    },
+    {
+      "path": "cachedata/lua/harvest/gossips.tsv",
+      "bytes": 17701,
+      "sha256": "7557a7e9a2916239fce7d5984dc54eac2bf3c95712fb3f4cfd482d293a5a403e"
+    },
+    {
+      "path": "cachedata/lua/harvest/observed.json",
+      "bytes": 2003,
+      "sha256": "9fe369479904a771968199d3b1e1ca3956a0736223231f9e370a4fd743185ad9"
+    },
+    {
+      "path": "cachedata/lua/harvest/roleRequirements.json",
+      "bytes": 160,
+      "sha256": "c0307730519b7a276332944592784416663a871dd9bee1e51dbf8067bd40a5cb"
+    },
+    {
+      "path": "cachedata/lua/harvest/skillCards.json",
+      "bytes": 2816,
+      "sha256": "5aa60d58180d8d3f525c05387b2e6db3c26d4c345d792ef9276e7ee64c95b944"
+    },
+    {
+      "path": "cachedata/lua/harvest/spells.json",
+      "bytes": 79307,
+      "sha256": "671ca40d27ffdee5daa30813bfaf8d6fc5bfbd5beb6c54ebf63d1f284951d88c"
+    },
+    {
+      "path": "cachedata/lua/harvest/vendors.tsv",
+      "bytes": 558866,
+      "sha256": "d7b319503390b0a5d9ba565cd2ca2ad6af0defb7269a8907280f427ecd505a95"
+    },
+    {
+      "path": "cachedata/lua/MobSpells.lua",
+      "bytes": 1783078,
+      "sha256": "cfbd0c1413cfc3e7ba4f0ed1f6b5ccdad32a0db354693411dcc888438708b35c"
+    },
+    {
+      "path": "cachedata/raw/creaturecache.index.tsv.gz",
+      "bytes": 880004,
+      "sha256": "ab273acd5d8daa450c32462bb93b769fa155714bdcd422818c78e88698e32263"
+    },
+    {
+      "path": "cachedata/raw/creaturecache.pack.gz",
+      "bytes": 510917,
+      "sha256": "8940d3cbbf426125ca02382910f3fb029a1d737886ed5eb276f39da455ed916c"
+    },
+    {
+      "path": "cachedata/raw/gameobjectcache.index.tsv.gz",
+      "bytes": 386041,
+      "sha256": "79c440038fae5f10ca05b989b7fde4757a7402329013c41194b9bfbb43d7f012"
+    },
+    {
+      "path": "cachedata/raw/gameobjectcache.pack.gz",
+      "bytes": 225446,
+      "sha256": "db0620fd419cd231c1ea349ab807bf7c0274cd2a486c968535e767fa481050f4"
+    },
+    {
+      "path": "cachedata/raw/itemcache.index.tsv.gz",
+      "bytes": 18805457,
+      "sha256": "c6481e86b89a7d2f32b5aef80057e20dcfffb6ae000f8ed8751affa948993d97"
+    },
+    {
+      "path": "cachedata/raw/itemcache.pack.gz",
+      "bytes": 16727754,
+      "sha256": "7c81d3f9992e4892bd46bab7de7d89e30c0e0509043ca45573c73be4a01f4adc"
+    },
+    {
+      "path": "cachedata/raw/itemnamecache.index.tsv.gz",
+      "bytes": 97020,
+      "sha256": "fe49f707140ef0f3a44c73ed962a8bf6671967daeffc4d55259261b4a28f8993"
+    },
+    {
+      "path": "cachedata/raw/itemnamecache.pack.gz",
+      "bytes": 29174,
+      "sha256": "98c1858357704cfb799bdc4b1d4cfa6426adf0c2fa5c9c94843ae894e7c56493"
+    },
+    {
+      "path": "cachedata/raw/npccache.index.tsv.gz",
+      "bytes": 72530,
+      "sha256": "e2076fbf7e852ed8422071d4c08b4d6bf9f064e8f84d22b19a7147a3e6474e55"
+    },
+    {
+      "path": "cachedata/raw/npccache.pack.gz",
+      "bytes": 231061,
+      "sha256": "29033480ab477cc526a19589edcf7be723ecaa871882dd5e4bb7c22945de0a89"
+    },
+    {
+      "path": "cachedata/raw/pagetextcache.index.tsv.gz",
+      "bytes": 10792,
+      "sha256": "f56f79719b6a996b8af0f0f6dd87606c6978a359eb0fba81dd2fe003e160a38a"
+    },
+    {
+      "path": "cachedata/raw/pagetextcache.pack.gz",
+      "bytes": 51275,
+      "sha256": "b216bd19b0e9dbd62069698d17439c8375f1f120867d6d247fd59dffa05cdfef"
+    },
+    {
+      "path": "cachedata/raw/questcache.index.tsv.gz",
+      "bytes": 682210,
+      "sha256": "d04117f5f09412af0b8f9236ed554b067c36ffee00ab8297cfad9a1e199fdf8d"
+    },
+    {
+      "path": "cachedata/raw/questcache.pack.gz",
+      "bytes": 2884717,
+      "sha256": "849e407b295d0d9681afeb62728d4752350ae4671142085b15fc1e53fce5b937"
+    },
+    {
+      "path": "cachedata/README.md",
+      "bytes": 4414,
+      "sha256": "324ff1bc6ba3b3b55d0532a84d263dbe16af8d09cf37cb10046cd57f49e3a315"
+    },
+    {
+      "path": "cachedata/sources.tsv",
+      "bytes": 419288,
+      "sha256": "23d8f414dece47d18ad89350f74a1e85cd856b1c0b8c6d7c53ea2c140439a8a4"
+    },
+    {
+      "path": "cachedata/union/creaturecache.tsv.gz",
+      "bytes": 489424,
+      "sha256": "e4c7d236943a7f6b02728858765dbfd61b8d2351f7f36a2f4cd062e0adab67d2"
+    },
+    {
+      "path": "cachedata/union/gameobjectcache.tsv.gz",
+      "bytes": 240375,
+      "sha256": "7779ecc33a573ab2a39817e09124313e727815f2d74a19f33c6a295bd2c1f232"
+    },
+    {
+      "path": "cachedata/union/itemcache.tsv.gz",
+      "bytes": 14193186,
+      "sha256": "b0af5fb40c0376cc32526ffc6911f58d112d3e89b6c2a8caa89824962f347da5"
+    },
+    {
+      "path": "cachedata/union/itemnamecache.tsv.gz",
+      "bytes": 31371,
+      "sha256": "bb748b67ffdee0099b8e01888563b8aaa30aa78168fd57fa33281a84e418e450"
+    },
+    {
+      "path": "cachedata/union/npccache.tsv.gz",
+      "bytes": 223572,
+      "sha256": "0219be1662048d93ee17c03ce5b79dc5d6e9ef74926f6b4c47eafca68ffdd3b1"
+    },
+    {
+      "path": "cachedata/union/pagetextcache.tsv.gz",
+      "bytes": 51545,
+      "sha256": "c82615d8d9c3fc5902dab38fa7bbac610ea3982fad7a606d44f40ca870a1e176"
+    },
+    {
+      "path": "cachedata/union/questcache.tsv.gz",
+      "bytes": 2612443,
+      "sha256": "c2622ee7d1c33231462517c2e4d7088988b2e1b8e955f7358786cb5a28c2da5f"
+    },
+    {
+      "path": "cachedata/wdb/coa-alpha/creaturecache.wdb.gz",
+      "bytes": 33222,
+      "sha256": "03e4613679c787d92b40d78fa9ee1a9a469255baa7163c02c7a4d697f973b1b4"
+    },
+    {
+      "path": "cachedata/wdb/coa-alpha/gameobjectcache.wdb.gz",
+      "bytes": 19257,
+      "sha256": "b757ea7f6ffb944680eb6dbf67685bb9ca12fbbd7eb04931ad76072cfa0f9bf9"
+    },
+    {
+      "path": "cachedata/wdb/coa-alpha/npccache.wdb.gz",
+      "bytes": 5960,
+      "sha256": "b4af5f39455ea106eb3e859870c21eb358c4dfe8903253bac0b11fdde3652c54"
+    },
+    {
+      "path": "cachedata/wdb/coa-alpha/pagetextcache.wdb.gz",
+      "bytes": 365,
+      "sha256": "d7497a8a74245ab7dbb59eaed3be6266695398fea7a9670c3008c66e9c87af23"
+    },
+    {
+      "path": "cachedata/wdb/coa-alpha/questcache.wdb.gz",
+      "bytes": 26873,
+      "sha256": "7af74ed3c03a0877e8c8babffbaad1562003a9e43ebd6ddd393c651a82e8bdea"
+    },
+    {
+      "path": "cachedata/wdb/coa-beta/creaturecache.wdb.gz",
+      "bytes": 112899,
+      "sha256": "3236ede6dc7a3fb48b8f9815b2c6a336568b4eb430228b0bf890f2e0d0b5dd07"
+    },
+    {
+      "path": "cachedata/wdb/coa-beta/gameobjectcache.wdb.gz",
+      "bytes": 63739,
+      "sha256": "30fa233a90736c90559c9a020b6934854d8d758418c82c0dfd55477c57a637dd"
+    },
+    {
+      "path": "cachedata/wdb/coa-beta/itemcache.wdb.gz",
+      "bytes": 652263,
+      "sha256": "e33cfe3f16a09d0265afe0c34e848ade006bcd6933a8c71b6c3ec3a96c9d2835"
+    },
+    {
+      "path": "cachedata/wdb/coa-beta/itemnamecache.wdb.gz",
+      "bytes": 902,
+      "sha256": "dd59ab83ce44e053c267c6d01a777fe837f7117d8557479fab28b20833b81936"
+    },
+    {
+      "path": "cachedata/wdb/coa-beta/npccache.wdb.gz",
+      "bytes": 35434,
+      "sha256": "de93a464b791626e4605c435a419fc0b53606bf7a2f60514504299259444dbf3"
+    },
+    {
+      "path": "cachedata/wdb/coa-beta/pagetextcache.wdb.gz",
+      "bytes": 3884,
+      "sha256": "5f6048dd9f7011e0bc5dc20e4c60e7434e17f897745f00307366b7be6186bef5"
+    },
+    {
+      "path": "cachedata/wdb/coa-beta/questcache.wdb.gz",
+      "bytes": 165143,
+      "sha256": "19d6ff58e2e0f2d580d0bfdd7fb7ee17de1b5fc7a0d3d899287ae2adfbf12f5d"
+    },
+    {
+      "path": "cachedata/wdb/conquest-of-azeroth/creaturecache.wdb.gz",
+      "bytes": 355511,
+      "sha256": "dc5f153e1ef30737f6b8768b95295c67cfee63d4c2c5d85a0d23e0f828f0e99b"
+    },
+    {
+      "path": "cachedata/wdb/conquest-of-azeroth/gameobjectcache.wdb.gz",
+      "bytes": 180094,
+      "sha256": "bbc891f19464fd504f89c9f9d2f6acbc6f5800023e5f441cc02aea30e488069c"
+    },
+    {
+      "path": "cachedata/wdb/conquest-of-azeroth/itemcache.wdb.gz",
+      "bytes": 3220310,
+      "sha256": "7d43c539772a3fdab670953bb9d5fc3de82b9691fcad011f9767cbae8fc4df0d"
+    },
+    {
+      "path": "cachedata/wdb/conquest-of-azeroth/itemnamecache.wdb.gz",
+      "bytes": 22042,
+      "sha256": "40f4854a3759dce08ee6b0c4f2daaf34b9a924bc8698d013feec78ce1d6cecf7"
+    },
+    {
+      "path": "cachedata/wdb/conquest-of-azeroth/npccache.wdb.gz",
+      "bytes": 183051,
+      "sha256": "1cb5cc910ba57b120c20824a1408d1352ff747583adc5236b33538987a2dd6bd"
+    },
+    {
+      "path": "cachedata/wdb/conquest-of-azeroth/pagetextcache.wdb.gz",
+      "bytes": 47626,
+      "sha256": "dc7dcfc7be2f6824e04c4785bea6912fef56784d2cd2ac67feb0cb00806fb6d7"
+    },
+    {
+      "path": "cachedata/wdb/conquest-of-azeroth/questcache.wdb.gz",
+      "bytes": 713946,
+      "sha256": "331a97c14e28272f22fe4b883b1ec59454f272776737c04a2a8c7655be51a339"
+    },
+    {
+      "path": "cachedata/wdb/free-pick/creaturecache.wdb.gz",
+      "bytes": 140502,
+      "sha256": "bca384cd4d5a8c6fb6da34a1db788c2f5048cbe6a8648e3e83514598961dec5f"
+    },
+    {
+      "path": "cachedata/wdb/free-pick/gameobjectcache.wdb.gz",
+      "bytes": 77293,
+      "sha256": "35490cfa9a5b46d92dfaa2251f68826e3eed1d131f386de4156b24d13e5b87e5"
+    },
+    {
+      "path": "cachedata/wdb/free-pick/itemcache.wdb.gz",
+      "bytes": 1422039,
+      "sha256": "8314bdae284671d35c8b24cb7135139106e3ebd72a085cfd128f982af4f5e6cc"
+    },
+    {
+      "path": "cachedata/wdb/free-pick/itemnamecache.wdb.gz",
+      "bytes": 7713,
+      "sha256": "bcdc2d5052cc0da9a015866d1df06c68ed179e163b3cc091a8f56de631a1fe01"
+    },
+    {
+      "path": "cachedata/wdb/free-pick/npccache.wdb.gz",
+      "bytes": 26279,
+      "sha256": "28c59960c315d4a154c66c22e18f8c94ccdf175f03395d86431b990e2d8a647d"
+    },
+    {
+      "path": "cachedata/wdb/free-pick/pagetextcache.wdb.gz",
+      "bytes": 4478,
+      "sha256": "bb3778efc88a0912d812b65a968f11fe7b8f6bb9f39dad57249a53323255c4f5"
+    },
+    {
+      "path": "cachedata/wdb/free-pick/questcache.wdb.gz",
+      "bytes": 210791,
+      "sha256": "174c950d6faf3b538f5b92cdff3fd78033cf7f81aaf489424a8156fa12fc7ebd"
+    },
+    {
+      "path": "cachedata/wdb/live-qa/itemcache.wdb.gz",
+      "bytes": 12623,
+      "sha256": "fbc0108e8bd922e0e5496219670f6e210aa592f322fe09289ff47e0a9b1c86cf"
+    },
+    {
+      "path": "cachedata/wdb/live-qa/questcache.wdb.gz",
+      "bytes": 56447,
+      "sha256": "c0f458689980724d28887b4dd2c4ed67c233f25283014d164720ecd4412a17aa"
+    },
+    {
+      "path": "cachedata/wdb/README.md",
+      "bytes": 2448,
+      "sha256": "6ba55263579c78f84957e5df25a9fe77b12dc1639cc50da5a291a42943a1f61a"
+    },
+    {
+      "path": "cachedata/wdb/season-10-freepick/creaturecache.wdb.gz",
+      "bytes": 253308,
+      "sha256": "ec619fed6502f8455e553346e1747a7211111ae64fbae105c8ee6a13d302fc1d"
+    },
+    {
+      "path": "cachedata/wdb/season-10-freepick/gameobjectcache.wdb.gz",
+      "bytes": 123857,
+      "sha256": "51cd7b0e32dcb2a26ce6838e76ea37fb4b52b8b0cbbca0157e146ae2c20fe823"
+    },
+    {
+      "path": "cachedata/wdb/season-10-freepick/itemcache.wdb.gz",
+      "bytes": 15412469,
+      "sha256": "d60ad50af9925a5798de96091cf93b0646fda62ab38ed973f69fcd62335e8c8e"
+    },
+    {
+      "path": "cachedata/wdb/season-10-freepick/itemnamecache.wdb.gz",
+      "bytes": 6318,
+      "sha256": "1322a1f4ea871a3a3dd706c816f52d23d91f1b5847dc3bc089a0c1e3222e4269"
+    },
+    {
+      "path": "cachedata/wdb/season-10-freepick/npccache.wdb.gz",
+      "bytes": 44477,
+      "sha256": "ed5508143cbf2464aa6a1b03191191dfc481a5c1ae3227901a0ddca73b759581"
+    },
+    {
+      "path": "cachedata/wdb/season-10-freepick/pagetextcache.wdb.gz",
+      "bytes": 7328,
+      "sha256": "2c5fba5e6ebdbe91f34957304445c75c892bb0ee7f60e6a7477ef191fe079697"
+    },
+    {
+      "path": "cachedata/wdb/season-10-freepick/questcache.wdb.gz",
+      "bytes": 2766239,
+      "sha256": "444b061f314104d4c269b0abd79b188c4557e2838f4659c8818b8f5565dd0a2d"
+    },
+    {
+      "path": "cachedata/wdb/season-10-wildcard/creaturecache.wdb.gz",
+      "bytes": 112243,
+      "sha256": "76266fdb14bd083f4840d578bfd5915b54f4987dd3dcbfd6be0d7f6f9454e19c"
+    },
+    {
+      "path": "cachedata/wdb/season-10-wildcard/gameobjectcache.wdb.gz",
+      "bytes": 52819,
+      "sha256": "78c7638d4ee6814bf2f33db743409037245de069355cf1cea6e159c02d6ab805"
+    },
+    {
+      "path": "cachedata/wdb/season-10-wildcard/itemcache.wdb.gz",
+      "bytes": 1029991,
+      "sha256": "2029c07a7052d1e79818a9f6ed4cd96e9dc5e33aa6706305a9fcde19a137a1ab"
+    },
+    {
+      "path": "cachedata/wdb/season-10-wildcard/itemnamecache.wdb.gz",
+      "bytes": 2757,
+      "sha256": "80994f569a61edafd896bcdd9b057c967579acc1e8aeca3c4d3c875e03860f93"
+    },
+    {
+      "path": "cachedata/wdb/season-10-wildcard/npccache.wdb.gz",
+      "bytes": 30796,
+      "sha256": "fa7fb038c1860068e5237b8eaea5510f0d567717a1b38d7c54fd5b5087d68efc"
+    },
+    {
+      "path": "cachedata/wdb/season-10-wildcard/pagetextcache.wdb.gz",
+      "bytes": 2973,
+      "sha256": "af3fd546aba5cd2f7e6f2b3e4d29cb35df4afa31ad8116f9d4b137061d820a0e"
+    },
+    {
+      "path": "cachedata/wdb/season-10-wildcard/questcache.wdb.gz",
+      "bytes": 136154,
+      "sha256": "a6263ba2fef67c1742deaf8d120a4c4715230543b7dd6d8ea03087ebf953e31e"
+    },
+    {
+      "path": "cachedata/wdb/season-9/creaturecache.wdb.gz",
+      "bytes": 189929,
+      "sha256": "d3d56942482c4b013168608ee974806d06636710a4d917b1919406e0a472786e"
+    },
+    {
+      "path": "cachedata/wdb/season-9/gameobjectcache.wdb.gz",
+      "bytes": 102854,
+      "sha256": "9d0d9c2de3dd3420b2b328743aa1982b7219454a70883698f684b67c41d9cf98"
+    },
+    {
+      "path": "cachedata/wdb/season-9/itemcache.wdb.gz",
+      "bytes": 1376475,
+      "sha256": "9fa285f4fa437869da7f7e1f781cdb869c3253171ebddb8707542d0851121161"
+    },
+    {
+      "path": "cachedata/wdb/season-9/itemnamecache.wdb.gz",
+      "bytes": 7919,
+      "sha256": "a33ed237b99e3d508a4cd80ae22745f467eaee60ce2cdc732e7dfb711b25dbb4"
+    },
+    {
+      "path": "cachedata/wdb/season-9/npccache.wdb.gz",
+      "bytes": 28881,
+      "sha256": "8602c3e5002c8d60ab58f29c00086410f9e108e14aa39d8a391cb79be4c1d643"
+    },
+    {
+      "path": "cachedata/wdb/season-9/pagetextcache.wdb.gz",
+      "bytes": 677,
+      "sha256": "b6b1d4f20e37eb11ecd31a7911e543b18b6220aa0d8482a77060951f4d742c6d"
+    },
+    {
+      "path": "cachedata/wdb/season-9/questcache.wdb.gz",
+      "bytes": 192262,
+      "sha256": "bc0ebab49ff52324170640b1fa4e06d0b8419c7cedcca4611e39e998f4ef743b"
+    },
+    {
+      "path": "cachedata/wdb/stress-test/creaturecache.wdb.gz",
+      "bytes": 39029,
+      "sha256": "e7aac9da5f69a74ce90b987a7b465d01ef014730fa71aeab334310c1f420d338"
+    },
+    {
+      "path": "cachedata/wdb/stress-test/gameobjectcache.wdb.gz",
+      "bytes": 15952,
+      "sha256": "3929e0bbddfafe98df520e025fb4eb053ba26220f7463bcc9f608a4d71e39317"
+    },
+    {
+      "path": "cachedata/wdb/stress-test/itemcache.wdb.gz",
+      "bytes": 427325,
+      "sha256": "51e095f88eee731fc74d626006faeffcd2ed50cd02a2001f983cc8c4ea890b1e"
+    },
+    {
+      "path": "cachedata/wdb/stress-test/itemnamecache.wdb.gz",
+      "bytes": 1348,
+      "sha256": "ec22e0b91c6924ab3830e782b84bc90d0d3b9f0fd66bea2b2639e279e2899561"
+    },
+    {
+      "path": "cachedata/wdb/stress-test/npccache.wdb.gz",
+      "bytes": 3658,
+      "sha256": "6342cc727495e45bf9a92bacee6d4c49a6f163a63f51299d947a693e4631e5ad"
+    },
+    {
+      "path": "cachedata/wdb/stress-test/pagetextcache.wdb.gz",
+      "bytes": 639,
+      "sha256": "ea5faa2fe54a6afc37bf201d3b480e461951c6c4caafee8f7bcf0e914889df85"
+    },
+    {
+      "path": "cachedata/wdb/stress-test/questcache.wdb.gz",
+      "bytes": 36184,
+      "sha256": "0037bf004446c4003c96054f3e006dd18c2fab7f473a436e2bb77fcfa2d3db8a"
+    },
+    {
+      "path": "cachedata/wdb/unknown/creaturecache.wdb.gz",
+      "bytes": 66026,
+      "sha256": "91682cfb5fa4b94f404fc6297305f121a295b2b5245413cd8d628d0d234bee03"
+    },
+    {
+      "path": "cachedata/wdb/unknown/gameobjectcache.wdb.gz",
+      "bytes": 30271,
+      "sha256": "184f92f9535432e39d08213eba51de2353dd6dd46c9d104c7d8e685dbd35e5af"
+    },
+    {
+      "path": "cachedata/wdb/unknown/itemcache.wdb.gz",
+      "bytes": 2484,
+      "sha256": "703aa3740eda8218313d8bcb29027bb778f9a5e6ed93c4486733bedd3077d7be"
+    },
+    {
+      "path": "cachedata/wdb/unknown/itemnamecache.wdb.gz",
+      "bytes": 360,
+      "sha256": "16f26c6e0677f8e2c1336950c33f9e9d94791e1b78a312c996e10e609726e072"
+    },
+    {
+      "path": "cachedata/wdb/unknown/npccache.wdb.gz",
+      "bytes": 20337,
+      "sha256": "b09fb0a66e13a821893ca36aaa5a46da94305d188daef41a6cd61c1dc427f184"
+    },
+    {
+      "path": "cachedata/wdb/unknown/questcache.wdb.gz",
+      "bytes": 112137,
+      "sha256": "ed74c709e1d914bc3a584792ea8e9ef0caaad69470207f28ebc9b8956abb20a2"
+    },
+    {
+      "path": "cachedata/wdb/warcraft-reborn/creaturecache.wdb.gz",
+      "bytes": 110618,
+      "sha256": "71715a4a5345c021e0b669c7f91012b83639dc2b898cb03a97da95deb4ab46f7"
+    },
+    {
+      "path": "cachedata/wdb/warcraft-reborn/gameobjectcache.wdb.gz",
+      "bytes": 55984,
+      "sha256": "ff2a66bd523e2d93b7ccdbcdde54ed8abb01ce666aa1d1b553932e87e8f707e7"
+    },
+    {
+      "path": "cachedata/wdb/warcraft-reborn/itemcache.wdb.gz",
+      "bytes": 1996900,
+      "sha256": "9c0efd3b9eced81cb51b43fdc72712669e947a51ca0fb2447cac2c15b9509008"
+    },
+    {
+      "path": "cachedata/wdb/warcraft-reborn/itemnamecache.wdb.gz",
+      "bytes": 8464,
+      "sha256": "ed8516ffae6b98c389001d7925aca37e57ae4d61fa87015a7ae58e7bc4e399b2"
+    },
+    {
+      "path": "cachedata/wdb/warcraft-reborn/npccache.wdb.gz",
+      "bytes": 24040,
+      "sha256": "5768a0724a8405ee4016acb09c2db8f3036b24f876707594e702a5700afe03f8"
+    },
+    {
+      "path": "cachedata/wdb/warcraft-reborn/pagetextcache.wdb.gz",
+      "bytes": 2796,
+      "sha256": "0d338b36556be7d974263337bf83ca39e77cdf4bad2516a3ab33c21fbdfd8dbb"
+    },
+    {
+      "path": "cachedata/wdb/warcraft-reborn/questcache.wdb.gz",
+      "bytes": 163112,
+      "sha256": "7422c798ec037bf32d8e7ff703a112422632ccd695b3faad2d6aa72e77c29cba"
+    }
+  ],
+  "source_repository": "https://github.com/hertigservices/ascension-data",
+  "provenance": "cachedata/sources.tsv; raw payload indexes retain mode/date attribution"
+}

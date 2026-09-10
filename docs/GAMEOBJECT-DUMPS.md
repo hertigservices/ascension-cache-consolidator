@@ -1,3 +1,5 @@
+> Tool commands in this guide now run from the [canonical cache component](https://github.com/hertigservices/Ascension_preservation/tree/main/tools/cache-consolidator). Dataset paths remain in this data repository.
+
 # The GameObject dumps — what they are, and what they are not
 
 Submitted by **Coin** as `dumps-part1.zip`, `dumps_part2.zip`, `dumps_part3.zip`

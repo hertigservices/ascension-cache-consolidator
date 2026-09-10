@@ -1,0 +1,7 @@
+{
+  "schema": 1,
+  "role": "datasets-and-provenance",
+  "code_repository": "https://github.com/hertigservices/Ascension_preservation",
+  "code_path": "tools/cache-consolidator",
+  "legacy_repository_name": "ascension-cache-consolidator"
+}

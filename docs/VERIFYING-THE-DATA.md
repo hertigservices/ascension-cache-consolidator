@@ -1,3 +1,5 @@
+> Tool commands in this guide now run from the [canonical cache component](https://github.com/hertigservices/Ascension_preservation/tree/main/tools/cache-consolidator). Dataset paths remain in this data repository.
+
 # How do we know any of this actually works?
 
 Fair question, and it deserves a real answer rather than "the tests pass".
