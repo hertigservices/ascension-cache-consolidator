@@ -412,6 +412,7 @@ class Plan:
         if version_policy not in ("keep",):
             header = with_version(header, int(version_policy))
         self.version_out = cache_version(header)
+        self.merged = merged
         self.bytes = build(header, merged)
 
         if user_header is not None and self.added == 0 and \
@@ -420,12 +421,23 @@ class Plan:
             self.skip, self.note = True, "nothing to add -- already has everything"
 
     def verify(self):
+        """Re-parse the bytes about to be written and check every record against
+        the decision that produced it. This is the same check rebuild.py makes
+        on the published files: a wrong length field or a bad terminator would
+        otherwise become a plausible-looking file the client silently rejects."""
         info = wdblib.inspect(self.dst, data=self.bytes)
         want = self.user_records + self.added
         if not info.standard or not info.clean_end:
             return False, "rebuilt file failed the header check"
         if info.records != want:
             return False, f"record count {info.records} != {want}"
+        seen = 0
+        for entry, _size, payload in wdblib.iter_records(self.bytes):
+            if self.merged.get(entry) != payload:
+                return False, f"entry {entry} did not survive the rebuild intact"
+            seen += 1
+        if seen != len(self.merged):
+            return False, f"walked {seen} records, expected {len(self.merged)}"
         return True, ""
 
 
@@ -545,6 +557,9 @@ def plan_addons(root, data, account):
                     stats["added"] += 1
                 elif isinstance(v, luaser.Table) and isinstance(cur[g], luaser.Table):
                     deep_merge(cur[g], v, rules, stats)
+            if stats["added"] == 0 and stats["widened"] == 0:
+                out.append((src, dst, None, stats, "nothing to add -- your file already has it all"))
+                continue
             text = luaser.dumps(cur)
             note = "merge into your file"
         else:
@@ -573,10 +588,18 @@ def backup(path, root, bdir):
     return dst
 
 
+NEW_LIST = "NEW-FILES.txt"
+
+
 def write_atomic(dst, data, root, bdir):
     os.makedirs(os.path.dirname(dst), exist_ok=True)
     if os.path.exists(dst):
         backup(dst, root, bdir)
+    else:
+        # Nothing to back up, but --undo must still know to remove it.
+        os.makedirs(bdir, exist_ok=True)
+        with open(os.path.join(bdir, NEW_LIST), "a", encoding="utf-8") as f:
+            f.write(os.path.relpath(dst, root) + "\n")
     tmp = dst + ".part"
     with open(tmp, "wb") as f:
         f.write(data)
@@ -589,8 +612,19 @@ def do_undo(root):
         sys.exit("!! no WDB-backup-* folder in Cache/ to restore from")
     bdir = dirs[-1]
     n = 0
+    newlist = os.path.join(bdir, NEW_LIST)
+    if os.path.exists(newlist):
+        with open(newlist, encoding="utf-8") as f:
+            for rel in f.read().splitlines():
+                p = os.path.join(root, rel)
+                if rel and os.path.isfile(p):
+                    os.remove(p)
+                    print(f"  removed  {rel}  (was created by the install)")
+                    n += 1
     for dp, _d, fs in os.walk(bdir):
         for fn in fs:
+            if fn == NEW_LIST:
+                continue
             src = os.path.join(dp, fn)
             rel = os.path.relpath(src, bdir)
             dst = os.path.join(root, rel)
@@ -598,7 +632,7 @@ def do_undo(root):
             shutil.copy2(src, dst)
             print(f"  restored {rel}")
             n += 1
-    print(f"{n} file(s) restored from {bdir}")
+    print(f"{n} file(s) restored or removed, from {bdir}")
     print("The backup folder is left in place; delete it yourself once you are sure.")
     return 0
 

@@ -14,3 +14,5 @@ __pycache__/
 *.pyc
 modes.json
 decoded/
+# import_world.py output (SQL staging files + a mysqldump backup of YOUR database)
+import-out/

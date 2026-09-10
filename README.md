@@ -84,17 +84,58 @@ per-file hard limit. Compressed it is 105 MB with nothing over 16 MB. Each `.gz`
 exactly one file, so anything that reads gzip reads these: 7-Zip, `gunzip`,
 `pandas.read_csv`, `gzip.open`.
 
-To put a mode's caches into your own game:
+To put the caches into your own game, **merged with the ones you already have**:
 
 ```bash
-python tools/unpack.py                       # what is in here
-python tools/unpack.py --mode conquest-of-azeroth --into "<your WoW>/Cache/WDB/enUS/<Realm> - Conquest of Azeroth"
+python -B tools/install.py            # finds the client, shows what it would change
+python -B tools/install.py --write    # does it (close the game first)
+python -B tools/install.py --undo     # puts the replaced files back
 ```
 
-It parses each cache's header before letting it land, refuses to overwrite a cache you
-already have unless you pass `--force`, and keeps a `.bak` when it does. Your own cache
-is the only record of what your realm told your client; it is not this tool's to throw
-away. **Close the game first** — the client rewrites these files when it exits.
+or double-click `tools/Install Caches.cmd`. It works on an Ascension client (one cache
+folder per realm, mode read off the folder name) and on a stock 3.3.5a client (flat
+`Cache\WDB\enUS`, pass `--mode`). Where you and the archive both hold a record, **yours
+wins** — your cache is what your realm told your client. It backs up every file it
+replaces, keeps your cache-version header so the server does not throw the files away,
+can fetch the dataset for you (`--fetch`, no git needed), and merges the addon
+SavedVariables too (`--addons`). **Close the game first** — the client rewrites these
+files when it exits, and the tool refuses to write while it sees one running.
+
+`tools/unpack.py` is the simpler predecessor: it decompresses one mode's files and
+copies them in whole, refusing to overwrite a cache you already have.
+
+### Putting the data on a server
+
+Installed caches make the client *display* things; a server has to *know* them before
+it can hand them out. `tools/import_world.py` merges the decoded records into a stock
+AzerothCore world database — `item_template`, `creature_template` (+ models),
+`gameobject_template` (+ quest items), `quest_template`, `page_text`, `npc_text`:
+
+```bash
+python -B tools/import_world.py --ask-password              # preview: what would be added / filled
+python -B tools/import_world.py --ask-password --apply      # backs up the tables, then writes
+python -B tools/import_world.py --source conquest-of-azeroth --ask-password --apply
+```
+
+It adds rows the database lacks and fills columns still on their schema default; it
+never overwrites a value the database actually holds, so re-running is a no-op. Every
+value is range-checked before it is written, because AzerothCore's recommended MySQL
+setup would otherwise clamp or truncate silently. A fresh AzerothCore world gains
+~60,000 items from the Conquest of Azeroth view alone, or ~500,000 from the union.
+
+**[docs/USING-THE-DATA.md](docs/USING-THE-DATA.md)** is the full walk-through for both
+halves: what the data can and cannot show in game, the Ascension-client and
+stock-client setups, the cache-version handshake that silently deletes a mis-installed
+cache, and how to check the result in game.
+
+### Which repository is which
+
+This repository holds the **dataset and everything that puts the dataset somewhere** —
+into a game client, or into any AzerothCore world database. None of it depends on
+Ascension's server or binary. [hertigservices/Ascension_preservation](https://github.com/hertigservices/Ascension_preservation)
+is the other half: what it takes to run the **Ascension client itself** against a server
+you control — the auth shim, the world bridge, the custom wire protocol, the Conquest of
+Azeroth class system. Its world-database step points here for the data.
 
 ## Usage
 
@@ -116,11 +157,13 @@ The six stages, each runnable on its own:
 | `rebuild.py` | write merged, client-loadable `.wdb` files per mode |
 | `audit_publish.py` | scan everything about to be published for player data |
 
-Five tools sit outside the pipeline:
+These tools sit outside the pipeline:
 
 | tool | what it does |
 |---|---|
-| `unpack.py` | decompress the published dataset, or install one mode into your client |
+| `install.py` | merge the published caches (and addon SavedVariables) into an existing Ascension or stock 3.3.5a client, with backup and `--undo` |
+| `import_world.py` | merge the decoded records into an AzerothCore world database; preview by default, `--apply` to write |
+| `unpack.py` | decompress the published dataset, or copy one mode into your client whole |
 | `publish.py` | run the pipeline, mirror the result into this repository, audit it, commit and push. `--watch` repeats that whenever the inbox changes, so a dropped submission becomes public without anyone deciding anything by hand |
 | `tray_app.py` | the same thing with a face: a system-tray icon that watches the inbox, runs the pipeline when a submission lands, and opens a window with a live log and buttons for the manual commands |
 | `sweep_inbox.py` | find submissions the pipeline is silently skipping, and give them names that stop it |
