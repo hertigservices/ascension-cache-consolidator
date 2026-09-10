@@ -13,6 +13,18 @@ See the [unified setup guide](https://github.com/hertigservices/Ascension_preser
 | [manifests/](manifests/) | SHA-256 and size of every file in a named cache snapshot |
 | [supplemental/bisbeard/](supplemental/bisbeard/) | Separately attributed planner export, all original rows, queryable catalog and comparison report |
 
+| Guide | What it covers |
+|---|---|
+| [Using the data](https://github.com/hertigservices/Ascension_preservation/blob/main/tools/cache-consolidator/docs/USING-THE-DATA.md) | Installing these caches into a client, importing them into a server's world database, and checking the result in game |
+| [Verifying the data](https://github.com/hertigservices/Ascension_preservation/blob/main/tools/cache-consolidator/docs/VERIFYING-THE-DATA.md) | How to satisfy yourself a merged record matches what a client really wrote |
+| [The WDB format](https://github.com/hertigservices/Ascension_preservation/blob/main/tools/cache-consolidator/docs/WDB-FORMAT.md) | The layout of a `.wdb` cache file, including the parts still unread |
+| [The GameObject dumps](https://github.com/hertigservices/Ascension_preservation/blob/main/tools/cache-consolidator/docs/GAMEOBJECT-DUMPS.md) | What the donated object and creature dumps are, and why they are not a spawn table |
+
+Those guides live beside the tools whose commands they contain, so that a flag
+and its documentation change together. The matching paths under [docs/](docs/)
+in this repository are signposts to them, kept so older links still land
+somewhere useful.
+
 Captured cache variants remain separate by source and game mode. The supplemental
 planner catalog does not replace captured values or claim that a candidate ID,
 loot source, or probability is authoritative. Each supplemental snapshot records
