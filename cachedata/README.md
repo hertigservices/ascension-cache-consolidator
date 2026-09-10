@@ -1,6 +1,6 @@
 # Ascension client cache — merged dataset
 
-_Merged from 1241 distinct submitted cache files, the newest captured 2026-09-09._
+_Merged from 1266 distinct submitted cache files, the newest captured 2026-09-09._
 
 Community-submitted `Cache\WDB` folders from the Ascension WoW client, merged
 at the **record** level. Identical records collapse to one row no matter how
@@ -20,6 +20,7 @@ entry differently per game mode and between patches.
 | `sources.tsv` | every submitted file: realm, mode, capture date, record count. |
 | `lua/` | merged addon SavedVariables, and the server-pushed UI code. |
 | `lua/stock-client/` | the item, creature and quest records as Lua 5.1 tables an addon on a **stock** client can load; `dbc/item_display_icons.tsv.gz` is the icon lookup they use. |
+| `mapdata/` | which **server** map ids exist as extracted terrain, and the DBC set submitted with them. An inventory, never the terrain itself — that is derived data a server operator regenerates from their own client. |
 
 **The data files are gzipped.** Uncompressed this dataset is ~756 MB and its
 largest file is a 254 MB itemcache; GitHub rejects anything over 100 MB. Each
@@ -35,13 +36,13 @@ independent submissions corroborate it.
 
 | cache | distinct records | union entries |
 |---|---:|---:|
-| creaturecache | 26,858 | 22,982 |
-| gameobjectcache | 15,962 | 15,791 |
-| itemcache | 645,049 | 552,238 |
+| creaturecache | 26,874 | 22,998 |
+| gameobjectcache | 15,972 | 15,801 |
+| itemcache | 645,080 | 552,239 |
 | itemnamecache | 3,389 | 3,360 |
-| npccache | 2,358 | 2,321 |
-| pagetextcache | 362 | 362 |
-| questcache | 22,021 | 18,553 |
+| npccache | 2,376 | 2,338 |
+| pagetextcache | 370 | 370 |
+| questcache | 22,023 | 18,553 |
 
 ## Game modes
 
@@ -49,7 +50,7 @@ independent submissions corroborate it.
 |---|---|---:|---:|---:|---:|---:|---:|---:|
 | `coa-alpha` | conquest-of-azeroth | 1,359 | 1,400 | 0 | 0 | 54 | 1 | 119 |
 | `coa-beta` | conquest-of-azeroth | 5,122 | 4,653 | 16,239 | 67 | 308 | 22 | 720 |
-| `conquest-of-azeroth` | conquest-of-azeroth | 17,276 | 12,552 | 83,092 | 2,802 | 1,866 | 335 | 3,580 |
+| `conquest-of-azeroth` | conquest-of-azeroth | 17,301 | 12,562 | 84,148 | 2,802 | 1,886 | 343 | 3,622 |
 | `free-pick` | free-pick | 7,040 | 6,140 | 38,034 | 813 | 320 | 18 | 1,066 |
 | `live-qa` | free-pick | 0 | 0 | 398 | 0 | 0 | 0 | 210 |
 | `season-10-freepick` | free-pick | 12,194 | 8,757 | 548,849 | 640 | 496 | 28 | 18,552 |
@@ -57,7 +58,7 @@ independent submissions corroborate it.
 | `season-9` | season-9 | 8,484 | 7,448 | 36,327 | 818 | 283 | 3 | 962 |
 | `stress-test` | stress-test | 1,674 | 1,122 | 10,125 | 100 | 34 | 2 | 177 |
 | `unknown` | unknown | 2,989 | 2,039 | 65 | 19 | 176 | 0 | 445 |
-| `warcraft-reborn` | warcraft-reborn | 5,208 | 3,859 | 47,573 | 875 | 223 | 15 | 776 |
+| `warcraft-reborn` | warcraft-reborn | 5,211 | 3,859 | 47,602 | 875 | 223 | 15 | 782 |
 
 ### `unknown` is not a game mode
 

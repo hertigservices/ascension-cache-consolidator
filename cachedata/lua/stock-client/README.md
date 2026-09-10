@@ -13,9 +13,9 @@ never saw. Data captured through 2026-09-09. Regenerated on every publish by
 
 | table | rows | from `conquest-of-azeroth` | from `union` | files | row layout |
 |---|---:|---:|---:|---:|---|
-| `AscensionStockData.items` | 552,238 | 83,092 | 469,146 | 131 | `{ name, quality, icon, displayId, class, subclass, inventoryType, itemLevel, requiredLevel }` |
-| `AscensionStockData.creatures` | 22,982 | 17,276 | 5,706 | 3 | `{ name, subname, displayId }` |
-| `AscensionStockData.quests` | 18,553 | 3,580 | 14,973 | 3 | `{ title }` |
+| `AscensionStockData.items` | 552,239 | 84,148 | 468,091 | 131 | `{ name, quality, icon, displayId, class, subclass, inventoryType, itemLevel, requiredLevel }` |
+| `AscensionStockData.creatures` | 22,998 | 17,301 | 5,697 | 3 | `{ name, subname, displayId }` |
+| `AscensionStockData.quests` | 18,553 | 3,622 | 14,931 | 3 | `{ title }` |
 
 Rows are positional to keep the files small; the order above is also in
 `AscensionStockData.fields`. Numbers are integers, strings are UTF-8 as the server sent them,
@@ -31,7 +31,7 @@ the last is the stock 3.3.5a display id with byte-identical art, blank when none
 
 | items | count |
 |---|---:|
-| with an icon | 522,151 |
+| with an icon | 522,152 |
 | display id not in Ascension's DBC | 433 |
 | display id 0 in the record | 29,654 |
 

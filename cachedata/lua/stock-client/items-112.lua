@@ -2469,6 +2469,7 @@ T[1852028]={"Corestalker's Chain",4,"INV_Belt_11",20208,4,3,6,68,60}
 T[1852029]={"Blackscale Vambraces",4,"INV_Bracer_14",24366,4,4,9,74,60}
 T[1852030]={"Crown of the Cinder Wyrm",4,"INV_Helmet_13",17786,4,4,1,68,60}
 T[1852031]={"Magmawall Girdle",4,"INV_Belt_49C",51689,4,4,6,68,60}
+T[1852033]={"Ashclaw Coif",4,"INV_Helmet_42",38073,4,2,1,68,60}
 T[1852034]={"Pyroclast Armguards",4,"INV_Bracer_16",157858,4,4,9,68,60}
 T[1852035]={"Band of the Pierced Scale",4,"INV_Jewelry_Ring_23",158226,4,0,11,68,60}
 T[1852201]={"Treasure Seeker's Scroll #1",4,"INV_Misc_Book_07",28046,0,0,0,1,1}
