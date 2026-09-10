@@ -58,7 +58,11 @@ def classify(path):
     # make the mob table itself player data.  Everything else in WTF is refused.
     if low in LUA_SCRUB:
         return SCRUB, LUA_SCRUB[low]
-    if "/wtf/" in p.lower() or p.lower().startswith("wtf/"):
+    # Uploads may contain WTF itself or only its Account subtree. Match exact
+    # directory components even without an email login or a realm/mode suffix;
+    # account-wide SavedVariables has neither. Explicit Lua merge specs above
+    # still take priority because they discard character/profile branches.
+    if any(part.lower() in ("wtf", "account") for part in p.split("/")[:-1]):
         return QUARANTINE, ("WTF config tree: keyed by account login and character "
                             "name, and carries chat, macros and combat logs")
     if low.endswith(".wdb"):

@@ -74,6 +74,7 @@ import webbrowser
 HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, HERE)
 import config
+from publish import BUSY_EXIT
 
 PUBLISH = os.path.join(HERE, "publish.py")
 STATE_PATH = os.path.join(config.WORK, "tray_state.json")
@@ -488,10 +489,13 @@ class Runner(object):
             rc = self.proc.wait()
             self.proc = None
             took = time.time() - self.started
-            self.last_ok = (rc == 0)
-            self.last_result = ("%s: OK in %s" % (label, mmss(took)) if rc == 0
-                                else "%s: FAILED (exit %d) after %s"
-                                     % (label, rc, mmss(took)))
+            self.last_ok = None if rc == BUSY_EXIT else (rc == 0)
+            if rc == BUSY_EXIT:
+                self.last_result = "%s: waiting for another publisher" % label
+            else:
+                self.last_result = ("%s: OK in %s" % (label, mmss(took)) if rc == 0
+                                    else "%s: FAILED (exit %d) after %s"
+                                         % (label, rc, mmss(took)))
             self.log("-- " + self.last_result)
             return rc
         finally:
@@ -585,6 +589,11 @@ class Watcher(threading.Thread):
         rc = self.app.runner.run(self.app.state["push"], "auto-consolidate")
         if rc is None:
             return                      # a manual run holds the lock; try later
+        if rc == BUSY_EXIT:
+            self.next_attempt = time.time() + POLL_SECONDS
+            self.app.log("~~ another publisher is active; retrying in %s. "
+                         "The submission remains pending." % mmss(POLL_SECONDS))
+            return
         if rc != 0:
             # Deliberately NOT recording the fingerprint: this submission has not
             # been published, so the next poll must try it again rather than wait
@@ -779,6 +788,8 @@ class App(object):
             if rc == 0 and self.state["tidy"]:
                 tidy_inbox(self.log)
             if rc == 0:
+                self.watcher.failures = 0
+                self.watcher.next_attempt = 0.0
                 self.watcher.handled = inbox_fingerprint()
                 self.watcher.pristine = set(root_files())
                 self.consumed.clear()

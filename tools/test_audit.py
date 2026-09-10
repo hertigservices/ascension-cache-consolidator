@@ -15,6 +15,7 @@ import os, sys, gzip, shutil, tempfile, subprocess
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import audit_publish
+import scrub
 
 # THE FIXTURES ARE WRITTEN IN PIECES ON PURPOSE.
 #
@@ -136,6 +137,49 @@ def check_ignored():
     return results
 
 
+def check_config_trees():
+    """Packing WTF's contents must not turn account state into public data.
+
+    Use synthetic paths only. Known addon files still require branch scrubbing;
+    ordinary caches and server JSON outside config trees remain publishable.
+    """
+    account = "Acc" + "ount/"
+    email_login = "sample" + chr(64) + "example.invalid"
+    roots = [
+        "WTF/" + account + "SAMPLE/",
+        "drop/wTf/" + account + "SAMPLE/",
+        account + email_login + "/",
+        "drop/" + account + "SAMPLE/",
+    ]
+    cases = []
+    for root in roots:
+        # Account-wide state has no realm name; realm names also need not
+        # contain the Ascension-specific ' - ' mode separator.
+        for leaf in ("SavedVariables/state.json",
+                     "ExampleRealm/ExampleCharacter/state.loc",
+                     "ExampleRealm - CoA/ExampleCharacter/itemcache.wdb"):
+            path = root + leaf
+            cases.append((path, scrub.QUARANTINE))
+            cases.append((path.replace("/", chr(92)), scrub.QUARANTINE))
+        for addon in ("GatherMate2.lua", "MobSpells.lua.bak"):
+            cases.append((root + "SavedVariables/" + addon, scrub.SCRUB))
+    for path in ("Cache/WDB/enUS/itemcache.wdb", "server/content.json",
+                 "server/content.loc", "accounting/content.json",
+                 "mywtf/content.loc"):
+        cases.append((path, scrub.PUBLISH))
+    cases.extend([
+        ("Cache/WDB/enUS/itemtextcache.wdb", scrub.QUARANTINE),
+        ("Cache/WDB/enUS/wowcache.wdb", scrub.QUARANTINE),
+        (account + "SAMPLE/SavedVariables/UnknownAddon.lua", scrub.QUARANTINE),
+    ])
+    failures = [(path, want, scrub.classify(path)[0]) for path, want in cases
+                if scrub.classify(path)[0] != want]
+    for path, want, got in failures:
+        print(f"  FAIL  config classification: {path}: {got}, expected {want}")
+    print(f"  {len(cases) - len(failures)}/{len(cases)} config-tree checks")
+    return [("config trees stay private regardless of packing", not failures)]
+
+
 def main():
     bad = 0
     for name, body in sorted(MUST_FAIL.items()):
@@ -150,10 +194,10 @@ def main():
         ok = check_gz(body, rc, trunc)
         bad += not ok
         print(f"  {'ok  ' if ok else 'FAIL'}  compressed      : {label}")
-    extra = check_ignored()
+    extra = check_ignored() + check_config_trees()
     for label, ok in extra:
         bad += not ok
-        print(f"  {'ok  ' if ok else 'FAIL'}  git-ignore      : {label}")
+        print(f"  {'ok  ' if ok else 'FAIL'}  safeguard       : {label}")
     n = len(MUST_FAIL) + len(MUST_PASS) + len(COMPRESSED) + len(extra)
     print(f"\n{n - bad}/{n} "
           + ("- the publish gate is working" if not bad

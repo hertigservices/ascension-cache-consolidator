@@ -23,8 +23,9 @@ though it were a consolidation.
 WHAT IT WILL NOT DO
 -------------------
 It never invents a remote, never force-pushes, and never commits anything under
-`quarantine/`.  If the working tree has changes it did not make, it says so and
-stops rather than sweeping someone else's edit into a commit.
+`quarantine/`.  If tracked files have unrelated changes, it says so and
+stops rather than sweeping someone else's edit into a commit. Untracked drafts
+outside the output stay uncommitted and do not block the run.
 """
 import os, io, re, sys, subprocess, shutil, time, filecmp
 
@@ -37,6 +38,7 @@ REPO = os.environ.get(
     os.path.join(os.path.dirname(config.WORK), "ascension-cache-consolidator"))
 DATA = os.path.join(REPO, "cachedata")
 POLL_SECONDS = 60
+BUSY_EXIT = 75  # temporary lock contention, not a pipeline failure
 
 
 def run(cmd, cwd=None, check=True):
@@ -387,7 +389,7 @@ class Lock(object):
                     except OSError:
                         pass
                     continue
-                print("\n!! another publish is already running -- pid %s, "
+                print("\n~~ another publish is already running -- pid %s, "
                       "started %s" % (who[0] if who else "?",
                                       who[1] if len(who) > 1 else "?"))
                 print("   %s" % (who[2] if len(who) > 2 else ""))
@@ -411,22 +413,36 @@ class Lock(object):
 def publish(push):
     with Lock() as lock:
         if not lock.held:
-            return False
+            return None
         return _publish(push)
 
 
 def _publish(push):
-    if not consolidate():
-        print("\n!! the pipeline did not finish; nothing published")
-        return False
-
+    # Untracked drafts outside our output never enter the scoped git add.
+    # Keep them in place; tracked edits still need their owner's attention.
+    # Check before spending several minutes rebuilding the data.
     foreign = [(xy, p) for xy, p in status_paths()
-               if not p.startswith(("cachedata/", "tools/"))]
+               if xy != "??" and not p.startswith(("cachedata/", "tools/"))]
     if foreign:
         print("\n!! the working tree has changes this script did not make:")
         for xy, p in foreign[:20]:
             print("   %s %s" % (xy, p))
         print("   commit or revert them first; refusing to sweep them into a push")
+        return False
+
+    # A pre-existing staged tool must also block a no-data-change run, which
+    # otherwise reaches push without entering the commit-time index guard.
+    staged = nul("diff", "--cached", "--name-only", "-z")
+    strays = [p for p in staged if not p.startswith("cachedata/")]
+    if strays:
+        print("\n!! the index holds files this run did not write:")
+        for p in strays[:20]:
+            print("   " + p)
+        print("   unstage them first; refusing to publish unrelated staged work")
+        return False
+
+    if not consolidate():
+        print("\n!! the pipeline did not finish; nothing published")
         return False
 
     copied = sync_tools()
@@ -502,7 +518,8 @@ def _publish(push):
 def main(argv):
     push = "--push" in argv
     if "--watch" not in argv:
-        return 0 if publish(push) else 1
+        result = publish(push)
+        return BUSY_EXIT if result is None else (0 if result else 1)
     print(f"watching {config.INBOX}\n  repo: {REPO}\n"
           f"  push: {'yes' if push else 'no (dry run)'}")
     last = None
@@ -513,8 +530,8 @@ def main(argv):
             if last is not None:
                 print(f"\n[{time.strftime('%H:%M:%S')}] inbox changed "
                       f"({len(now)} files)")
-            publish(push)
-            last = now
+            if publish(push):
+                last = now
         time.sleep(POLL_SECONDS)
 
 
