@@ -19,7 +19,7 @@ Two consequences shape everything here:
 
 ## The cache files
 
-### `itemcache.wdb`  — 645,080 distinct records held
+### `itemcache.wdb`  — 647,402 distinct records held
 
 *Stored from:* `SMSG_ITEM_QUERY_SINGLE_RESPONSE`
 
@@ -27,7 +27,7 @@ Item definitions: name, icon, quality, item level, stats, damage, price, and on-
 
 **Not in this file:** Not loot tables, not drop sources, not where an item comes from.
 
-### `creaturecache.wdb`  — 26,874 distinct records held
+### `creaturecache.wdb`  — 27,297 distinct records held
 
 *Stored from:* `SMSG_CREATURE_QUERY_RESPONSE`
 
@@ -35,7 +35,7 @@ NPC and mob identity: name, the title under the name, creature type, family, ran
 
 **Not in this file:** A thin slice only — no level, faction, health, loot or AI. Those never leave the server, so no cache can contain them.
 
-### `gameobjectcache.wdb`  — 15,972 distinct records held
+### `gameobjectcache.wdb`  — 15,994 distinct records held
 
 *Stored from:* `SMSG_GAMEOBJECT_QUERY_RESPONSE`
 
@@ -43,7 +43,7 @@ World objects: doors, chests, ore veins, herbs, mailboxes, campfires. Holds the 
 
 **Not in this file:** Not placements. No cache records where objects stand in the world.
 
-### `questcache.wdb`  — 22,023 distinct records held
+### `questcache.wdb`  — 22,309 distinct records held
 
 *Stored from:* `SMSG_QUEST_QUERY_RESPONSE`
 
@@ -51,7 +51,7 @@ Quest text and structure: title, objectives, description, completion text, requi
 
 **Not in this file:** Not quest chains or availability conditions.
 
-### `npccache.wdb`  — 2,376 distinct records held
+### `npccache.wdb`  — 2,443 distinct records held
 
 *Stored from:* `SMSG_NPC_TEXT_UPDATE`
 
@@ -59,7 +59,7 @@ The gossip text an NPC greets you with. Eight alternative blocks per entry, each
 
 **Not in this file:** Not vendor stock, not trainer lists.
 
-### `pagetextcache.wdb`  — 370 distinct records held
+### `pagetextcache.wdb`  — 401 distinct records held
 
 *Stored from:* `SMSG_PAGE_TEXT_QUERY_RESPONSE`
 
@@ -67,7 +67,7 @@ The body text of readable objects — books, signs, letters on the ground. Pages
 
 **Not in this file:** Not the item that holds the book; that is in itemcache.
 
-### `itemnamecache.wdb`  — 3,389 distinct records held
+### `itemnamecache.wdb`  — 3,412 distinct records held
 
 *Stored from:* `SMSG_ITEM_NAME_QUERY_RESPONSE`
 
