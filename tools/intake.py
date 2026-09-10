@@ -23,10 +23,18 @@ ARCHIVE_EXT = {".zip", ".rar", ".7z", ".tar",
                ".tar.gz", ".tgz", ".tar.bz2", ".tbz2", ".tar.xz", ".txz",
                ".gz", ".bz2", ".xz"}
 TAR_CHAINS  = {".tar.gz", ".tgz", ".tar.bz2", ".tbz2", ".tar.xz", ".txz"}
-# Written into each extract dir so a second archive with the same stem
-# (WDB.zip vs WDB.rar) gets its own dir instead of being reported "cached".
-# Dirs predating this marker are grandfathered on first sight.
+# Written into each extract dir and read back by extract_all(), so a second
+# archive that maps to the same dir -- same stem, or the same name entirely --
+# gets its own dir instead of being reported "cached" and silently skipped.
+#
+# SRCMARK holds only a NAME, and archive_inbox.py requires it to be exactly
+# that, so it cannot carry the hash: two submissions have arrived called
+# Account.zip and a name is not an identity. The content hash therefore lives
+# in its own file beside it. Dirs with neither are grandfathered: no marker
+# means "mine", because disowning them would re-extract the whole historical
+# archive set into hash-suffixed twins.
 SRCMARK = ".intake-source"
+SRCHASH = ".intake-sha256"
 
 def split_archive(fn):
     """(base, ext) where ext is the full suffix chain for compressed tars."""
@@ -46,6 +54,35 @@ def sha256(path):
 
 # Beside EXTRACT, never inside it: anything under EXTRACT is scanned.
 QUARANTINE = os.path.join(os.path.dirname(EXTRACT), "quarantine")
+
+
+def occupied(out):
+    """True when `out` already holds an extraction."""
+    return os.path.isdir(out) and bool(os.listdir(out))
+
+
+def _marker(out, name):
+    try:
+        with open(os.path.join(out, name), encoding="utf-8",
+                  errors="replace") as f:
+            return f.read().strip() or None
+    except OSError:
+        return None
+
+
+def already_holds(out, fn, digest):
+    """Is the extraction in `out` the archive `fn` whose content is `digest`?
+
+    Content first, name only as a fallback for dirs written before the hash
+    marker existed, and True for a dir with no markers at all (grandfathered).
+    A name-only test is what lost a submission: both files were called
+    Account.zip, the name matched, and the second was reported "cached".
+    """
+    have = _marker(out, SRCHASH)
+    if have:
+        return have == digest
+    name = _marker(out, SRCMARK)
+    return True if name is None else name == fn
 
 
 def extract_all():
@@ -83,7 +120,19 @@ def extract_all():
                 if stem in contested:
                     stem = stem + "__" + ext.replace(".", "")
                 out = os.path.join(EXTRACT, stem)
-                if os.path.isdir(out) and os.listdir(out):
+                # Does that dir hold THIS archive, or a different one that
+                # merely shared its name? The pre-scan above separates WDB.zip
+                # from WDB.rar, but it keys on the set of NAMES, so two files
+                # genuinely called Account.zip -- one just dropped in _inbox,
+                # one already filed under archive/ -- collapse to a single
+                # claim and a single dir. The second was reported "cached" and
+                # never extracted: no error, exit 0, a whole submission lost.
+                # Hashing is why this is gated on the dir already existing:
+                # a first extraction should not pay for a read of every byte.
+                digest = sha256(src) if occupied(out) else None
+                if digest and not already_holds(out, fn, digest):
+                    out = os.path.join(EXTRACT, "%s__%s" % (stem, digest[:8]))
+                if occupied(out):
                     done.append((fn, "cached")); continue
                 os.makedirs(out, exist_ok=True)
                 r = subprocess.run([SEVENZIP, "x", src, "-o"+out, "-y", "-bd", "-bb0"],
@@ -101,6 +150,8 @@ def extract_all():
                             os.remove(tp)
                 if ok:
                     with open(os.path.join(out, SRCMARK), "w") as f: f.write(fn)
+                    with open(os.path.join(out, SRCHASH), "w") as f:
+                        f.write(digest or sha256(src))
                     done.append((fn, "ok"))
                 else:
                     where = quarantine(out, fn, (r.stderr or r.stdout or "").strip())

@@ -32,12 +32,12 @@ corrects it the next time the server sends that entry.
 | mode | creaturecache | gameobjectcache | itemcache | itemnamecache | npccache | pagetextcache | questcache |
 |---|---:|---:|---:|---:|---:|---:|---:|
 | `coa-alpha` | 1,359 | 1,400 | — | — | 54 | 1 | 119 |
-| `coa-beta` | 3,406 | 3,121 | 13,931 | 39 | 225 | 11 | 558 |
-| `conquest-of-azeroth` | 17,023 | 12,373 | 78,336 | 2,267 | 1,606 | 266 | 3,246 |
+| `coa-beta` | 5,122 | 4,653 | 16,239 | 67 | 308 | 22 | 720 |
+| `conquest-of-azeroth` | 17,036 | 12,373 | 79,076 | 2,273 | 1,627 | 295 | 3,253 |
 | `free-pick` | 6,478 | 5,402 | 36,007 | 743 | 285 | 17 | 893 |
 | `live-qa` | — | — | 398 | — | — | — | 210 |
-| `season-10-freepick` | 11,903 | 8,533 | 548,845 | 631 | 393 | 27 | 18,552 |
-| `season-10-wildcard` | 4,993 | 3,424 | 24,002 | 243 | 248 | 8 | 567 |
+| `season-10-freepick` | 11,914 | 8,533 | 548,845 | 631 | 393 | 27 | 18,552 |
+| `season-10-wildcard` | 5,256 | 3,811 | 24,193 | 243 | 250 | 8 | 570 |
 | `season-9` | 8,484 | 7,448 | 36,327 | 818 | 283 | 3 | 962 |
 | `stress-test` | 1,674 | 1,122 | 10,125 | 100 | 34 | 2 | 177 |
 | `unknown` | 2,989 | 2,039 | 65 | 19 | 176 | — | 445 |

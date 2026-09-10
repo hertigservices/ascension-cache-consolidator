@@ -1,6 +1,6 @@
 # Ascension client cache — merged dataset
 
-_Merged from 938 distinct submitted cache files, the newest captured 2026-09-09._
+_Merged from 995 distinct submitted cache files, the newest captured 2026-09-09._
 
 Community-submitted `Cache\WDB` folders from the Ascension WoW client, merged
 at the **record** level. Identical records collapse to one row no matter how
@@ -34,25 +34,25 @@ independent submissions corroborate it.
 
 | cache | distinct records | union entries |
 |---|---:|---:|
-| creaturecache | 26,585 | 22,748 |
-| gameobjectcache | 15,770 | 15,605 |
-| itemcache | 643,581 | 552,005 |
-| itemnamecache | 3,039 | 3,010 |
-| npccache | 2,075 | 2,044 |
-| pagetextcache | 285 | 285 |
-| questcache | 21,456 | 18,553 |
+| creaturecache | 26,601 | 22,763 |
+| gameobjectcache | 15,782 | 15,616 |
+| itemcache | 643,736 | 552,007 |
+| itemnamecache | 3,044 | 3,015 |
+| npccache | 2,100 | 2,068 |
+| pagetextcache | 317 | 317 |
+| questcache | 21,644 | 18,553 |
 
 ## Game modes
 
 | mode | family | creaturecache | gameobjectcache | itemcache | itemnamecache | npccache | pagetextcache | questcache |
 |---|---|---:|---:|---:|---:|---:|---:|---:|
 | `coa-alpha` | conquest-of-azeroth | 1,359 | 1,400 | 0 | 0 | 54 | 1 | 119 |
-| `coa-beta` | conquest-of-azeroth | 3,406 | 3,121 | 13,931 | 39 | 225 | 11 | 558 |
-| `conquest-of-azeroth` | conquest-of-azeroth | 17,023 | 12,373 | 78,336 | 2,267 | 1,606 | 266 | 3,246 |
+| `coa-beta` | conquest-of-azeroth | 5,122 | 4,653 | 16,239 | 67 | 308 | 22 | 720 |
+| `conquest-of-azeroth` | conquest-of-azeroth | 17,036 | 12,373 | 79,076 | 2,273 | 1,627 | 295 | 3,253 |
 | `free-pick` | free-pick | 6,478 | 5,402 | 36,007 | 743 | 285 | 17 | 893 |
 | `live-qa` | free-pick | 0 | 0 | 398 | 0 | 0 | 0 | 210 |
-| `season-10-freepick` | free-pick | 11,903 | 8,533 | 548,845 | 631 | 393 | 27 | 18,552 |
-| `season-10-wildcard` | wildcard | 4,993 | 3,424 | 24,002 | 243 | 248 | 8 | 567 |
+| `season-10-freepick` | free-pick | 11,914 | 8,533 | 548,845 | 631 | 393 | 27 | 18,552 |
+| `season-10-wildcard` | wildcard | 5,256 | 3,811 | 24,193 | 243 | 250 | 8 | 570 |
 | `season-9` | season-9 | 8,484 | 7,448 | 36,327 | 818 | 283 | 3 | 962 |
 | `stress-test` | stress-test | 1,674 | 1,122 | 10,125 | 100 | 34 | 2 | 177 |
 | `unknown` | unknown | 2,989 | 2,039 | 65 | 19 | 176 | 0 | 445 |
