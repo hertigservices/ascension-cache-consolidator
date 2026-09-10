@@ -41,6 +41,12 @@ live site.
 | [SQLite database](6bcecd0faa6c2e7084d8015e1d931431c30e3013a9122810d593868196a3578b/catalog.sqlite.gz) | Decompress and open read-only to query entities, trees and talents. |
 | [Comparison report](6bcecd0faa6c2e7084d8015e1d931431c30e3013a9122810d593868196a3578b/comparison.json.gz) | Every name conflict, missing candidate and stub-named entity, listed by name and id. |
 | [Manifest](6bcecd0faa6c2e7084d8015e1d931431c30e3013a9122810d593868196a3578b/manifest.json) | Source and baseline hashes, counts, interpretation limits and artifact checksums. |
+| [Icon assets](assets/) | The 21 CoA class icons, and the 16,733 icons a stock 3.3.5a client cannot supply, each verified against the mirror index. |
+
+The 406,560,614-byte source archive is preserved in the
+[`exiles-db-mirror-2026-08-29`](https://github.com/hertigservices/ascension-data/releases/tag/exiles-db-mirror-2026-08-29)
+release, together with the mirrored assets not republished in the tree —
+creature portrait renders, dungeon floor maps, and the icons a client already has.
 
 ## Creature spawn coordinates
 
