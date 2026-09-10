@@ -12,6 +12,7 @@ See the [unified setup guide](https://github.com/hertigservices/Ascension_preser
 | [cachedata/](cachedata/) | Captured WDB records, valid variants, per-mode views and provenance |
 | [manifests/](manifests/) | SHA-256 and size of every file in a named cache snapshot |
 | [supplemental/bisbeard/](supplemental/bisbeard/) | Separately attributed planner export, all original rows, queryable catalog and comparison report |
+| [supplemental/exiles-db/](supplemental/exiles-db/) | Separately attributed mirror of a CoA database site, parsed into spell, item, NPC, quest, achievement and talent-tree records, with a change log and a hash index of every mirrored file |
 
 | Guide | What it covers |
 |---|---|
@@ -19,6 +20,7 @@ See the [unified setup guide](https://github.com/hertigservices/Ascension_preser
 | [Verifying the data](https://github.com/hertigservices/Ascension_preservation/blob/main/tools/cache-consolidator/docs/VERIFYING-THE-DATA.md) | How to satisfy yourself a merged record matches what a client really wrote |
 | [The WDB format](https://github.com/hertigservices/Ascension_preservation/blob/main/tools/cache-consolidator/docs/WDB-FORMAT.md) | The layout of a `.wdb` cache file, including the parts still unread |
 | [The GameObject dumps](https://github.com/hertigservices/Ascension_preservation/blob/main/tools/cache-consolidator/docs/GAMEOBJECT-DUMPS.md) | What the donated object and creature dumps are, and why they are not a spawn table |
+| [The Exiles database mirror](https://github.com/hertigservices/Ascension_preservation/blob/main/tools/cache-consolidator/docs/EXILES-DB.md) | What the `db.exil.es` mirror holds, what its rendered values can and cannot tell you, and how the catalog is built and checked |
 
 Those guides live beside the tools whose commands they contain, so that a flag
 and its documentation change together. The matching paths under [docs/](docs/)

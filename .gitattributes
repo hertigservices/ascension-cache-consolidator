@@ -16,3 +16,4 @@
 
 # Immutable supplemental snapshots retain the reviewed artifact bytes, including JSON.
 supplemental/bisbeard/** -text
+supplemental/exiles-db/** -text
