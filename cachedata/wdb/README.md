@@ -32,7 +32,7 @@ corrects it the next time the server sends that entry.
 | mode | creaturecache | gameobjectcache | itemcache | itemnamecache | npccache | pagetextcache | questcache |
 |---|---:|---:|---:|---:|---:|---:|---:|
 | `coa-alpha` | 1,359 | 1,400 | — | — | 54 | 1 | 119 |
-| `coa-beta` | 5,122 | 4,653 | 16,239 | 67 | 308 | 22 | 720 |
+| `coa-beta` | 5,977 | 5,467 | 20,616 | 90 | 344 | 23 | 849 |
 | `conquest-of-azeroth` | 17,411 | 12,576 | 84,717 | 2,819 | 1,950 | 376 | 3,748 |
 | `free-pick` | 7,040 | 6,140 | 38,034 | 813 | 320 | 18 | 1,066 |
 | `live-qa` | — | — | 398 | — | — | — | 210 |
