@@ -208,4 +208,6 @@ decoder without having to re-collect anything.
 
 | `lua/MobSpells.lua` | addon SavedVariables, plain Lua | a text editor, or the addon itself |
 | `lua/AIO_Client.lua` | addon SavedVariables, plain Lua | a text editor |
+| `lua/stock-client/*.lua` | item / creature / quest records as Lua 5.1 tables for an addon on a stock 3.3.5a client | any addon (see its README.md) |
+| `dbc/item_display_icons.tsv.gz` | Ascension display id -> icon name, and the stock display id with identical art | text editor, Excel |
 

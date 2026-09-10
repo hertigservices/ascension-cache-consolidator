@@ -19,6 +19,7 @@ entry differently per game mode and between patches.
 | `raw/<cache>.index.tsv.gz` | per record: sha1, size, modes, capture dates, corroboration count. |
 | `sources.tsv` | every submitted file: realm, mode, capture date, record count. |
 | `lua/` | merged addon SavedVariables, and the server-pushed UI code. |
+| `lua/stock-client/` | the item, creature and quest records as Lua 5.1 tables an addon on a **stock** client can load; `dbc/item_display_icons.tsv.gz` is the icon lookup they use. |
 
 **The data files are gzipped.** Uncompressed this dataset is ~756 MB and its
 largest file is a 254 MB itemcache; GitHub rejects anything over 100 MB. Each
