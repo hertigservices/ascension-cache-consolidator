@@ -149,5 +149,56 @@ class BusyTests(unittest.TestCase):
         self.assertEqual(run.call_count, 2)
 
 
+
+class ArrivalTests(unittest.TestCase):
+    def test_late_files_and_folder_children_remain_pending(self):
+        with tempfile.TemporaryDirectory(prefix='arrival-test-') as tmp:
+            inbox = Path(tmp)
+            (inbox / 'old.zip').write_text('old input')
+            (inbox / 'folder').mkdir()
+            (inbox / 'folder' / 'old.lua').write_text('old input')
+            (inbox / 'archive').mkdir()
+            with patch.object(tray_app.config, 'INBOX', str(inbox)), \
+                 patch.object(tray_app, 'DONE_DIR', str(inbox / 'archive')):
+                processed = tray_app.inbox_fingerprint()
+                def pipeline(*args):
+                    (inbox / 'new.zip').write_text('new input')
+                    (inbox / 'folder' / 'new.lua').write_text('new input')
+                    (inbox / 'archive' / 'late.zip').write_text('new input')
+                    return 0
+                app = SimpleNamespace(state={'push': False, 'tidy': True},
+                                      log=Mock(), consumed=set(),
+                                      runner=SimpleNamespace(run=pipeline))
+                watcher = tray_app.Watcher(app)
+                watcher.consolidate_and_settle_up([], processed)
+                self.assertTrue((inbox / 'new.zip').exists())
+                self.assertTrue((inbox / 'folder' / 'old.lua').exists())
+                self.assertTrue((inbox / 'folder' / 'new.lua').exists())
+                self.assertFalse((inbox / 'old.zip').exists())
+                self.assertNotIn('new.zip', watcher.handled)
+                self.assertNotIn(os.path.join('folder', 'new.lua'), watcher.handled)
+                self.assertNotIn(os.path.join('archive', 'late.zip'), watcher.handled)
+                self.assertIn(os.path.join('folder', 'old.lua'), watcher.handled)
+                self.assertTrue(any(p.endswith('old.zip') for p in watcher.handled))
+
+    def test_changed_input_is_not_archived_or_marked_done(self):
+        with tempfile.TemporaryDirectory(prefix='arrival-test-') as tmp:
+            inbox = Path(tmp)
+            (inbox / 'changed.zip').write_text('before')
+            with patch.object(tray_app.config, 'INBOX', str(inbox)), \
+                 patch.object(tray_app, 'DONE_DIR', str(inbox / 'archive')):
+                processed = tray_app.inbox_fingerprint()
+                def pipeline(*args):
+                    (inbox / 'changed.zip').write_text('changed during run')
+                    return 0
+                app = SimpleNamespace(state={'push': False, 'tidy': True},
+                                      log=Mock(), consumed=set(),
+                                      runner=SimpleNamespace(run=pipeline))
+                watcher = tray_app.Watcher(app)
+                watcher.consolidate_and_settle_up([], processed, push=False,
+                                                  label='manual test')
+                self.assertTrue((inbox / 'changed.zip').exists())
+                self.assertNotIn('changed.zip', watcher.handled)
+
 if __name__ == '__main__':
     unittest.main()

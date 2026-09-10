@@ -252,7 +252,7 @@ def inbox_fingerprint():
                 st = os.stat(p)
             except OSError:
                 continue
-            out[os.path.relpath(p, config.INBOX)] = (st.st_size, int(st.st_mtime))
+            out[os.path.relpath(p, config.INBOX)] = (st.st_size, st.st_mtime_ns)
     return out
 
 
@@ -366,7 +366,7 @@ def file_arrival(name, log):
         return None
 
 
-def tidy_inbox(log):
+def tidy_inbox(log, processed=None):
     """Move consolidated drops out of the inbox root into archive/YYYY-MM/.
 
     Both loose files and dropped folders, which is the point -- see root_dirs()
@@ -396,6 +396,15 @@ def tidy_inbox(log):
     n_dirs = 0
     for name in names + dirs:
         is_dir = name in dirs
+        if processed is not None:
+            # Recheck each root immediately before moving it. A new file, or
+            # a folder with new/changed children, belongs to the next sweep.
+            current = inbox_fingerprint()
+            members = {p: v for p, v in current.items()
+                       if p == name or p.startswith(name + os.sep)}
+            if not members or any(processed.get(p) != v for p, v in members.items()):
+                log("~~ leaving %s pending: arrived or changed during the run" % name)
+                continue
         src = os.path.join(config.INBOX, name)
         dst = os.path.join(dest, name)
         if os.path.exists(dst):
@@ -412,6 +421,12 @@ def tidy_inbox(log):
                 stem, ext = os.path.splitext(name)
                 dst = os.path.join(dest, "%s__%s%s"
                                    % (stem, int(time.time()), ext))
+        boundary = os.path.normcase(os.path.realpath(config.INBOX))
+        targets = [os.path.normcase(os.path.realpath(p)) for p in (src, dst)]
+        if any(os.path.commonpath([boundary, p]) != boundary or p == boundary
+               for p in targets):
+            log("!! refusing to move %s outside the inbox" % name)
+            continue
         try:
             shutil.move(src, dst)
             moved.append((name, os.path.relpath(dst, config.INBOX)))
@@ -583,10 +598,13 @@ class Watcher(threading.Thread):
             self.app.log("still being written; will look again shortly")
             return
         self.app.prepare_inbox(self.pristine)
-        self.consolidate_and_settle_up(gone, now)
+        self.consolidate_and_settle_up(gone, inbox_fingerprint())
 
-    def consolidate_and_settle_up(self, gone, processed):
-        rc = self.app.runner.run(self.app.state["push"], "auto-consolidate")
+    def consolidate_and_settle_up(self, gone, processed, push=None,
+                                  label="auto-consolidate"):
+        if push is None:
+            push = self.app.state["push"]
+        rc = self.app.runner.run(push, label)
         if rc is None:
             return                      # a manual run holds the lock; try later
         if rc == BUSY_EXIT:
@@ -607,41 +625,22 @@ class Watcher(threading.Thread):
             return
         self.failures = 0
         self.next_attempt = 0.0
-        if self.app.state["tidy"]:
-            tidy_inbox(self.app.log)
-        # Re-baseline only what we can account for. A file that arrived while the
-        # pipeline was running is left looking new on purpose, so the next tick
-        # picks it up instead of it being marked done without being processed.
+        moved = tidy_inbox(self.app.log, processed) if self.app.state["tidy"] else []
         after = inbox_fingerprint()
-        for p in gone:
-            self.handled.pop(p, None)
-        # Everything this run actually saw, that still has the same size and
-        # mtime it had when the run started, has now been consolidated.
-        #
-        # This line is what stops the watcher looping. The two rules below only
-        # recognise a file once it has been MOVED into archive/ or renamed by
-        # prepare_inbox -- and both of those go through root_files(), which is
-        # files-only. Drop a FOLDER into the inbox and nothing ever moves or
-        # renames it, so none of its contents were ever recorded as handled,
-        # every poll saw them as new, and the whole pipeline ran again on the
-        # same folder for as long as it sat there. Measured: one extracted
-        # submission folder triggered eight full runs in an hour.
-        #
-        # Comparing against the pre-run fingerprint rather than just taking
-        # `after` wholesale keeps the original intent intact: a file that
-        # arrived or changed mid-run does not match and stays looking new.
-        for p, v in processed.items():
-            if after.get(p) == v:
-                self.handled[p] = v
-        for p, v in after.items():
-            if p not in self.handled and p.replace("\\", "/").startswith("archive/"):
-                self.handled[p] = v     # our own tidy move, not a new arrival
-        for p in list(self.handled):
-            if p not in after:
-                self.handled.pop(p, None)
-        for p in self.app.consumed:
-            if p in after:
-                self.handled[p] = after[p]
+        # Map only this sweep's original input to its archived location. Never
+        # mark every file seen after the run as done: late arrivals were not
+        # necessarily read by intake, even when they landed inside archive/.
+        for original, value in processed.items():
+            target = original
+            for old, new in moved:
+                if original == old or original.startswith(old + os.sep):
+                    target = new + original[len(old):]
+                    break
+            if after.get(target) == value:
+                self.handled[target] = value
+        for path in list(self.handled):
+            if path not in after:
+                self.handled.pop(path, None)
         self.app.consumed.clear()
         self.pristine = set(root_files())
 
@@ -784,15 +783,8 @@ class App(object):
     def start_run(self, push, label):
         def go():
             self.prepare_inbox(self.watcher.pristine)
-            rc = self.runner.run(push, label)
-            if rc == 0 and self.state["tidy"]:
-                tidy_inbox(self.log)
-            if rc == 0:
-                self.watcher.failures = 0
-                self.watcher.next_attempt = 0.0
-                self.watcher.handled = inbox_fingerprint()
-                self.watcher.pristine = set(root_files())
-                self.consumed.clear()
+            self.watcher.consolidate_and_settle_up(
+                [], inbox_fingerprint(), push=push, label=label)
         threading.Thread(target=go, daemon=True).start()
 
     def tidy_now(self):
