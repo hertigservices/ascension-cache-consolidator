@@ -13,9 +13,9 @@ never saw. Data captured through 2026-09-09. Regenerated on every publish by
 
 | table | rows | from `conquest-of-azeroth` | from `union` | files | row layout |
 |---|---:|---:|---:|---:|---|
-| `AscensionStockData.items` | 552,007 | 79,076 | 472,931 | 131 | `{ name, quality, icon, displayId, class, subclass, inventoryType, itemLevel, requiredLevel }` |
-| `AscensionStockData.creatures` | 22,763 | 17,036 | 5,727 | 3 | `{ name, subname, displayId }` |
-| `AscensionStockData.quests` | 18,553 | 3,253 | 15,300 | 3 | `{ title }` |
+| `AscensionStockData.items` | 552,007 | 79,306 | 472,701 | 131 | `{ name, quality, icon, displayId, class, subclass, inventoryType, itemLevel, requiredLevel }` |
+| `AscensionStockData.creatures` | 22,781 | 17,063 | 5,718 | 3 | `{ name, subname, displayId }` |
+| `AscensionStockData.quests` | 18,553 | 3,278 | 15,275 | 3 | `{ title }` |
 
 Rows are positional to keep the files small; the order above is also in
 `AscensionStockData.fields`. Numbers are integers, strings are UTF-8 as the server sent them,
