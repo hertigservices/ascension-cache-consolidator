@@ -2722,6 +2722,7 @@ T[7851559]={"Bloodforged Runed Warrior's Band",4,"inv_ring_80_02a",139025,4,0,11
 T[7851560]={"Bloodforged Runed Assassin's Ring",4,"inv_ring_80_02d",139028,4,0,11,88,60}
 T[7851587]={"Bloodforged Runed Ranger's Ring",4,"inv_ring_80_02b",139026,4,0,11,88,60}
 T[7851588]={"Bloodforged Runed Protector's Ring",4,"INV_Jewelry_Ring_59",32185,4,0,11,88,60}
+T[7851591]={"Bloodforged Grips of the Searing Gale",4,"INV_Gauntlets_21",24916,4,2,10,68,60}
 T[7851595]={"Bloodforged Sabatons of Rolling Thunder",4,"INV_Boots_08",24554,4,2,8,68,60}
 T[7851597]={"Bloodforged Legplates of the Tenfold Tempest",4,"INV_Pants_06",24560,4,2,7,76,60}
 T[7851598]={"Bloodforged Bracers of Obsidian Thunder",4,"INV_Bracer_02",24572,4,2,9,75,60}

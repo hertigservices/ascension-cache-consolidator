@@ -2639,6 +2639,7 @@ T[265154]={"Bella","",1060}
 T[265155]={"Greta","",1060}
 T[266870]={"Reginald Wrongdoer","Contraband Dealer",3264}
 T[267600]={"Compact Harvest Reaper","",1159}
+T[267717]={"White Riding Yak","",141938}
 T[267734]={"Scadeald Black Goat","",141980}
 T[267751]={"TempleofEmbers Platform","",142961}
 T[267752]={"Azzar_Event_Ship","",138019}
