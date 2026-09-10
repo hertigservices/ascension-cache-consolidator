@@ -84,6 +84,37 @@ def stream(cmd, cwd=None, every=10):
     return p.wait(), tail
 
 
+def nul(*args):
+    """A git path list, split on NUL instead of on whitespace.
+
+    Without -z git quotes any name holding a space, and splitting the result
+    then yields two names that are each wrong. The repo contains
+    `tools/Install Caches.cmd`, so this is the ordinary case, not the corner.
+    """
+    return [p for p in git(*args).stdout.split(chr(0)) if p]
+
+
+def status_paths(*extra):
+    """(XY, path) per porcelain entry, with the real path, never a quoted one.
+
+    The quoting is what broke the tools/ exemption below: git reported
+    `?? "tools/Install Caches.cmd"`, the prefix test saw a leading quote
+    instead of `tools/`, and a file the guard was written to ignore blocked
+    publishing instead. -z never quotes.
+
+    Rename and copy entries carry a second NUL-terminated field holding the
+    old name. Consume it, or it reads as an entry of its own with someone
+    else's status bytes sliced off the front of it.
+    """
+    recs = iter(nul("status", "--porcelain", "-z", *extra))
+    out = []
+    for rec in recs:
+        out.append((rec[:2], rec[3:]))
+        if rec[:1] in ("R", "C"):
+            next(recs, None)
+    return out
+
+
 def git(*args, check=True):
     return run(["git", *args], cwd=REPO, check=check)
 
@@ -168,14 +199,33 @@ def sync_tools():
     wrote a new one, so the shipped set stays an explicit allow-list -- the
     files already under version control.
     """
-    tracked = git("ls-files", "tools").stdout.split()
-    wrote = []
+    tracked = nul("ls-files", "-z", "tools")
+    # Which of these is someone else part-way through? copy2 would erase that
+    # edit with no diff, no prompt and no trace -- the intake copy simply wins,
+    # and the loss looks exactly like the author forgetting to save. tools/ is
+    # exempt from the foreign-change check because this script owns it, so this
+    # is the only place that can notice.
+    dirty = set(p for _xy, p in status_paths("--", "tools"))
+    wrote, held = [], []
     for rel in tracked:
         s = os.path.join(HERE, os.path.basename(rel))
         d = os.path.join(REPO, rel.replace("/", os.sep))
-        if os.path.exists(s) and not filecmp.cmp(s, d, shallow=False):
-            shutil.copy2(s, d)
-            wrote.append(rel)
+        if not os.path.exists(s) or filecmp.cmp(s, d, shallow=False):
+            continue
+        if rel in dirty:
+            held.append(rel)
+            continue
+        shutil.copy2(s, d)
+        wrote.append(rel)
+    if held:
+        # Named, and not fatal. Publishing DATA must not stop because a
+        # maintainer is editing a script; the held file just does not travel
+        # this run, and it is not staged either, so nothing half-done ships.
+        print("tools: NOT overwriting %d file(s) edited in the repo:"
+              % len(held))
+        for rel in held:
+            print("   " + rel)
+        print("   commit or revert them, or copy them into " + HERE)
     if wrote:
         print(f"tools: {len(wrote)} file(s) updated from {HERE}")
     # The caller stages these by name. Returning a count instead is what let
@@ -192,7 +242,7 @@ def audit():
     # subdirectories never touched them -- and they are published too. Ask git
     # which top-level files are tracked rather than naming them here, so a new
     # one is covered the day it appears.
-    targets += [os.path.join(REPO, f) for f in git("ls-files").stdout.split()
+    targets += [os.path.join(REPO, f) for f in nul("ls-files", "-z")
                 if "/" not in f]
     for target in targets:
         if not os.path.exists(target):
@@ -235,7 +285,7 @@ def check_tool_imports():
 
     Static, on the repository tree, because importing them would run them.
     """
-    tracked = [f for f in git("ls-files", "tools").stdout.split()
+    tracked = [f for f in nul("ls-files", "-z", "tools")
                if f.endswith(".py")]
     have = set(os.path.splitext(os.path.basename(f))[0] for f in tracked)
     missing = {}
@@ -267,8 +317,8 @@ def check_tool_imports():
 
 def describe(status):
     counts = {}
-    for line in status:
-        counts[line[:2].strip() or "?"] = counts.get(line[:2].strip() or "?", 0) + 1
+    for xy, _path in status:
+        counts[xy.strip() or "?"] = counts.get(xy.strip() or "?", 0) + 1
     return ", ".join(f"{v} {k}" for k, v in sorted(counts.items()))
 
 
@@ -370,12 +420,12 @@ def _publish(push):
         print("\n!! the pipeline did not finish; nothing published")
         return False
 
-    foreign = [l for l in git("status", "--porcelain").stdout.splitlines()
-               if not l[3:].startswith(("cachedata/", "tools/"))]
+    foreign = [(xy, p) for xy, p in status_paths()
+               if not p.startswith(("cachedata/", "tools/"))]
     if foreign:
         print("\n!! the working tree has changes this script did not make:")
-        for l in foreign[:20]:
-            print("   " + l)
+        for xy, p in foreign[:20]:
+            print("   %s %s" % (xy, p))
         print("   commit or revert them first; refusing to sweep them into a push")
         return False
 
@@ -392,7 +442,7 @@ def _publish(push):
     # and the commit that follows either sweeps it in or fails outright with
     # nothing staged.
     ours = ["cachedata"] + copied
-    status = git("status", "--porcelain", "--", *ours).stdout.splitlines()
+    status = status_paths("--", *ours)
     if not status:
         # "Nothing to commit" is not "nothing to push". A run that committed and
         # then failed to push -- dropped network, timeout, an interrupted run --
@@ -417,7 +467,7 @@ def _publish(push):
         # Last look before the one irreversible step. Staging is scoped above,
         # but the index is shared: anything a person left staged would ride
         # along into an automated commit and, with --push, straight to GitHub.
-        staged = git("diff", "--cached", "--name-only").stdout.split()
+        staged = nul("diff", "--cached", "--name-only", "-z")
         strays = [f for f in staged
                   if not f.startswith("cachedata/") and f not in copied]
         if strays:
