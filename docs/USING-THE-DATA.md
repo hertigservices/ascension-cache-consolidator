@@ -308,6 +308,36 @@ Server side, as a GM:
 .npc info                          # on a spawned imported creature: template values
 ```
 
+## For addon authors on a stock client: `lua/stock-client/`
+
+An addon on a stock 3.3.5a client cannot read a `.wdb` cache, but it can load
+Lua files named in its `.toc`. The dataset therefore also ships the item,
+creature and quest records as plain Lua 5.1 tables under one global,
+`AscensionStockData`, in `cachedata/lua/stock-client/`:
+
+| table | row layout |
+|---|---|
+| `AscensionStockData.items[entry]` | `{ name, quality, icon, displayId, class, subclass, inventoryType, itemLevel, requiredLevel }` |
+| `AscensionStockData.creatures[entry]` | `{ name, subname, displayId }` |
+| `AscensionStockData.quests[entry]` | `{ title }` |
+
+List `init.lua` first in the `.toc`, then the part files in any order (each is
+under 340 KB; `init.lua` carries the full file list in `AscensionStockData.files`).
+Rows come from the `conquest-of-azeroth` view first and `union/` for everything
+that mode never saw. `icon` is resolved through **Ascension's** renumbered
+`ItemDisplayInfo.dbc`, published as `dbc/item_display_icons.tsv.gz`; that file's
+`stock_displayid` column names the stock display id with byte-identical art,
+which is the one a client without Ascension's patches can actually draw.
+Names are unfiltered, so Ascension's own stand-ins (`Z:DBCtoDB Generated Item`
+and friends) are present; the folder's `README.md` lists them with counts.
+
+The generator is `tools/export_stock_client.py`; it runs on every publish.
+To rebuild the icon lookup from a client that has Ascension's DBC:
+
+```bash
+python -B tools/export_stock_client.py --data <ascension-data>/cachedata --dbc <path>/ItemDisplayInfo.dbc --stock-dbc <stock 3.3.5a>/ItemDisplayInfo.dbc
+```
+
 ## Troubleshooting
 
 - **Everything vanished after first login.** Cache version mismatch; see above.
