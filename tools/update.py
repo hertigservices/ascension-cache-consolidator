@@ -31,7 +31,26 @@ STAGES = [("intake",  "intake.py"),
           ("catalogue", "ingest_gameobjects.py"),
           ("export",  "export.py"),
           ("rebuild", "rebuild.py"),
+          # Two gates, asking opposite questions of the same tree. `columns`
+          # asks whether the data we meant to publish is still in there;
+          # `audit` asks whether anything is in there that must not be. The
+          # first exists because the dataset shipped once with every vendor
+          # price silently zeroed and every other check passed -- they all
+          # compare our encoder against our decoder. See audit_columns.py.
+          ("columns", "audit_columns.py"),
           ("audit",   "audit_publish.py")]
+
+# Stages that judge the output rather than produce it. A failure in one means
+# the result is not fit to publish, but the run still finishes: stopping early
+# would hide what the other gate had to say, and both answers are wanted at
+# once rather than one bad drop at a time.
+GATES = {"columns", "audit"}
+
+BANNER = {
+    "columns": "!! DATA-LOSS CHECK FAILED -- do not publish until every dead "
+               "column and branch is explained.",
+    "audit":   "!! AUDIT FAILED -- do not publish until every hit is explained.",
+}
 
 
 def main():
@@ -43,8 +62,8 @@ def main():
         r = subprocess.run([sys.executable, os.path.join(HERE, script)])
         if r.returncode != 0:
             failed.append(name)
-            if name == "audit":
-                print("\n!! AUDIT FAILED -- do not publish until every hit is explained.")
+            if name in GATES:
+                print("\n" + BANNER[name])
             else:
                 print(f"\n!! {name} failed (exit {r.returncode}); stopping.")
                 break

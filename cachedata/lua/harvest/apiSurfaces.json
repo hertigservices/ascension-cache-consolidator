@@ -860,7 +860,8 @@
    "_hookItem (table)",
    "_hookNPC (table)",
    "_redirectItem (table)",
-   "_redirectNPC (table)"
+   "_redirectNPC (table)",
+   "savedPos (table)"
   ],
   "C_GroupFinder": [
    "CreateListing (function)",
@@ -937,7 +938,8 @@
    "GetSlotItemPower (function)",
    "ITEM_USED_PAYLOAD (function)",
    "IsBound (function)",
-   "lastUsedItem (table)"
+   "lastUsedItem (table)",
+   "tooltip (table)"
   ],
   "C_ItemSet": [
    "GetAppearances (function)",
@@ -1258,7 +1260,8 @@
    "InHighRisk (boolean)",
    "IsLegacyWarmode (function)",
    "PLAYER_ENTERING_WORLD (function)",
-   "ZONE_CHANGED_NEW_AREA (function)"
+   "ZONE_CHANGED_NEW_AREA (function)",
+   "IsHighRisk (boolean)"
   ],
   "C_Player": [
    "GetAverageItemLevel (function)",
@@ -1304,7 +1307,8 @@
    "SetRuleset (function)",
    "UNIT_PET (function)",
    "UpdatePvEPower (function)",
-   "currentLevel (number)"
+   "currentLevel (number)",
+   "lastPetTalentPoints (number)"
   ],
   "C_PlayerPoll": [
    "CanChangeQuestionChoice (function)",
@@ -1913,7 +1917,9 @@
    "WARDROBE_CHANGE_TRANSMOG (table)",
    "WARDROBE_CHANGE_TRANSMOG_HINT (table)",
    "WATCH_FRAME_PING (table)",
-   "WILDCARD_DICE_OF_DESTINY (table)"
+   "WILDCARD_DICE_OF_DESTINY (table)",
+   "EC_HELP_LEVEL (table)",
+   "EC_HELP_SAVE_CURRENCY (table)"
   ],
   "LinkUtil": [
    "AddHandler (function)",
@@ -1976,7 +1982,8 @@
    "IsScrollOfFortuneTokenForInactiveSpec (function)",
    "RecentlyUsedCaseOfFortune (function)",
    "SCROLL_OF_FORTUNE_USED (function)",
-   "TOKEN_UPDATED (function)"
+   "TOKEN_UPDATED (function)",
+   "TimeSinceCaseOfFortuneUsed (table)"
   ]
  }
 }

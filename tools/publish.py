@@ -26,7 +26,7 @@ It never invents a remote, never force-pushes, and never commits anything under
 `quarantine/`.  If the working tree has changes it did not make, it says so and
 stops rather than sweeping someone else's edit into a commit.
 """
-import os, re, sys, subprocess, shutil, time, filecmp
+import os, io, re, sys, subprocess, shutil, time, filecmp
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, HERE)
@@ -198,14 +198,69 @@ def audit():
         r = subprocess.run([sys.executable,
                             os.path.join(HERE, "audit_publish.py"), target])
         ok = ok and r.returncode == 0
+    # The other half of the gate. audit_publish asks whether the tree contains
+    # something it must not; this asks whether it still contains what it is
+    # supposed to. Both have to pass, because the dataset has already been
+    # published once with every vendor price silently zeroed and nothing in
+    # here noticed -- see the header of audit_columns.py.
+    r = subprocess.run([sys.executable,
+                        os.path.join(HERE, "audit_columns.py"), DATA])
+    ok = ok and r.returncode == 0
     # The gate itself is only worth as much as its own test.
-    r = subprocess.run([sys.executable, os.path.join(HERE, "test_audit.py")],
-                       capture_output=True, text=True)
-    if r.returncode != 0:
-        print(r.stdout + r.stderr)
-        print("!! the publish gate failed its own test")
-        ok = False
+    for t in ("test_audit.py", "test_columns.py"):
+        r = subprocess.run([sys.executable, os.path.join(HERE, t)],
+                           capture_output=True, text=True)
+        if r.returncode != 0:
+            print(r.stdout + r.stderr)
+            print(f"!! the publish gate failed its own test ({t})")
+            ok = False
+    ok = check_tool_imports() and ok
     return ok
+
+
+def check_tool_imports():
+    """Every module a published tool imports must itself be published.
+
+    sync_tools() ships an allow-list -- the files git already tracks -- which
+    is right for keeping private scripts out and wrong in one direction nobody
+    was watching: a NEW module is not on the list, so the first publish after
+    splitting code into one silently ships the caller without the callee. That
+    is not hypothetical. luamerge.py grew `import harvestmerge` and was pushed
+    without tools/harvestmerge.py, so the public pipeline died on
+    ModuleNotFoundError for anyone who cloned it, while every check here passed
+    -- the same shape as the bug audit_columns.py exists for, and caught by the
+    same reflex: ask whether what we shipped is still whole, not just clean.
+
+    Static, on the repository tree, because importing them would run them.
+    """
+    tracked = [f for f in git("ls-files", "tools").stdout.split()
+               if f.endswith(".py")]
+    have = set(os.path.splitext(os.path.basename(f))[0] for f in tracked)
+    missing = {}
+    for rel in tracked:
+        p = os.path.join(REPO, rel.replace("/", os.sep))
+        if not os.path.exists(p):
+            continue
+        with io.open(p, encoding="utf-8", errors="replace") as f:
+            src = f.read()
+        for m in re.findall(r"^\s*(?:import|from)\s+([a-zA-Z_][\w, ]*)",
+                            src, re.M):
+            for name in (x.strip() for x in m.split(",")):
+                # A local module is one that exists as a .py beside this file.
+                # Anything else is stdlib or third-party and not our problem.
+                if (name and name not in have
+                        and os.path.exists(os.path.join(HERE, name + ".py"))):
+                    missing.setdefault(name, []).append(os.path.basename(rel))
+    if missing:
+        print(f"\n{'='*70}")
+        print("!! PUBLISHED TOOLS ARE INCOMPLETE -- these modules are imported "
+              "but not tracked:")
+        for name, by in sorted(missing.items()):
+            print("  tools/%-28s imported by %s" % (name + ".py", ", ".join(sorted(set(by)))))
+        print("Fix with:  git add tools/<name>.py   (check it is publishable "
+              "first -- this list is exactly how a private script would get in)")
+        return False
+    return True
 
 
 def describe(status):

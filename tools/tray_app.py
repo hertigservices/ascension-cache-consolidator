@@ -264,6 +264,46 @@ def root_files():
         return []
 
 
+def root_dirs():
+    """Folders dropped straight into the inbox, never the inbox's own plumbing.
+
+    People drag folders in as often as they drag archives in, and until now
+    nothing ever filed one: tidy_inbox() moved whatever root_files() returned,
+    root_files() filters on os.path.isfile, so a dropped folder was merged,
+    left in place, and then looked like a fresh drop on the very next poll --
+    eight full pipeline runs in one hour off a single folder.
+
+    The exclusion is the whole risk here. DONE_DIR is *inside* the inbox, so a
+    version of this that returned every directory would move archive/ into
+    archive/YYYY-MM/archive/ and take the project's raw evidence with it. The
+    rule comes from intake rather than a copy of it, for the reason
+    archive_rules() gives; if intake cannot be imported we file no directories
+    at all, which is the safe direction. DONE_DIR is then excluded again by
+    real path, because that one must hold whether or not any import worked.
+    """
+    try:
+        import intake
+        tidy = intake.TIDY
+    except Exception:
+        return []
+    done = os.path.realpath(DONE_DIR)
+    out = []
+    try:
+        names = os.listdir(config.INBOX)
+    except OSError:
+        return []
+    for name in sorted(names):
+        p = os.path.join(config.INBOX, name)
+        if not os.path.isdir(p):
+            continue
+        if tidy.match(name):
+            continue
+        if os.path.realpath(p) == done:
+            continue
+        out.append(name)
+    return out
+
+
 def archive_rules():
     """intake's own extension list and splitter, imported rather than copied.
 
@@ -328,15 +368,22 @@ def file_arrival(name, log):
 def tidy_inbox(log):
     """Move consolidated drops out of the inbox root into archive/YYYY-MM/.
 
+    Both loose files and dropped folders, which is the point -- see root_dirs()
+    for what leaving folders behind actually cost.
+
     Nothing is deleted: these archives are the raw evidence of a preservation
-    project. The filename is kept byte for byte, because intake keys extraction
-    on the stem -- change that and everything is extracted a second time.
+    project. The name is kept byte for byte, because intake keys extraction on
+    the stem -- change that and everything is extracted a second time. Moving
+    is safe for provenance too: intake's ledger is keyed on the sha256 of the
+    file, not its path, and submission_segment() skips archive/ and YYYY-MM/
+    segments, so a submission keeps its identity after being filed.
 
     Returns [(oldrelpath, newrelpath)].
     """
     moved = []
     names = root_files()
-    if not names:
+    dirs = root_dirs()
+    if not names and not dirs:
         return moved
     month = time.strftime("%Y-%m")
     dest = os.path.join(DONE_DIR, month)
@@ -345,23 +392,39 @@ def tidy_inbox(log):
     except OSError as e:
         log("!! could not make %s: %s" % (dest, e))
         return moved
-    for name in names:
+    n_dirs = 0
+    for name in names + dirs:
+        is_dir = name in dirs
         src = os.path.join(config.INBOX, name)
         dst = os.path.join(dest, name)
         if os.path.exists(dst):
             # Same name already archived. Keep both: identical content is
             # harmless to the pipeline (it dedups by hash) and losing a
             # differing file would be silent data loss.
-            stem, ext = os.path.splitext(name)
-            dst = os.path.join(dest, "%s__%s%s" % (stem, int(time.time()), ext))
+            if is_dir:
+                # splitext on a folder is not merely useless, it is wrong:
+                # "Rexxar - Conquest of Azeroth" splits at nothing, but any
+                # folder with a dot in its name would be cut at that dot and
+                # filed under a name nobody dropped.
+                dst = os.path.join(dest, "%s__%s" % (name, int(time.time())))
+            else:
+                stem, ext = os.path.splitext(name)
+                dst = os.path.join(dest, "%s__%s%s"
+                                   % (stem, int(time.time()), ext))
         try:
             shutil.move(src, dst)
             moved.append((name, os.path.relpath(dst, config.INBOX)))
+            if is_dir:
+                n_dirs += 1
         except OSError as e:
             log("!! could not move %s: %s" % (name, e))
     if moved:
-        log("tidied %d file(s) into archive/%s (nothing deleted; they are still "
-            "scanned from there)" % (len(moved), month))
+        what = "%d file(s)" % (len(moved) - n_dirs)
+        if n_dirs:
+            what = ("%s and %d folder(s)" % (what, n_dirs) if len(moved) - n_dirs
+                    else "%d folder(s)" % n_dirs)
+        log("tidied %s into archive/%s (nothing deleted; they are still "
+            "scanned from there)" % (what, month))
     return moved
 
 
