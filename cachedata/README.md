@@ -1,6 +1,6 @@
 # Ascension client cache — merged dataset
 
-_Merged from 1011 distinct submitted cache files, the newest captured 2026-09-09._
+_Merged from 1053 distinct submitted cache files, the newest captured 2026-09-09._
 
 Community-submitted `Cache\WDB` folders from the Ascension WoW client, merged
 at the **record** level. Identical records collapse to one row no matter how
@@ -35,13 +35,13 @@ independent submissions corroborate it.
 
 | cache | distinct records | union entries |
 |---|---:|---:|
-| creaturecache | 26,619 | 22,781 |
-| gameobjectcache | 15,853 | 15,687 |
-| itemcache | 643,742 | 552,007 |
-| itemnamecache | 3,279 | 3,250 |
-| npccache | 2,109 | 2,077 |
-| pagetextcache | 320 | 320 |
-| questcache | 21,644 | 18,553 |
+| creaturecache | 26,677 | 22,833 |
+| gameobjectcache | 15,876 | 15,710 |
+| itemcache | 644,135 | 552,182 |
+| itemnamecache | 3,319 | 3,290 |
+| npccache | 2,179 | 2,146 |
+| pagetextcache | 330 | 330 |
+| questcache | 21,708 | 18,553 |
 
 ## Game modes
 
@@ -49,11 +49,11 @@ independent submissions corroborate it.
 |---|---|---:|---:|---:|---:|---:|---:|---:|
 | `coa-alpha` | conquest-of-azeroth | 1,359 | 1,400 | 0 | 0 | 54 | 1 | 119 |
 | `coa-beta` | conquest-of-azeroth | 5,122 | 4,653 | 16,239 | 67 | 308 | 22 | 720 |
-| `conquest-of-azeroth` | conquest-of-azeroth | 17,063 | 12,458 | 79,306 | 2,724 | 1,636 | 298 | 3,278 |
-| `free-pick` | free-pick | 6,478 | 5,402 | 36,007 | 743 | 285 | 17 | 893 |
+| `conquest-of-azeroth` | conquest-of-azeroth | 17,067 | 12,458 | 79,501 | 2,732 | 1,650 | 302 | 3,288 |
+| `free-pick` | free-pick | 6,642 | 5,516 | 36,598 | 759 | 310 | 17 | 958 |
 | `live-qa` | free-pick | 0 | 0 | 398 | 0 | 0 | 0 | 210 |
-| `season-10-freepick` | free-pick | 11,914 | 8,533 | 548,845 | 631 | 393 | 27 | 18,552 |
-| `season-10-wildcard` | wildcard | 5,256 | 3,811 | 24,193 | 243 | 250 | 8 | 570 |
+| `season-10-freepick` | free-pick | 12,154 | 8,720 | 548,846 | 640 | 477 | 28 | 18,552 |
+| `season-10-wildcard` | wildcard | 8,140 | 6,709 | 30,399 | 345 | 476 | 17 | 1,039 |
 | `season-9` | season-9 | 8,484 | 7,448 | 36,327 | 818 | 283 | 3 | 962 |
 | `stress-test` | stress-test | 1,674 | 1,122 | 10,125 | 100 | 34 | 2 | 177 |
 | `unknown` | unknown | 2,989 | 2,039 | 65 | 19 | 176 | 0 | 445 |
