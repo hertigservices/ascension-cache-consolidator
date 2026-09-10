@@ -169,16 +169,18 @@ def sync_tools():
     files already under version control.
     """
     tracked = git("ls-files", "tools").stdout.split()
-    n = 0
+    wrote = []
     for rel in tracked:
         s = os.path.join(HERE, os.path.basename(rel))
         d = os.path.join(REPO, rel.replace("/", os.sep))
         if os.path.exists(s) and not filecmp.cmp(s, d, shallow=False):
             shutil.copy2(s, d)
-            n += 1
-    if n:
-        print(f"tools: {n} file(s) updated from {HERE}")
-    return n
+            wrote.append(rel)
+    if wrote:
+        print(f"tools: {len(wrote)} file(s) updated from {HERE}")
+    # The caller stages these by name. Returning a count instead is what let
+    # `git add -A tools` publish a file this script never touched.
+    return wrote
 
 
 def audit():
@@ -377,14 +379,20 @@ def _publish(push):
         print("   commit or revert them first; refusing to sweep them into a push")
         return False
 
-    changed = sync_data() + sync_tools()
+    copied = sync_tools()
+    changed = sync_data() + len(copied)
     if not audit():
         print("\n!! AUDIT FAILED -- nothing committed, nothing pushed.")
         print("   Every hit must be explained before this can go public.")
         return False
     print("\naudit clean")
 
-    status = git("status", "--porcelain").stdout.splitlines()
+    # Scoped to what this run produced. Asked about the whole tree, a second
+    # maintainer's half-finished file reads as "there is something to commit",
+    # and the commit that follows either sweeps it in or fails outright with
+    # nothing staged.
+    ours = ["cachedata"] + copied
+    status = git("status", "--porcelain", "--", *ours).stdout.splitlines()
     if not status:
         # "Nothing to commit" is not "nothing to push". A run that committed and
         # then failed to push -- dropped network, timeout, an interrupted run --
@@ -395,11 +403,30 @@ def _publish(push):
         print("nothing new to commit")
     else:
         print(f"\n{len(status)} path(s) changed: {describe(status)}")
-        git("add", "-A", "cachedata", "tools")
+        # cachedata is wholly this script's output, so -A is right there --
+        # sync_data mirrors it including deletions. tools/ is shared with a
+        # human editing the same checkout, so only the files sync_tools just
+        # copied are ours to commit.
+        git("add", "-A", "cachedata")
+        for rel in copied:
+            git("add", "--", rel)
         msg = ("Consolidate submissions and republish\n\n"
                "Automated run: every file in the inbox merged, deduplicated and\n"
                "re-exported, then audited for player data before commit.\n\n"
                "Co-Authored-By: Claude Opus 5 <noreply@anthropic.com>\n")
+        # Last look before the one irreversible step. Staging is scoped above,
+        # but the index is shared: anything a person left staged would ride
+        # along into an automated commit and, with --push, straight to GitHub.
+        staged = git("diff", "--cached", "--name-only").stdout.split()
+        strays = [f for f in staged
+                  if not f.startswith("cachedata/") and f not in copied]
+        if strays:
+            print(chr(10) + "!! the index holds files this run did not write:")
+            for f in strays[:20]:
+                print("   " + f)
+            print("   unstage them first; refusing to commit someone "
+                  "else's work under this message")
+            return False
         git("commit", "-m", msg)
         print("committed " + git("rev-parse", "--short", "HEAD").stdout.strip())
 
