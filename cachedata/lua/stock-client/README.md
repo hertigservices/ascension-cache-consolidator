@@ -13,8 +13,8 @@ never saw. Data captured through 2026-09-10. Regenerated on every publish by
 
 | table | rows | from `conquest-of-azeroth` | from `union` | files | row layout |
 |---|---:|---:|---:|---:|---|
-| `AscensionStockData.items` | 553,720 | 432,368 | 121,352 | 132 | `{ name, quality, icon, displayId, class, subclass, inventoryType, itemLevel, requiredLevel }` |
-| `AscensionStockData.creatures` | 23,860 | 17,598 | 6,262 | 3 | `{ name, subname, displayId }` |
+| `AscensionStockData.items` | 553,720 | 432,476 | 121,244 | 132 | `{ name, quality, icon, displayId, class, subclass, inventoryType, itemLevel, requiredLevel }` |
+| `AscensionStockData.creatures` | 23,865 | 17,603 | 6,262 | 3 | `{ name, subname, displayId }` |
 | `AscensionStockData.quests` | 18,553 | 18,550 | 3 | 3 | `{ title }` |
 
 Rows are positional to keep the files small; the order above is also in
