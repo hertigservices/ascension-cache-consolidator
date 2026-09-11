@@ -13,8 +13,8 @@ never saw. Data captured through 2026-09-10. Regenerated on every publish by
 
 | table | rows | from `conquest-of-azeroth` | from `union` | files | row layout |
 |---|---:|---:|---:|---:|---|
-| `AscensionStockData.items` | 553,338 | 431,062 | 122,276 | 132 | `{ name, quality, icon, displayId, class, subclass, inventoryType, itemLevel, requiredLevel }` |
-| `AscensionStockData.creatures` | 23,423 | 17,557 | 5,866 | 3 | `{ name, subname, displayId }` |
+| `AscensionStockData.items` | 553,707 | 431,303 | 122,404 | 132 | `{ name, quality, icon, displayId, class, subclass, inventoryType, itemLevel, requiredLevel }` |
+| `AscensionStockData.creatures` | 23,843 | 17,563 | 6,280 | 3 | `{ name, subname, displayId }` |
 | `AscensionStockData.quests` | 18,553 | 18,550 | 3 | 3 | `{ title }` |
 
 Rows are positional to keep the files small; the order above is also in
@@ -31,8 +31,8 @@ the last is the stock 3.3.5a display id with byte-identical art, blank when none
 
 | items | count |
 |---|---:|
-| with an icon | 523,161 |
-| display id not in Ascension's DBC | 448 |
+| with an icon | 523,547 |
+| display id not in Ascension's DBC | 431 |
 | display id 0 in the record | 29,729 |
 
 ## Names that are not names
