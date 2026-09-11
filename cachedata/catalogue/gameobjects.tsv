@@ -644,14 +644,14 @@ id	name	type	display_id	sightings	submissions	zones	example_zone	example_map_id	
 3941	Fierce Blaze	SpellFocus	351	4	3	1	BurningSteppes	0	-8081.280	-1900.510	147.677	55.800	53.800				dumps_part2 | dumps_part3 | dumps_part4	BurningSteppes	stock
 3942	Fierce Blaze	SpellFocus	351	4	3	1	BurningSteppes	0	-8100.900	-1896.270	147.677	55.600	54.800				dumps_part2 | dumps_part3 | dumps_part4	BurningSteppes	stock
 3943	Mighty Blaze	SpellFocus	350	4	3	1	BurningSteppes	0	-8081.890	-1895.870	182.532	55.600	53.800				dumps_part2 | dumps_part3 | dumps_part4	BurningSteppes	stock
-3944	Fierce Blaze			3	3	1	Desolace	1	-1835.570	605.213	109.211	80.700	76.300				GameObjects-Bronzebeard | dumps_part2 | dumps_part4	Desolace	stock
-3945	Mighty Blaze			3	3	1	Desolace	1	-1840.200	588.710	157.515	81.100	76.500				GameObjects-Bronzebeard | dumps_part2 | dumps_part4	Desolace	stock
-3946	Fierce Blaze			3	3	1	Desolace	1	-1829.550	596.711	122.660	80.900	76.100				GameObjects-Bronzebeard | dumps_part2 | dumps_part4	Desolace	stock
-3947	Fierce Blaze			3	3	1	Desolace	1	-1836.860	588.299	109.211	81.100	76.400				GameObjects-Bronzebeard | dumps_part2 | dumps_part4	Desolace	stock
-3948	Fierce Blaze			3	3	1	Desolace	1	-1851.100	597.134	109.211	80.900	76.800				GameObjects-Bronzebeard | dumps_part2 | dumps_part4	Desolace	stock
-3949	Fierce Blaze			3	3	1	Desolace	1	-1846.530	607.406	122.660	80.700	76.700				GameObjects-Bronzebeard | dumps_part2 | dumps_part4	Desolace	stock
-3950	Fierce Blaze			3	3	1	Desolace	1	-1847.870	587.302	122.660	81.100	76.700				GameObjects-Bronzebeard | dumps_part2 | dumps_part4	Desolace	stock
-3951	Mighty Blaze			3	3	1	Desolace	1	-1847.550	602.834	157.515	80.800	76.700				GameObjects-Bronzebeard | dumps_part2 | dumps_part4	Desolace	stock
+3944	Fierce Blaze	SpellFocus	351	3	3	1	Desolace	1	-1835.570	605.213	109.211	80.700	76.300				GameObjects-Bronzebeard | dumps_part2 | dumps_part4	Desolace	stock
+3945	Mighty Blaze	SpellFocus	350	3	3	1	Desolace	1	-1840.200	588.710	157.515	81.100	76.500				GameObjects-Bronzebeard | dumps_part2 | dumps_part4	Desolace	stock
+3946	Fierce Blaze	SpellFocus	351	3	3	1	Desolace	1	-1829.550	596.711	122.660	80.900	76.100				GameObjects-Bronzebeard | dumps_part2 | dumps_part4	Desolace	stock
+3947	Fierce Blaze	SpellFocus	351	3	3	1	Desolace	1	-1836.860	588.299	109.211	81.100	76.400				GameObjects-Bronzebeard | dumps_part2 | dumps_part4	Desolace	stock
+3948	Fierce Blaze	SpellFocus	351	3	3	1	Desolace	1	-1851.100	597.134	109.211	80.900	76.800				GameObjects-Bronzebeard | dumps_part2 | dumps_part4	Desolace	stock
+3949	Fierce Blaze	SpellFocus	351	3	3	1	Desolace	1	-1846.530	607.406	122.660	80.700	76.700				GameObjects-Bronzebeard | dumps_part2 | dumps_part4	Desolace	stock
+3950	Fierce Blaze	SpellFocus	351	3	3	1	Desolace	1	-1847.870	587.302	122.660	81.100	76.700				GameObjects-Bronzebeard | dumps_part2 | dumps_part4	Desolace	stock
+3951	Mighty Blaze	SpellFocus	350	3	3	1	Desolace	1	-1847.550	602.834	157.515	80.800	76.700				GameObjects-Bronzebeard | dumps_part2 | dumps_part4	Desolace	stock
 3960	Burning Embers	SpellFocus	349	4	2	2	Azeroth	0	-6648.950	-2153.670	245.475	49.900	65.700				GameObjects-Bronzebeard | dumps_part2	Azeroth | Badlands	stock
 3962	Burning Embers	SpellFocus	349	4	2	1	SwampOfSorrows	0	-10493.900	-3251.540	21.153	44.800	57.100				GameObjects-Bronzebeard | dumps_part2	SwampOfSorrows	stock
 3963	Fierce Blaze	SpellFocus	408	1	1	1	Barrens	1	-297.850	-1966.340	90.582	45.300	28.300				dumps_part4	Barrens	stock
@@ -1286,7 +1286,7 @@ id	name	type	display_id	sightings	submissions	zones	example_zone	example_map_id	
 50961	Malem Chest	Questgiver	336	3	3	1	Desolace	1	-82.790	1692.180	88.718	56.500	17.800				GameObjects-Bronzebeard | dumps_part2 | dumps_part4	Desolace	stock
 50982	The Charred Oak	Chest	702	3	2	1	SearingGorge	0	-6850.780	-1538.730	240.864	54.500	50.500				GameObjects-Bronzebeard | dumps_part2	SearingGorge	stock
 50983	Heated Forge	SpellFocus	703	14	5	5	Ashenvale	1	2541.930	-3389.390	102.529	88.300	55.400	0			GameObjects-Bronzebeard | dumps-part1 | dumps_part2 | dumps_part3 | dumps_part4	Ashenvale | Barrens | BurningSteppes | Durotar | Stranglethorn	stock
-50984	Heated Forge			3	3	1	Desolace	1	-1890.750	620.357	107.671	80.400	78.100				GameObjects-Bronzebeard | dumps_part2 | dumps_part4	Desolace	stock
+50984	Heated Forge	SpellFocus	703	3	3	1	Desolace	1	-1890.750	620.357	107.671	80.400	78.100				GameObjects-Bronzebeard | dumps_part2 | dumps_part4	Desolace	stock
 50985	Heated Forge	SpellFocus	703	5	3	1	SwampOfSorrows	0	-10398.600	-3260.640	20.242	45.200	50.900				GameObjects-Bronzebeard | dumps_part2 | dumps_part4	SwampOfSorrows	stock
 50986	Bonfire	SpellFocus	200	5	3	1	Feralas	1	-5289.890	1279.830	50.744	59.900	63.100				GameObjects-Bronzebeard | dumps_part2 | dumps_part4	Feralas	stock
 50987	Bonfire	SpellFocus	200	1	1	1	Feralas	1	-5356.570	1313.400	35.395	59.400	64.500				dumps_part4	Feralas	stock
@@ -5465,7 +5465,7 @@ id	name	type	display_id	sightings	submissions	zones	example_zone	example_map_id	
 190226	Rowboat	Generic	124	2	2	1	Barrens	1	-1007.790	-3729.100	-0.408	62.700	38.800	0			dumps-part1 | dumps_part4	Barrens	stock
 190353	Poster Knife	Generic	7871	7	3	2	Badlands	0	-7297.930	-3194.180	296.359	44.800	84.900				GameObjects-Bronzebeard | dumps_part2 | dumps_part4	Badlands | Stranglethorn	stock
 190445	Alchemy Gear			4	3	1	Mulgore	1	-1822.620	338.369	207.837	33.300	45.200				GameObjects-Bronzebeard | dumps_part2 | dumps_part4	Mulgore	stock
-190447	Flying Machine Engine			4	3	1	Silithus	1	-7018.191	1866.830	6.585	19.300	45.600				GameObjects-Bronzebeard | dumps_part2 | dumps_part4	Silithus	stock
+190447	Flying Machine Engine	Chest	304	4	3	1	Silithus	1	-7018.191	1866.830	6.585	19.300	45.600				GameObjects-Bronzebeard | dumps_part2 | dumps_part4	Silithus	stock
 190483	Document Chest #2	Chest	10	4	3	1	ThousandNeedles	1	-5139.710	-1918.910	89.188	33.800	40.000				GameObjects-Bronzebeard | dumps_part2 | dumps_part4	ThousandNeedles	stock
 190484	Document Chest #3	Chest	10	4	3	1	ThousandNeedles	1	-5184.790	-2164.450	94.634	39.300	41.500				GameObjects-Bronzebeard | dumps_part2 | dumps_part4	ThousandNeedles	stock
 190507	Offering Bowl	SpellFocus	7928	3	2	1	DeadwindPass	0	-11082.000	-2169.580	28.849	53.400	72.900				GameObjects-Bronzebeard | dumps_part2	DeadwindPass	stock
@@ -7076,13 +7076,13 @@ id	name	type	display_id	sightings	submissions	zones	example_zone	example_map_id	
 1190587	Grove Flowers			1	1	1	Darkshore	1	4993.307	82.756	52.773	43.600	76.500				dumps_part4	Darkshore	ascension
 1194357	Poison Vial	Chest	8447	7	3	3	Duskwood	0	-11125.050	548.138	71.293	10.600	78.200				GameObjects-Bronzebeard | dumps_part2 | dumps_part4	Duskwood | Stranglethorn | Westfall	ascension
 1194358	Poison Vial			2	1	2	Silverpine	0	1481.911	432.594	-83.542	71.800	6.600				dumps_part4	Silverpine | Tirisfal	ascension
-1203236	Dynamite Bundle			4	3	1	Silithus	1	-7001.970	1867.370	6.164	19.200	44.900				GameObjects-Bronzebeard | dumps_part2 | dumps_part4	Silithus	ascension
+1203236	Dynamite Bundle	Generic	191	4	3	1	Silithus	1	-7001.970	1867.370	6.164	19.200	44.900				GameObjects-Bronzebeard | dumps_part2 | dumps_part4	Silithus	ascension
 1215386	Crumbling Statue	Chest	980926	3	1	1	EasternPlaguelands	0	2948.460	-3978.860	104.908	42.000	28.100				dumps_part2	EasternPlaguelands	ascension
 1234869	Tidal Treasures Crate	Generic	275	4	2	1	Dustwallow	1	-4223.560	-3898.870	2.125	55.700	62.600				GameObjects-Bronzebeard | dumps_part2	Dustwallow	ascension
 1234870	Tidal Treasure Shell A	Generic	1050445	4	2	1	Dustwallow	1	-4223.980	-3898.670	2.281	55.700	62.600				GameObjects-Bronzebeard | dumps_part2	Dustwallow	ascension
 1234871	Tidal Treasure	Chest	7362	4	2	1	Dustwallow	1	-4223.900	-3899.030	2.346	55.700	62.600				GameObjects-Bronzebeard | dumps_part2	Dustwallow	ascension
 1234872	Tidal Treasure Shell C	Generic	1056039	4	2	1	Dustwallow	1	-4223.740	-3898.930	2.386	55.700	62.600				GameObjects-Bronzebeard | dumps_part2	Dustwallow	ascension
-1240526	Plunger			4	3	1	Silithus	1	-7011.273	1861.011	6.334	19.400	45.300				GameObjects-Bronzebeard | dumps_part2 | dumps_part4	Silithus	ascension
+1240526	Plunger	Goober	9277	4	3	1	Silithus	1	-7011.273	1861.011	6.334	19.400	45.300				GameObjects-Bronzebeard | dumps_part2 | dumps_part4	Silithus	ascension
 1240527	Plunger	Goober	9277	4	3	1	LochModan	0	-5435.162	-4175.465	391.330	79.100	51.500				GameObjects-Bronzebeard | dumps_part2 | dumps_part4	LochModan	ascension
 1272038	Invisible Collision	Generic	1010403	3	3	2	Aszhara	1	3834.500	-5513.950	126.138	44.100	44.600				GameObjects-Bronzebeard | dumps_part2 | dumps_part4	Aszhara | Azshara	ascension
 1272039	Invisible Collision	Generic	86131	3	3	2	Barrens	1	-1067.900	-3535.690	64.413	60.800	39.700	0			GameObjects-Bronzebeard | dumps-part1 | dumps_part2	Barrens | Desolace	ascension
@@ -7177,8 +7177,8 @@ id	name	type	display_id	sightings	submissions	zones	example_zone	example_map_id	
 1355825	Message	Goober	1061631	4	3	2	Aszhara	1	5085.863	-5112.800	930.550	36.200	7.600				GameObjects-Bronzebeard | dumps_part2 | dumps_part4	Aszhara | Winterspring	ascension
 1370431	Un'Goro Rock	Generic	84701	3	3	2	UnGoroCrater	1	-7769.760	-694.883	-260.640	33.200	73.100				GameObjects-Bronzebeard | dumps_part2 | dumps_part4	UnGoroCrater | UngoroCrater	ascension
 1370440	Azshara Ruins	Generic	87017	3	3	2	Aszhara	1	3962.782	-5461.162	132.417	43.100	40.800				GameObjects-Bronzebeard | dumps_part2 | dumps_part4	Aszhara | Azshara	ascension
-1370500	Silithus Crystal			4	3	1	Silithus	1	-7000.300	1868.630	5.931	19.200	44.900				GameObjects-Bronzebeard | dumps_part2 | dumps_part4	Silithus	ascension
-1370501	Silithus Crystal			4	3	1	Silithus	1	-7016.395	1864.931	7.237	19.300	45.500				GameObjects-Bronzebeard | dumps_part2 | dumps_part4	Silithus	ascension
+1370500	Silithus Crystal	Generic	84888	4	3	1	Silithus	1	-7000.300	1868.630	5.931	19.200	44.900				GameObjects-Bronzebeard | dumps_part2 | dumps_part4	Silithus	ascension
+1370501	Silithus Crystal	Generic	84889	4	3	1	Silithus	1	-7016.395	1864.931	7.237	19.300	45.500				GameObjects-Bronzebeard | dumps_part2 | dumps_part4	Silithus	ascension
 1517370	Champion's Band RPG PROP	Generic	63516	1	1	1	Durotar	1	168.967	-3966.740	50.112	37.900	46.500				dumps_part4	Durotar	ascension
 1533556	Bow			1	1	1	UngoroCrater	1	-7978.530	-1807.540	-270.300	63.300	81.600				dumps_part4	UngoroCrater	ascension
 1544098	Still Smoldering Stump	Chest	980926	3	2	1	StonetalonMountains	1	797.595	1630.490	-31.017	33.100	65.100				GameObjects-Bronzebeard | dumps_part2	StonetalonMountains	ascension

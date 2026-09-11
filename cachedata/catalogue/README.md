@@ -103,19 +103,19 @@ counts as **unknown**, not as a door.
 Where no dump read a value, it comes from the game itself: the
 gameobjectcache records elsewhere in this dataset, which are the
 server's own description of each entry. That supplied the type of
-5,562 objects and the model of 5,562. A dump's value is never replaced. Where
+5,576 objects and the model of 5,576. A dump's value is never replaced. Where
 both exist they were compared on this run: the types agree for
 1,751 of 1,751 objects and the
 models for 1,749 of 1,751.
 
-**311 objects are still of unknown type**: no dump
+**297 objects are still of unknown type**: no dump
 read it and no cache record covers them. The types as published:
 
-* `Generic` — 2,850
-* `Chest` — 2,416
-* `SpellFocus` — 894
+* `Generic` — 2,853
+* `Chest` — 2,417
+* `SpellFocus` — 903
 * `Questgiver` — 252
-* `Goober` — 185
+* `Goober` — 186
 * `Chair` — 134
 * `Text` — 96
 * `Mailbox` — 79
