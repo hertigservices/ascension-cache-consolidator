@@ -1,6 +1,10 @@
 AUCTIONATOR_PRICE_DATABASE = {
 	["Area 52 - Free-Pick"] = {
+		["2800 Bazaar Tokens"] = 350000000,
+		["321 Bazaar Tokens"] = 39990000,
+		["560 Bazaar Tokens"] = 69990000,
 		["Aura of Experience"] = 19680000,
+		["Bazaar Token"] = 88000,
 	},
 	["Bronzebeard - Warcraft Reborn"] = {
 		["Aquadynamic Fish Lens"] = 8400,
