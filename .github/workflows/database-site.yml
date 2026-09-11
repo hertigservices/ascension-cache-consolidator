@@ -1,0 +1,14 @@
+name: Update public database website
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+jobs:
+  catalog:
+    uses: hertigservices/Ascension_preservation/.github/workflows/ascension-db.yml@571283fc182c33f03cd7688d581088a7f41b913f
+    with:
+      source_ref: 571283fc182c33f03cd7688d581088a7f41b913f
