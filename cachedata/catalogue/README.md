@@ -46,61 +46,97 @@ they are catalogued on their own rather than folded in.
 |---|---|
 | `id` | the entry id the server uses |
 | `name` | the name most dumps agreed on |
-| `type` | object type, **blank where it could not be read** (see below) |
-| `display_id` | the model the client drew; blank if not recorded |
+| `type` | object type: what a dump read, else what the game's own cache says; **blank where neither knows** (see below) |
+| `display_id` | the model id, from a dump, else from the cache; blank if neither has it |
 | `sightings` | how many rows across all files mention this id |
-| `submissions` | how many separate uploads saw it -- 2 or more means two people independently found the same thing |
+| `submissions` | how many separate uploads saw it -- uploads, not people (see below) |
 | `zones` | how many distinct zones it was seen in |
 | `example_*` | **one** position it was seen at, not its only one |
 | `lock_id`, `lock_type` | for locked objects, where recorded |
 | `other_names` | every other name any dump gave this id |
 | `seen_in` | which uploads it came from |
 | `zone_list` | every zone it was seen in |
+| `origin` | `stock` if stock 3.3.5a has this entry, `ascension` if it does not (see below) |
 
-## `type` is blank more often than you would expect
+## Reading these files
 
-That is on purpose. The dumper wrote `Door` when it could not read an
-object's type, and it could not read it most of the time: of the
-6,395 rows marked `Door`, 6,393 have no model id either, while every
-row of every other type has one. `Grave Moss` -- a herb -- is filed as
-a `Door`. Reporting that as a real breakdown would tell you the world
-is four-fifths doors.
-
-So an untyped `Door` is published as **blank, meaning unknown**. The
-types that remain are the ones the dump actually read:
-
-* `Generic` — 779
-* `Chest` — 653
-* `SpellFocus` — 164
-* `Questgiver` — 37
-* `Goober` — 33
-* `Text` — 24
-* `Mailbox` — 15
-* `Transport` — 13
-* `FishingHole` — 11
-* `Door` — 11
-* `SpellCaster` — 10
-* `Chair` — 6
-* `Button` — 6
-* `MOTransport` — 5
-* `Trap` — 4
-* `MeetingStone` — 2
-* `Difficulty` — 2
-* `AuraGen` — 1
-* `DuelArbiter` — 1
-* `GuildBank` — 1
-
-Types and model ids exist only in the `.csv` dumps, so zones that
-were only ever dumped to `.txt` have neither.
+They are tab-separated with no quoting at all, and some names begin
+with a double quote: `"Evidence"`, `"Borrowed" Dark Iron Signet`.
+A CSV reader left on its defaults takes that quote for field quoting
+and strips it without a word. Turn quoting off -- in Python,
+`csv.reader(f, delimiter="\t", quoting=csv.QUOTE_NONE)`.
 
 ## Which of these are Ascension's own?
 
-Stock 3.3.5a GameObjects have ids below 200000 and Ascension's
-worldforged ones were given a range above it, so **2,061
-of the 7,651 objects look custom** and
-5,590 look like stock 3.3.5a. That is a rule of thumb for
-reading the list, not a guarantee, and nothing was included or left
-out on the strength of it.
+The `origin` column. An entry is `stock` if stock 3.3.5a's template
+table has it -- looked up in the ids AzerothCore's base world
+database ships, `stock_entries.txt` beside the tool -- and
+`ascension` if it does not. That is everything Ascension added,
+whether they made it or brought it back from a later expansion.
+
+| file | ascension | stock |
+|---|---:|---:|
+| `gameobjects.tsv` | 4,159 | 3,492 |
+| `creatures.tsv` | 149 | 399 |
+
+**This used to be answered by an id range, and the range was
+wrong.** Earlier versions of this file said stock objects sit below
+200000 and Ascension's above it. 2,112 of
+Ascension's objects sit below it -- `4609 Timbermaw Totem of Nourishment`, `90421 Lost One Satchel`, `95706 Forgotten Dwarven Axe`, `96102 Logging Axe` --
+and 14 stock objects sit above it -- `200294 Doodad_InstancePortal_Green_10Man01`, `200295 Doodad_InstancePortal_Green_25Man01`, `200296 Washing Tub`, `200297 Shandy's Clothesline`.
+The range called 2,061 objects Ascension's; the stock
+table says 4,159.
+
+An id being stock says the entry exists in 3.3.5a, not that
+Ascension left it alone: a few stock entries carry a different name
+here. `origin` answers only the first question.
+
+## Where `type` and `display_id` come from
+
+First from the dumps, and there is a catch. The dumper wrote `Door`
+when it could not read an object's type, and it could not read it
+most of the time: of the 6,395 rows marked `Door`, 6,393 have no
+model id either, while every row of every other type has one.
+`Grave Moss` -- a herb -- is filed as a `Door`. So an untyped `Door`
+counts as **unknown**, not as a door.
+
+Where no dump read a value, it comes from the game itself: the
+gameobjectcache records elsewhere in this dataset, which are the
+server's own description of each entry. That supplied the type of
+5,562 objects and the model of 5,562. A dump's value is never replaced. Where
+both exist they were compared on this run: the types agree for
+1,751 of 1,751 objects and the
+models for 1,749 of 1,751.
+
+**311 objects are still of unknown type**: no dump
+read it and no cache record covers them. The types as published:
+
+* `Generic` — 2,850
+* `Chest` — 2,416
+* `SpellFocus` — 894
+* `Questgiver` — 252
+* `Goober` — 185
+* `Chair` — 134
+* `Text` — 96
+* `Mailbox` — 79
+* `Difficulty` — 71
+* `Trap` — 69
+* `Door` — 67
+* `Button` — 60
+* `SpellCaster` — 39
+* `Transport` — 30
+* `MeetingStone` — 25
+* `FishingHole` — 21
+* `MOTransport` — 15
+* `GuildBank` — 11
+* `BarberChair` — 9
+* `MapObject` — 6
+* `Binder` — 6
+* `FishingNode` — 1
+* `AuraGen` — 1
+* `DuelArbiter` — 1
+* `Ritual` — 1
+* `Camera` — 1
 
 ## Honest gaps
 
@@ -111,11 +147,14 @@ out on the strength of it.
 * **69 objects were given more than one name.**
   All of them are kept, in `other_names`, rather than one being
   quietly chosen and the rest dropped.
-* **Only 6,507 objects were seen by more than one
-  upload.** The rest rest on a single contributor's dump.
+* **6,507 objects were seen in more than one
+  upload.** Uploads are not people. One contributor can send several
+  -- `docs/GAMEOBJECT-DUMPS.md` says who sent what -- so a second
+  upload is a second sighting, not a second witness.
 * Zone names are printed exactly as the dumps wrote them. `Aszhara`
   and `Azshara` are **two different zones** here, not a typo -- they
   have different internal map names and not one id in common.
 
-Built from 159 dump files across 48 zones.
+Built from 159 dump files across 48 zones. Stock
+reference: AzerothCore base world database, 9fb906bb72 2026-08-21.
 
