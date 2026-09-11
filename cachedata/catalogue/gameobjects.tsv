@@ -5634,7 +5634,7 @@ id	name	type	display_id	sightings	submissions	zones	example_zone	example_map_id	
 250000	Horde Supply Crate			1	1	1	Silithus	1	-8513.840	1957.210	100.721	16.700	110.000				dumps_part4	Silithus	ascension
 250002	Barrel of Milk	Generic	334	2	1	1	Elwynn	0	-8678.128	-188.744	91.709	49.700	31.900				dumps_part4	Elwynn	ascension
 251562	Alliance Sword			2	1	1	Elwynn	0	-8680.136	-185.400	92.400	49.600	32.000				dumps_part4	Elwynn	ascension
-251653	Uther's Statue			1	1	1	Elwynn	0	-8732.437	-406.429	93.000	55.900	34.300				dumps_part4	Elwynn	ascension
+251653	Uther's Statue	Goober	6815	1	1	1	Elwynn	0	-8732.437	-406.429	93.000	55.900	34.300				dumps_part4	Elwynn	ascension
 254000	Ectoplasm Cannister	Chest	334	5	3	1	LochModan	0	-6088.550	-2769.800	414.407	28.100	87.000				GameObjects-Bronzebeard | dumps_part2 | dumps_part4	LochModan	ascension
 254001	Strange Flower	Chest	3232	3	3	1	Durotar	1	-320.429	-4121.060	51.117	40.800	60.400				GameObjects-Bronzebeard | dumps_part2 | dumps_part4	Durotar	ascension
 254002	Ouru???gai Crystal	Chest	2978	2	2	1	Barrens	1	253.970	-3132.500	91.819	56.800	20.100			Ouru’gai Crystal	GameObjects-Bronzebeard | dumps_part2	Barrens	ascension
@@ -6044,7 +6044,7 @@ id	name	type	display_id	sightings	submissions	zones	example_zone	example_map_id	
 254693	Discarded Junk	Chest	1010201	3	2	1	Duskwood	0	-11018.200	181.502	28.795	24.100	72.300				GameObjects-Bronzebeard | dumps_part2	Duskwood	ascension
 254694	Short Wooden Seat	Chair	138	5	2	2	Alterac	0	-97.893	216.758	53.276	20.200	85.600				GameObjects-Bronzebeard | dumps_part2	Alterac | Hilsbrad	ascension
 278831	Meeting Stone	MeetingStone	5491	4	2	1	EasternPlaguelands	0	3113.990	-3737.000	133.604	36.000	22.000				dumps_part2 | dumps_part3	EasternPlaguelands	ascension
-284901	Demon Skull			1	1	1	Teldrassil	1	10349.186	1041.979	1345.999	54.500	43.700				dumps_part4	Teldrassil	ascension
+284901	Demon Skull	Goober	226	1	1	1	Teldrassil	1	10349.186	1041.979	1345.999	54.500	43.700				dumps_part4	Teldrassil	ascension
 284902	Demon Skull			1	1	1	Durotar	1	-133.369	-4338.036	68.702	44.900	55.100				dumps_part4	Durotar	ascension
 290008	Mysterious Pirate Cache	Chest	980926	3	2	1	Stranglethorn	0	-12543.700	278.555	-39.609	30.400	32.300				GameObjects-Bronzebeard | dumps_part2	Stranglethorn	ascension
 293011	Burning Stump	Generic	1012682	2	1	1	Wetlands	0	-3409.050	-3171.170	25.394	67.300	45.800				dumps_part2	Wetlands	ascension
@@ -7285,7 +7285,7 @@ id	name	type	display_id	sightings	submissions	zones	example_zone	example_map_id	
 3204116	Broken Cart	Generic	1009682	4	3	1	SearingGorge	0	-7102.111	-1468.041	241.675	51.300	67.400				GameObjects-Bronzebeard | dumps_part2 | dumps_part4	SearingGorge	ascension
 3204227	Cauldron	SpellFocus	1009686	5	3	1	Dustwallow	1	-4681.760	-3950.930	42.094	56.700	75.700				GameObjects-Bronzebeard | dumps_part2 | dumps_part4	Dustwallow	ascension
 3204859	Forward Post Collision	Generic	1009799	4	2	2	LochModan	0	-5371.520	-3492.740	255.546	54.300	48.100				GameObjects-Bronzebeard | dumps_part2	LochModan | Silverpine	ascension
-3204879	Hippogryph Roost			1	1	1	Teldrassil	1	10169.713	700.882	1361.555	61.200	49.000				dumps_part4	Teldrassil	ascension
+3204879	Hippogryph Roost	Generic	1009803	1	1	1	Teldrassil	1	10169.713	700.882	1361.555	61.200	49.000				dumps_part4	Teldrassil	ascension
 3205435	Sullah's Crate	Generic	1009899	8	3	2	Stranglethorn	0	-13792.947	-199.184	27.338	37.900	61.700				GameObjects-Bronzebeard | dumps_part2 | dumps_part4	Stranglethorn | ThousandNeedles	ascension
 3205502	Bucket of Food	Generic	1009908	5	3	2	Stranglethorn	0	-13793.500	-199.379	27.338	37.900	61.700				GameObjects-Bronzebeard | dumps_part2 | dumps_part4	Stranglethorn | Tanaris	ascension
 3205528	Sullah's Rug	Generic	1009914	4	3	1	Arathi	0	-2080.572	-1634.957	37.833	21.300	81.100				GameObjects-Bronzebeard | dumps_part2 | dumps_part4	Arathi	ascension
