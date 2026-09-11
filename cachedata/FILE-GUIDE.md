@@ -19,7 +19,7 @@ Two consequences shape everything here:
 
 ## The cache files
 
-### `itemcache.wdb`  — 659,350 distinct records held
+### `itemcache.wdb`  — 659,458 distinct records held
 
 *Stored from:* `SMSG_ITEM_QUERY_SINGLE_RESPONSE`
 
@@ -27,7 +27,7 @@ Item definitions: name, icon, quality, item level, stats, damage, price, and on-
 
 **Not in this file:** Not loot tables, not drop sources, not where an item comes from.
 
-### `creaturecache.wdb`  — 28,710 distinct records held
+### `creaturecache.wdb`  — 28,732 distinct records held
 
 *Stored from:* `SMSG_CREATURE_QUERY_RESPONSE`
 
@@ -43,7 +43,7 @@ World objects: doors, chests, ore veins, herbs, mailboxes, campfires. Holds the 
 
 **Not in this file:** Not placements. No cache records where objects stand in the world.
 
-### `questcache.wdb`  — 22,980 distinct records held
+### `questcache.wdb`  — 23,017 distinct records held
 
 *Stored from:* `SMSG_QUEST_QUERY_RESPONSE`
 
@@ -51,7 +51,7 @@ Quest text and structure: title, objectives, description, completion text, requi
 
 **Not in this file:** Not quest chains or availability conditions.
 
-### `npccache.wdb`  — 2,618 distinct records held
+### `npccache.wdb`  — 2,627 distinct records held
 
 *Stored from:* `SMSG_NPC_TEXT_UPDATE`
 
@@ -59,7 +59,7 @@ The gossip text an NPC greets you with. Eight alternative blocks per entry, each
 
 **Not in this file:** Not vendor stock, not trainer lists.
 
-### `pagetextcache.wdb`  — 470 distinct records held
+### `pagetextcache.wdb`  — 471 distinct records held
 
 *Stored from:* `SMSG_PAGE_TEXT_QUERY_RESPONSE`
 
