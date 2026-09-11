@@ -19,7 +19,7 @@ Two consequences shape everything here:
 
 ## The cache files
 
-### `itemcache.wdb`  — 659,458 distinct records held
+### `itemcache.wdb`  — 659,462 distinct records held
 
 *Stored from:* `SMSG_ITEM_QUERY_SINGLE_RESPONSE`
 
@@ -27,7 +27,7 @@ Item definitions: name, icon, quality, item level, stats, damage, price, and on-
 
 **Not in this file:** Not loot tables, not drop sources, not where an item comes from.
 
-### `creaturecache.wdb`  — 28,732 distinct records held
+### `creaturecache.wdb`  — 28,733 distinct records held
 
 *Stored from:* `SMSG_CREATURE_QUERY_RESPONSE`
 
@@ -35,7 +35,7 @@ NPC and mob identity: name, the title under the name, creature type, family, ran
 
 **Not in this file:** A thin slice only — no level, faction, health, loot or AI. Those never leave the server, so no cache can contain them.
 
-### `gameobjectcache.wdb`  — 16,524 distinct records held
+### `gameobjectcache.wdb`  — 16,525 distinct records held
 
 *Stored from:* `SMSG_GAMEOBJECT_QUERY_RESPONSE`
 
@@ -51,7 +51,7 @@ Quest text and structure: title, objectives, description, completion text, requi
 
 **Not in this file:** Not quest chains or availability conditions.
 
-### `npccache.wdb`  — 2,627 distinct records held
+### `npccache.wdb`  — 2,640 distinct records held
 
 *Stored from:* `SMSG_NPC_TEXT_UPDATE`
 

@@ -5335,6 +5335,7 @@ T[525000]={"C'thun Eyestalk Seeker (3)","",21955}
 T[525011]={"C'thun Stomach Ejector (3)","",21955}
 T[525500]={"Khazno","Lost and Forgotten",18847}
 T[525501]={"Khazno","Lost and Forgotten",18847}
+T[529264]={"Spirit Wolf","",21114}
 T[533030]={"Void Portal","",460870}
 T[534427]={"Floofers","Devrak's Cub",30413}
 T[534428]={"Cuddles","Devrak's Cub",30413}
