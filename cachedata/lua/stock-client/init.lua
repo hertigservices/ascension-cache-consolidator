@@ -17,7 +17,7 @@ D.meta = {
   mode = "conquest-of-azeroth",
   fallback = "union",
   capturedThrough = "2026-09-09",
-  counts = { items = 552263, creatures = 23354, quests = 18553 },
+  counts = { items = 553336, creatures = 23413, quests = 18553 },
 }
 D.files = {
   "items-001.lua",
@@ -151,6 +151,7 @@ D.files = {
   "items-129.lua",
   "items-130.lua",
   "items-131.lua",
+  "items-132.lua",
   "creatures-001.lua",
   "creatures-002.lua",
   "creatures-003.lua",

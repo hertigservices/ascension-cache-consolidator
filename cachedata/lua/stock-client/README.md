@@ -13,9 +13,9 @@ never saw. Data captured through 2026-09-09. Regenerated on every publish by
 
 | table | rows | from `conquest-of-azeroth` | from `union` | files | row layout |
 |---|---:|---:|---:|---:|---|
-| `AscensionStockData.items` | 552,263 | 84,717 | 467,546 | 131 | `{ name, quality, icon, displayId, class, subclass, inventoryType, itemLevel, requiredLevel }` |
-| `AscensionStockData.creatures` | 23,354 | 17,411 | 5,943 | 3 | `{ name, subname, displayId }` |
-| `AscensionStockData.quests` | 18,553 | 3,748 | 14,805 | 3 | `{ title }` |
+| `AscensionStockData.items` | 553,336 | 430,576 | 122,760 | 132 | `{ name, quality, icon, displayId, class, subclass, inventoryType, itemLevel, requiredLevel }` |
+| `AscensionStockData.creatures` | 23,413 | 17,546 | 5,867 | 3 | `{ name, subname, displayId }` |
+| `AscensionStockData.quests` | 18,553 | 18,550 | 3 | 3 | `{ title }` |
 
 Rows are positional to keep the files small; the order above is also in
 `AscensionStockData.fields`. Numbers are integers, strings are UTF-8 as the server sent them,
@@ -31,9 +31,9 @@ the last is the stock 3.3.5a display id with byte-identical art, blank when none
 
 | items | count |
 |---|---:|
-| with an icon | 522,173 |
-| display id not in Ascension's DBC | 436 |
-| display id 0 in the record | 29,654 |
+| with an icon | 523,159 |
+| display id not in Ascension's DBC | 448 |
+| display id 0 in the record | 29,729 |
 
 ## Names that are not names
 
@@ -43,8 +43,8 @@ many entries. Names shared by 100+ item entries:
 
 | name | item entries |
 |---|---:|
-| `Z:DBCtoDB Generated Item` | 28,885 |
-| `[MISSING ITEM NAME]` | 11,385 |
+| `Z:DBCtoDB Generated Item` | 28,961 |
+| `[MISSING ITEM NAME]` | 11,387 |
 | `***Name Not Available***` | 2,282 |
 | `Signet Ring of the Bronze Dragonflight` | 645 |
 | `Duplicate Appearance` | 516 |
