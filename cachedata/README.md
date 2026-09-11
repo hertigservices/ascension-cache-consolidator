@@ -1,6 +1,6 @@
 # Ascension client cache — merged dataset
 
-_Merged from 1583 distinct submitted cache files, the newest captured 2026-09-10._
+_Merged from 1622 distinct submitted cache files, the newest captured 2026-09-10._
 
 Community-submitted `Cache\WDB` folders from the Ascension WoW client, merged
 at the **record** level. Identical records collapse to one row no matter how
@@ -36,13 +36,13 @@ independent submissions corroborate it.
 
 | cache | distinct records | union entries |
 |---|---:|---:|
-| creaturecache | 28,375 | 23,854 |
-| gameobjectcache | 16,478 | 16,276 |
-| itemcache | 657,702 | 553,716 |
+| creaturecache | 28,582 | 23,860 |
+| gameobjectcache | 16,501 | 16,278 |
+| itemcache | 657,788 | 553,720 |
 | itemnamecache | 3,561 | 3,532 |
-| npccache | 2,521 | 2,472 |
-| pagetextcache | 415 | 415 |
-| questcache | 22,796 | 18,553 |
+| npccache | 2,535 | 2,485 |
+| pagetextcache | 425 | 425 |
+| questcache | 22,858 | 18,553 |
 
 ## Game modes
 
@@ -50,13 +50,13 @@ independent submissions corroborate it.
 |---|---|---:|---:|---:|---:|---:|---:|---:|
 | `coa-alpha` | conquest-of-azeroth | 1,359 | 1,400 | 0 | 0 | 54 | 1 | 119 |
 | `coa-beta` | conquest-of-azeroth | 5,977 | 5,467 | 20,616 | 90 | 344 | 23 | 849 |
-| `conquest-of-azeroth` | conquest-of-azeroth | 17,588 | 12,624 | 432,331 | 2,930 | 1,999 | 389 | 18,550 |
-| `free-pick` | free-pick | 20,598 | 14,956 | 93,498 | 2,828 | 1,793 | 258 | 3,844 |
+| `conquest-of-azeroth` | conquest-of-azeroth | 17,598 | 12,626 | 432,368 | 2,930 | 2,014 | 399 | 18,550 |
+| `free-pick` | free-pick | 20,599 | 14,956 | 93,508 | 2,828 | 1,793 | 258 | 3,844 |
 | `live-qa` | free-pick | 0 | 0 | 398 | 0 | 0 | 0 | 210 |
 | `season-10-freepick` | free-pick | 12,196 | 8,757 | 548,849 | 640 | 496 | 28 | 18,552 |
-| `season-10-wildcard` | wildcard | 9,116 | 7,279 | 37,006 | 659 | 507 | 21 | 1,160 |
+| `season-10-wildcard` | wildcard | 9,137 | 7,291 | 37,088 | 659 | 508 | 21 | 1,171 |
 | `season-9` | season-9 | 8,484 | 7,448 | 36,327 | 818 | 283 | 3 | 962 |
-| `stress-test` | stress-test | 2,149 | 1,693 | 11,671 | 100 | 61 | 3 | 222 |
+| `stress-test` | stress-test | 2,203 | 1,737 | 11,894 | 109 | 64 | 3 | 231 |
 | `unknown` | unknown | 2,989 | 2,039 | 65 | 19 | 176 | 0 | 445 |
 | `warcraft-reborn` | warcraft-reborn | 6,724 | 5,677 | 55,912 | 1,222 | 285 | 15 | 1,012 |
 
