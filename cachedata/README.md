@@ -1,6 +1,6 @@
 # Ascension client cache — merged dataset
 
-_Merged from 1506 distinct submitted cache files, the newest captured 2026-09-10._
+_Merged from 1524 distinct submitted cache files, the newest captured 2026-09-10._
 
 Community-submitted `Cache\WDB` folders from the Ascension WoW client, merged
 at the **record** level. Identical records collapse to one row no matter how
@@ -36,11 +36,11 @@ independent submissions corroborate it.
 
 | cache | distinct records | union entries |
 |---|---:|---:|
-| creaturecache | 27,561 | 23,417 |
+| creaturecache | 27,567 | 23,423 |
 | gameobjectcache | 16,041 | 15,850 |
-| itemcache | 653,595 | 553,338 |
+| itemcache | 653,598 | 553,338 |
 | itemnamecache | 3,513 | 3,484 |
-| npccache | 2,458 | 2,414 |
+| npccache | 2,464 | 2,420 |
 | pagetextcache | 411 | 411 |
 | questcache | 22,702 | 18,553 |
 
@@ -50,7 +50,7 @@ independent submissions corroborate it.
 |---|---|---:|---:|---:|---:|---:|---:|---:|
 | `coa-alpha` | conquest-of-azeroth | 1,359 | 1,400 | 0 | 0 | 54 | 1 | 119 |
 | `coa-beta` | conquest-of-azeroth | 5,977 | 5,467 | 20,616 | 90 | 344 | 23 | 849 |
-| `conquest-of-azeroth` | conquest-of-azeroth | 17,550 | 12,600 | 431,004 | 2,928 | 1,962 | 385 | 18,550 |
+| `conquest-of-azeroth` | conquest-of-azeroth | 17,557 | 12,600 | 431,062 | 2,928 | 1,968 | 385 | 18,550 |
 | `free-pick` | free-pick | 18,730 | 13,700 | 89,420 | 2,633 | 1,731 | 256 | 3,693 |
 | `live-qa` | free-pick | 0 | 0 | 398 | 0 | 0 | 0 | 210 |
 | `season-10-freepick` | free-pick | 12,196 | 8,757 | 548,849 | 640 | 496 | 28 | 18,552 |
