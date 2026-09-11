@@ -13,6 +13,7 @@ See the [unified setup guide](https://github.com/hertigservices/Ascension_preser
 | [manifests/](manifests/) | SHA-256 and size of every file in a named cache snapshot |
 | [supplemental/bisbeard/](supplemental/bisbeard/) | Separately attributed planner export, all original rows, queryable catalog and comparison report |
 | [supplemental/exiles-db/](supplemental/exiles-db/) | Separately attributed mirror of a CoA database site, parsed into spell, item, NPC, quest, achievement and talent-tree records, with a change log and a hash index of every mirrored file |
+| [supplemental/worldforged/](supplemental/worldforged/) | Separately attributed Worldforged pickup locations and upgrade ladders ([Tareksoh/Worldforged-data](https://github.com/Tareksoh/Worldforged-data)), republished with the author's permission |
 
 | Guide | What it covers |
 |---|---|

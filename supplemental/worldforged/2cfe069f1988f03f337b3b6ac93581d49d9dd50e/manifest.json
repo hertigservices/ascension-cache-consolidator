@@ -1,0 +1,402 @@
+{
+ "artifacts": {
+  "comparison.json.gz": {
+   "bytes": 1980,
+   "sha256": "9cb21510747ab45fd99077d9b608d430786a5bdcbceaf51c0f5ca6009212d5f2"
+  },
+  "data/exiles_wf_ladder.csv.gz": {
+   "bytes": 144873,
+   "sha256": "4f846b2f6771aac1ec55187cb354aefad0cd66f446bf3370185d48c2a93aeea1"
+  },
+  "data/lootsmith/bisbeard_atlas_data.json.gz": {
+   "bytes": 88828,
+   "sha256": "442433ed44d33313bae62452fe69360bab1a50120a7babcc1f4db83e1d52f5b4"
+  },
+  "data/lootsmith/bisbeard_atlas_wf_locations.json.gz": {
+   "bytes": 34596,
+   "sha256": "21122bbcff95e37f5ef3fbb60a17bef468b54a561853327291932f1832138baf"
+  },
+  "data/lootsmith/lootcollector_wf.json.gz": {
+   "bytes": 28004,
+   "sha256": "15600beef087fee1244c8aa02ea3dda400d53609267319fa592ec0c4df5f14a1"
+  },
+  "data/lootsmith/wf_upgrade_chains.json.gz": {
+   "bytes": 38865,
+   "sha256": "3b096d4d35b539ae9e7572b4ff611415ae22d16e185a483ecc1964a540360640"
+  },
+  "data/provenance/dump_zips_wf_items.csv.gz": {
+   "bytes": 33880,
+   "sha256": "934c56220352495440fb52c14e5b1cdedfc12354a3247af5dbfc01998da1a4ce"
+  },
+  "data/provenance/dump_zips_wf_locations.csv.gz": {
+   "bytes": 142132,
+   "sha256": "a781c0e69409542546de40aabb6665b2633fc1761a7f15f669dc955ac012c046"
+  },
+  "data/wf_items_union.csv.gz": {
+   "bytes": 36954,
+   "sha256": "40f0c9c8dba593b14ae4fa7702770fcf6897beb6b403fbb0e1cd22d2cdf54eea"
+  },
+  "data/wf_pins_union.csv.gz": {
+   "bytes": 134255,
+   "sha256": "745a046d12f37ef9156141f20cd2cf08a67b6f2e67a4f9cf090b270f2d92b960"
+  },
+  "data/worldmaparea_bounds_captured.csv.gz": {
+   "bytes": 7803,
+   "sha256": "a63d74430147507e4fb04f538ed3318f3832a1258bc1b17188774a6fcd45bb9c"
+  },
+  "data/worldmaparea_bounds_stock.csv.gz": {
+   "bytes": 3322,
+   "sha256": "a26ac5f5de535fcde836a9e5f9f9c16a40019bf1a0ffc85842ec29dde7f39ef0"
+  }
+ },
+ "baseline": {
+  "format": "union itemcache.tsv.gz",
+  "revision": "151cae50fd4df34eeb2576b953e7ea61bace1beb",
+  "sha256": "eb6b060bcf8de789930278af0a610b1bb26eb9d2a9321b34f8af6807e43edd89"
+ },
+ "files": {
+  "data/exiles_wf_ladder.csv": {
+   "bytes": 967922,
+   "git_blob": "d43ed81af6cd35e8f06037dbd5e2f429a890e3af",
+   "sha256": "9df653c9324418a878f5aaef4a25292f2e874ebc60e1b49cfe76d7fde9f5cd62",
+   "summary": {
+    "columns": [
+     "name",
+     "tier",
+     "tier_label",
+     "item_id",
+     "s1_item_level",
+     "s1_required_level",
+     "found_at_zone",
+     "name_has_all_7_tiers"
+    ],
+    "kind": "csv",
+    "rows": 13953
+   }
+  },
+  "data/lootsmith/bisbeard_atlas_data.json": {
+   "bytes": 361872,
+   "git_blob": "ce9782d50826c4ff29c36670565329f76e6bcb57",
+   "sha256": "6760f781ede396e9dd3466521f9567971fc215ba7c1c2c01041966fa1d05b487",
+   "summary": {
+    "kind": "json",
+    "top_level": [
+     "_generatedAt",
+     "_harvested",
+     "_skipped",
+     "_src",
+     "kinds",
+     "markers",
+     "zones"
+    ]
+   }
+  },
+  "data/lootsmith/bisbeard_atlas_wf_locations.json": {
+   "bytes": 118821,
+   "git_blob": "1d57e222612a9b83ef876e8f7aa9289f5ce8a62c",
+   "sha256": "0a132381dc22c5a385e38e2a18f6d3c78239c8ea5c706aad2b0e15ef2a97e436",
+   "summary": {
+    "kind": "json",
+    "top_level": [
+     "_generatedAt",
+     "_harvested",
+     "_src",
+     "loc",
+     "zones"
+    ]
+   }
+  },
+  "data/lootsmith/lootcollector_wf.json": {
+   "bytes": 178119,
+   "git_blob": "41bbbbdc9550bce32aef31755f8c62c631dd456c",
+   "sha256": "9a67c7141129de37b646a42246c276c75ef1b3838b56c96b46c49a28cf566de9",
+   "summary": {
+    "kind": "json",
+    "top_level": [
+     "_crossCheck",
+     "_note",
+     "_source",
+     "count",
+     "items",
+     "worldforged"
+    ]
+   }
+  },
+  "data/lootsmith/wf_upgrade_chains.json": {
+   "bytes": 269424,
+   "git_blob": "28b27641820551061247047ebd312c543560337b",
+   "sha256": "bd59305cf561b5acbd2f53f3be68238401681892fc6b2d407be34275b69ed7f3",
+   "summary": {
+    "kind": "json",
+    "top_level": [
+     "_catalogAudit",
+     "_note",
+     "_source",
+     "_tierNames",
+     "chains",
+     "data",
+     "tierItemIds"
+    ]
+   }
+  },
+  "data/provenance/dump_zips_wf_items.csv": {
+   "bytes": 118413,
+   "git_blob": "d35bf7162fec99f55646836a3e94b40804393b2f",
+   "sha256": "0bce3c650c77c9ec72073429c97359185a048d0344b8c794b058a6d7bc4a953d",
+   "summary": {
+    "columns": [
+     "item_id",
+     "item_name",
+     "item_level",
+     "req_level",
+     "quality",
+     "class",
+     "subclass",
+     "inv_type",
+     "n_pins",
+     "n_pins_go_within_5yd",
+     "server_maps",
+     "zones",
+     "in_our_55454_cache",
+     "in_harvest_itemcache"
+    ],
+    "kind": "csv",
+    "rows": 1755
+   }
+  },
+  "data/provenance/dump_zips_wf_locations.csv": {
+   "bytes": 482491,
+   "git_blob": "29f9f970bfb26fec103bda8c89dfca426734b978",
+   "sha256": "ed3c66c2ee9c33f64e9b461e46cba37ec6bc5b890c44c6e28f1566232cc7dfd6",
+   "summary": {
+    "columns": [
+     "item_id",
+     "item_name",
+     "item_level",
+     "req_level",
+     "quality",
+     "lc_z_mapAreaId",
+     "wma_id",
+     "wma_name",
+     "server_map",
+     "norm_x",
+     "norm_y",
+     "server_X",
+     "server_Y",
+     "nearest_dump_go_entry",
+     "nearest_go_dist_yd",
+     "nearest_go_z",
+     "n_realms",
+     "n_records"
+    ],
+    "kind": "csv",
+    "rows": 4284
+   }
+  },
+  "data/wf_items_union.csv": {
+   "bytes": 129166,
+   "git_blob": "a01bd03168a990a38ac3770333e5bb55ba80f1f3",
+   "sha256": "ab85b9225af27d537fc81d24ccf73fb3a428d7b0ea17d80f13e78bceb990e579",
+   "summary": {
+    "columns": [
+     "item_id",
+     "item_name",
+     "s1_item_level",
+     "s1_required_level",
+     "n_pins",
+     "n_pins_starterdb",
+     "n_pins_dump_zip",
+     "n_pins_dump_rar",
+     "server_maps",
+     "zones"
+    ],
+    "kind": "csv",
+    "rows": 1973
+   }
+  },
+  "data/wf_pins_union.csv": {
+   "bytes": 510434,
+   "git_blob": "29b7aa4f0baa7d5301135737218e808dd2af5be1",
+   "sha256": "da9dd8d4eb6c886a73c24d8b6dc5d8e72a50da7ba3e7cab46c118a87f7aa0d1c",
+   "summary": {
+    "columns": [
+     "item_id",
+     "item_name",
+     "s1_item_level",
+     "s1_required_level",
+     "lc_z",
+     "wma_id",
+     "wma_name",
+     "server_map",
+     "norm_x",
+     "norm_y",
+     "server_X",
+     "server_Y",
+     "in_starterdb",
+     "in_dump_zip",
+     "in_dump_rar",
+     "n_records"
+    ],
+    "kind": "csv",
+    "rows": 5703
+   }
+  },
+  "data/worldmaparea_bounds_captured.csv": {
+   "bytes": 19050,
+   "git_blob": "177eb30003b38525aa123be86f44dc36955176c7",
+   "sha256": "38818a6cbb58d64b6dbff39691e2750086ec2bcca21554ed964465eccb49b9ac",
+   "summary": {
+    "columns": [
+     "wma_id",
+     "name",
+     "server_map",
+     "top",
+     "bottom",
+     "left",
+     "right"
+    ],
+    "kind": "csv",
+    "rows": 310
+   }
+  },
+  "data/worldmaparea_bounds_stock.csv": {
+   "bytes": 8832,
+   "git_blob": "46aa93993bfc4911516c4628a1ee9a894b71002d",
+   "sha256": "c3de675b06a5fa5f65d65839186d935aeb451df2c67d9ae5833cf86717bd9d03",
+   "summary": {
+    "columns": [
+     "wma_id",
+     "name",
+     "server_map",
+     "top",
+     "bottom",
+     "left",
+     "right"
+    ],
+    "kind": "csv",
+    "rows": 108
+   }
+  }
+ },
+ "omitted": [
+  {
+   "path": ".gitignore",
+   "reason": "repository housekeeping"
+  },
+  {
+   "path": "PRIVACY-GATE.md",
+   "reason": "the author's own privacy-gate record; read it upstream"
+  },
+  {
+   "path": "README.md",
+   "reason": "the author's description of the files; it embeds local paths. Summarised in our README"
+  },
+  {
+   "path": "docs/DISCORD-DUMP-lootcollector-lens.md",
+   "reason": "the author's measurement report; it embeds the author's local paths"
+  },
+  {
+   "path": "tools/build_exiles_ladder.py",
+   "reason": "code: the author's generators and LootCollector decoder; read them upstream"
+  },
+  {
+   "path": "tools/build_pin_union.py",
+   "reason": "code: the author's generators and LootCollector decoder; read them upstream"
+  },
+  {
+   "path": "tools/lootcollector-decoder/authority.py",
+   "reason": "code: the author's generators and LootCollector decoder; read them upstream"
+  },
+  {
+   "path": "tools/lootcollector-decoder/common.py",
+   "reason": "code: the author's generators and LootCollector decoder; read them upstream"
+  },
+  {
+   "path": "tools/lootcollector-decoder/dumpio.py",
+   "reason": "code: the author's generators and LootCollector decoder; read them upstream"
+  },
+  {
+   "path": "tools/lootcollector-decoder/fields.py",
+   "reason": "code: the author's generators and LootCollector decoder; read them upstream"
+  },
+  {
+   "path": "tools/lootcollector-decoder/goids.py",
+   "reason": "code: the author's generators and LootCollector decoder; read them upstream"
+  },
+  {
+   "path": "tools/lootcollector-decoder/itemjoin.py",
+   "reason": "code: the author's generators and LootCollector decoder; read them upstream"
+  },
+  {
+   "path": "tools/lootcollector-decoder/keys.py",
+   "reason": "code: the author's generators and LootCollector decoder; read them upstream"
+  },
+  {
+   "path": "tools/lootcollector-decoder/luasv.py",
+   "reason": "code: the author's generators and LootCollector decoder; read them upstream"
+  },
+  {
+   "path": "tools/lootcollector-decoder/main.py",
+   "reason": "code: the author's generators and LootCollector decoder; read them upstream"
+  },
+  {
+   "path": "tools/lootcollector-decoder/prec.py",
+   "reason": "code: the author's generators and LootCollector decoder; read them upstream"
+  },
+  {
+   "path": "tools/lootcollector-decoder/privcheck.py",
+   "reason": "code: the author's generators and LootCollector decoder; read them upstream"
+  },
+  {
+   "path": "tools/lootcollector-decoder/privcol.py",
+   "reason": "code: the author's generators and LootCollector decoder; read them upstream"
+  },
+  {
+   "path": "tools/lootcollector-decoder/privmd.py",
+   "reason": "code: the author's generators and LootCollector decoder; read them upstream"
+  },
+  {
+   "path": "tools/lootcollector-decoder/profile.py",
+   "reason": "code: the author's generators and LootCollector decoder; read them upstream"
+  },
+  {
+   "path": "tools/lootcollector-decoder/sidecar.py",
+   "reason": "code: the author's generators and LootCollector decoder; read them upstream"
+  },
+  {
+   "path": "tools/lootcollector-decoder/skeleton.py",
+   "reason": "code: the author's generators and LootCollector decoder; read them upstream"
+  },
+  {
+   "path": "tools/lootcollector-decoder/spawns.py",
+   "reason": "code: the author's generators and LootCollector decoder; read them upstream"
+  },
+  {
+   "path": "tools/lootcollector-decoder/starterdecode.py",
+   "reason": "code: the author's generators and LootCollector decoder; read them upstream"
+  },
+  {
+   "path": "tools/lootcollector-decoder/wfsem.py",
+   "reason": "code: the author's generators and LootCollector decoder; read them upstream"
+  },
+  {
+   "path": "tools/lootcollector-decoder/wma.py",
+   "reason": "code: the author's generators and LootCollector decoder; read them upstream"
+  }
+ ],
+ "schema_version": 1,
+ "semantics": {
+  "authority": "the author's derived measurements; captured data remains authoritative",
+  "kind": "supplemental third-party dataset",
+  "ladder": "rung labels differ between the two ladder sources; key on ids and item level",
+  "pins": "looter position at pickup time, not the spawn point; no Z"
+ },
+ "source": {
+  "author": "Tareksoh",
+  "commit": "2cfe069f1988f03f337b3b6ac93581d49d9dd50e",
+  "date": "2026-09-11T21:19:30+04:00",
+  "permission": "Republished with the author's permission, relayed by James Hertig on 2026-09-11. The upstream repository carries no licence file.",
+  "subject": "Worldforged data: pin union (5,703 pins / 1,973 items), Exiles 7-tier ladder (13,953 rows), Lootsmith WF files, WMA bounds, decoders, privacy gate record",
+  "url": "https://github.com/Tareksoh/Worldforged-data"
+ }
+}
