@@ -14,6 +14,7 @@ AUCTIONATOR_PRICE_DATABASE = {
 		["Bolt of Linen Cloth Upgrade Kit"] = 147,
 		["Bolt of Mageweave"] = 1595,
 		["Bolt of Silk Cloth"] = 1950,
+		["Chunk of Boar Meat"] = 75,
 		["Clam Meat"] = 870,
 		["Copper Tube"] = 790,
 		["Crisp Spider Meat"] = 31,
