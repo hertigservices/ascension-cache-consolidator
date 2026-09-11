@@ -5859,7 +5859,7 @@ id	name	type	display_id	sightings	submissions	zones	example_zone	example_map_id	
 254428	RPG PROP Azshara Rocks	Button	85561	5	3	2	Aszhara	1	4773.288	-7533.727	88.185	83.900	16.800				GameObjects-Bronzebeard | dumps_part2 | dumps_part4	Aszhara | Azshara	ascension
 254429	Eldara's Lyre	Chest	515460	3	3	2	Aszhara	1	4155.760	-7856.859	11.954	90.300	35.100				GameObjects-Bronzebeard | dumps_part2 | dumps_part4	Aszhara | Azshara	ascension
 254430	The Wrath of Arkkoroc	Chest	254104	3	3	2	Aszhara	1	3865.930	-7175.510	25.657	76.900	43.600				GameObjects-Bronzebeard | dumps_part2 | dumps_part4	Aszhara | Azshara	ascension
-254431	Arkkoran Idol			3	3	2	Aszhara	1	4006.451	-7129.711	25.770	76.000	39.500				GameObjects-Bronzebeard | dumps_part2 | dumps_part4	Aszhara | Azshara	ascension
+254431	Arkkoran Idol	Chest	1050391	3	3	2	Aszhara	1	4006.451	-7129.711	25.770	76.000	39.500				GameObjects-Bronzebeard | dumps_part2 | dumps_part4	Aszhara | Azshara	ascension
 254432	RPG PROP Pedestal	Button	4291	3	3	2	Aszhara	1	4006.655	-7129.764	24.683	76.000	39.500				GameObjects-Bronzebeard | dumps_part2 | dumps_part4	Aszhara | Azshara	ascension
 254434	Glinting Signet Stone	Chest	1070109	3	3	2	Aszhara	1	2479.969	-6908.029	109.476	71.600	84.600				GameObjects-Bronzebeard | dumps_part2 | dumps_part4	Aszhara | Azshara	ascension
 254435	Ancient Plaque	Text	214	1	1	1	Aszhara	1	2478.998	-6907.734	109.178	71.600	84.700				dumps_part4	Aszhara	ascension
