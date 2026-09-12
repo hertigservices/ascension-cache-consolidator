@@ -2519,7 +2519,7 @@ id	name	type	display_id	sightings	submissions	zones	example_zone	example_map_id	
 96074	Shoulder 95894 Prop	Generic	181600	3	3	1	Hinterlands	0	-53.943	-3174.830	99.600	41.600	59.200				GameObjects-Bronzebeard | dumps_part2 | dumps_part4	Hinterlands	ascension
 96075	Shoulder 95896 Prop	Generic	183228	3	3	1	Hinterlands	0	381.689	-3302.350	116.872	44.900	42.300				GameObjects-Bronzebeard | dumps_part2 | dumps_part4	Hinterlands	ascension
 96078	Skeleton Zandalari Prop	Generic	1044344	3	3	1	Hinterlands	0	-109.766	-3790.650	133.528	57.500	61.400				GameObjects-Bronzebeard | dumps_part2 | dumps_part4	Hinterlands	ascension
-96079	Skeleton Side Laying Prop			1	1	1	Winterspring	1	4562.293	-3926.182	943.145	50.800	83.900				dumps_part4	Winterspring	ascension
+96079	Skeleton Side Laying Prop	Generic	69735	1	1	1	Winterspring	1	4562.293	-3926.182	943.145	50.800	83.900				dumps_part4	Winterspring	ascension
 96080	Beer Keg Prop	Generic	1056625	3	3	1	Hinterlands	0	-348.377	-4601.510	8.593	78.600	70.700				GameObjects-Bronzebeard | dumps_part2 | dumps_part4	Hinterlands	ascension
 96081	Empty Beer Mug Prop	Generic	6153	3	3	1	Hinterlands	0	-346.773	-4603.277	9.426	78.700	70.700				GameObjects-Bronzebeard | dumps_part2 | dumps_part4	Hinterlands	ascension
 96083	Empty Bottle Prop	Generic	184807	3	3	1	Hinterlands	0	-344.895	-4601.640	9.180	78.600	70.600				GameObjects-Bronzebeard | dumps_part2 | dumps_part4	Hinterlands	ascension
@@ -3411,7 +3411,7 @@ id	name	type	display_id	sightings	submissions	zones	example_zone	example_map_id	
 100030	Prophetic Tome	Chest	338	3	3	2	Aszhara	1	3983.065	-4757.203	309.875	29.200	40.200				GameObjects-Bronzebeard | dumps_part2 | dumps_part4	Aszhara | Azshara	ascension
 100031	Prophetic Tome			3	2	1	Silithus	1	-6812.490	1655.220	8.219	25.300	36.800				GameObjects-Bronzebeard | dumps_part2	Silithus	ascension
 100032	Scorched Prophetic Tome			3	3	1	Alterac	0	20.843	353.819	43.046	15.300	79.200				GameObjects-Bronzebeard | dumps_part2 | dumps_part4	Alterac	ascension
-100034	Whispering Exsanguinated Corpse			1	1	1	Winterspring	1	4309.151	-4095.396	937.968	53.200	89.200				dumps_part4	Winterspring	ascension
+100034	Whispering Exsanguinated Corpse	Questgiver	7971	1	1	1	Winterspring	1	4309.151	-4095.396	937.968	53.200	89.200				dumps_part4	Winterspring	ascension
 100036	Terrifying Exsanguinated Corpse	Questgiver	7971	8	3	1	EasternPlaguelands	0	2864.240	-2536.080	86.485	6.200	31.300				dumps_part2 | dumps_part3 | dumps_part4	EasternPlaguelands	ascension
 100037	Dreaded Exsanguinated Corpse	Questgiver	7971	1	1	1	Feralas	1	-5551.142	3634.372	-14.766	26.000	68.700				dumps_part4	Feralas	ascension
 100038	Bloodsail Captain's Locked Treasure	Questgiver	10	4	3	1	Arathi	0	-2085.595	-2031.486	3.446	32.400	81.300				GameObjects-Bronzebeard | dumps_part2 | dumps_part4	Arathi	ascension
@@ -7180,7 +7180,7 @@ id	name	type	display_id	sightings	submissions	zones	example_zone	example_map_id	
 1370500	Silithus Crystal	Generic	84888	4	3	1	Silithus	1	-7000.300	1868.630	5.931	19.200	44.900				GameObjects-Bronzebeard | dumps_part2 | dumps_part4	Silithus	ascension
 1370501	Silithus Crystal	Generic	84889	4	3	1	Silithus	1	-7016.395	1864.931	7.237	19.300	45.500				GameObjects-Bronzebeard | dumps_part2 | dumps_part4	Silithus	ascension
 1517370	Champion's Band RPG PROP	Generic	63516	1	1	1	Durotar	1	168.967	-3966.740	50.112	37.900	46.500				dumps_part4	Durotar	ascension
-1533556	Bow			1	1	1	UngoroCrater	1	-7978.530	-1807.540	-270.300	63.300	81.600				dumps_part4	UngoroCrater	ascension
+1533556	Bow	Chest	515459	1	1	1	UngoroCrater	1	-7978.530	-1807.540	-270.300	63.300	81.600				dumps_part4	UngoroCrater	ascension
 1544098	Still Smoldering Stump	Chest	980926	3	2	1	StonetalonMountains	1	797.595	1630.490	-31.017	33.100	65.100				GameObjects-Bronzebeard | dumps_part2	StonetalonMountains	ascension
 1546304	Ish'thel Falesh, Gaze of Eldara	Chest	188455	6	3	2	Aszhara	1	3815.770	-5524.270	133.575	44.300	45.100				GameObjects-Bronzebeard | dumps_part2 | dumps_part4	Aszhara | Kalimdor	ascension
 1700962	Scholomance Supplies	Chest	2350	4	3	1	WesternPlaguelands	0	1364.260	-2568.870	105.572	69.400	69.900				GameObjects-Bronzebeard | dumps_part2 | dumps_part3	WesternPlaguelands	ascension
@@ -7451,9 +7451,9 @@ id	name	type	display_id	sightings	submissions	zones	example_zone	example_map_id	
 3253683	Drek'Thar's Wheelchair	Generic	1013401	4	3	1	Mulgore	1	-1814.043	329.434	206.655	33.400	45.000				GameObjects-Bronzebeard | dumps_part2 | dumps_part4	Mulgore	ascension
 3253727	Right Chamber - G - Clean - Pillowpile 01	Generic	1036376	5	3	1	Feralas	1	-5360.810	90.928	64.886	77.000	64.600				GameObjects-Bronzebeard | dumps_part2 | dumps_part4	Feralas	ascension
 3253780	Right Chamber - G - Clean - Pillowpile 03	Generic	1036387	4	3	1	Stranglethorn	0	-11637.930	-719.234	32.815	46.100	11.000				GameObjects-Bronzebeard | dumps_part2 | dumps_part4	Stranglethorn	ascension
-3253783	Right Chamber - B - Dirty - Glass Rubble 01			1	1	1	Winterspring	1	4557.107	-3958.336	942.604	51.300	84.000				dumps_part4	Winterspring	ascension
+3253783	Right Chamber - B - Dirty - Glass Rubble 01	Generic	1036390	1	1	1	Winterspring	1	4557.107	-3958.336	942.604	51.300	84.000				dumps_part4	Winterspring	ascension
 3253784	Right Chamber - F - Dirty - Web 02	Generic	1036391	5	3	1	Dustwallow	1	-2779.010	-2838.370	35.585	35.500	21.300				GameObjects-Bronzebeard | dumps_part2 | dumps_part4	Dustwallow	ascension
-3253840	Right Chamber - J - Dirty - Urn Wrecked			1	1	1	Winterspring	1	4544.334	-3968.227	943.053	51.400	84.300				dumps_part4	Winterspring	ascension
+3253840	Right Chamber - J - Dirty - Urn Wrecked	Generic	1036397	1	1	1	Winterspring	1	4544.334	-3968.227	943.053	51.400	84.300				dumps_part4	Winterspring	ascension
 3253841	Right Chamber - J - Dirty - Ruin 01	Generic	1036398	2	2	1	Darkshore	1	5635.570	218.684	52.095	41.600	61.800				GameObjects-Bronzebeard | dumps_part2	Darkshore	ascension
 3257632	7.0 Pre-Launch - Orgrimmar - Template Object	Generic	1037300	4	3	1	Stranglethorn	0	-13781.000	-198.969	18.593	37.900	61.400				GameObjects-Bronzebeard | dumps_part2 | dumps_part4	Stranglethorn	ascension
 3258360	Doodad_7nb_nightborn_clothbolt005	Generic	1037492	1	1	1	Feralas	1	-4629.814	-385.230	134.409	83.800	48.800				dumps_part4	Feralas	ascension

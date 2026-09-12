@@ -33,7 +33,7 @@ corrects it the next time the server sends that entry.
 |---|---:|---:|---:|---:|---:|---:|---:|
 | `coa-alpha` | 1,720 | 1,412 | 13,605 | — | 60 | 1 | 121 |
 | `coa-beta` | 5,989 | 5,472 | 20,638 | 90 | 345 | 23 | 855 |
-| `conquest-of-azeroth` | 17,697 | 12,641 | 432,822 | 2,970 | 2,134 | 458 | 18,550 |
+| `conquest-of-azeroth` | 17,705 | 12,647 | 432,846 | 2,970 | 2,147 | 468 | 18,550 |
 | `free-pick` | 20,615 | 14,957 | 93,848 | 2,828 | 1,798 | 258 | 3,888 |
 | `live-qa` | — | — | 398 | — | — | — | 210 |
 | `season-10-freepick` | 12,274 | 8,780 | 548,854 | 640 | 515 | 28 | 18,552 |
@@ -41,7 +41,7 @@ corrects it the next time the server sends that entry.
 | `season-9` | 8,515 | 7,463 | 36,332 | 818 | 283 | 3 | 965 |
 | `stress-test` | 2,214 | 1,750 | 12,101 | 109 | 68 | 4 | 253 |
 | `unknown` | 2,989 | 2,039 | 65 | 19 | 176 | — | 445 |
-| `warcraft-reborn` | 6,855 | 5,750 | 56,266 | 1,254 | 287 | 15 | 1,059 |
+| `warcraft-reborn` | 6,858 | 5,750 | 56,270 | 1,254 | 287 | 15 | 1,062 |
 
 Counts are entries, not file sizes; the files on disk are `.wdb.gz`.
 
