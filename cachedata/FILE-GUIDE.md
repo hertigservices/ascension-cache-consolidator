@@ -19,7 +19,7 @@ Two consequences shape everything here:
 
 ## The cache files
 
-### `itemcache.wdb`  — 659,462 distinct records held
+### `itemcache.wdb`  — 659,463 distinct records held
 
 *Stored from:* `SMSG_ITEM_QUERY_SINGLE_RESPONSE`
 
@@ -43,7 +43,7 @@ World objects: doors, chests, ore veins, herbs, mailboxes, campfires. Holds the 
 
 **Not in this file:** Not placements. No cache records where objects stand in the world.
 
-### `questcache.wdb`  — 23,017 distinct records held
+### `questcache.wdb`  — 23,023 distinct records held
 
 *Stored from:* `SMSG_QUEST_QUERY_RESPONSE`
 
