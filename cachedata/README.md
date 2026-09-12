@@ -1,6 +1,6 @@
 # Ascension client cache — merged dataset
 
-_Merged from 1887 distinct submitted cache files, the newest captured 2026-09-10._
+_Merged from 1932 distinct submitted cache files, the newest captured 2026-09-10._
 
 Community-submitted `Cache\WDB` folders from the Ascension WoW client, merged
 at the **record** level. Identical records collapse to one row no matter how
@@ -55,7 +55,7 @@ independent submissions corroborate it.
 | `free-pick` | free-pick | 20,616 | 14,957 | 93,858 | 2,828 | 1,798 | 258 | 3,888 |
 | `live-qa` | free-pick | 0 | 0 | 398 | 0 | 0 | 0 | 210 |
 | `season-10-freepick` | free-pick | 12,274 | 8,780 | 548,854 | 640 | 515 | 28 | 18,552 |
-| `season-10-wildcard` | wildcard | 10,776 | 7,964 | 40,427 | 731 | 513 | 25 | 1,185 |
+| `season-10-wildcard` | season-10-wildcard | 12,233 | 9,175 | 41,062 | 751 | 518 | 26 | 1,194 |
 | `season-9` | season-9 | 8,515 | 7,463 | 36,332 | 818 | 283 | 3 | 965 |
 | `stress-test` | stress-test | 2,249 | 1,750 | 12,197 | 109 | 68 | 4 | 253 |
 | `unknown` | unknown | 2,989 | 2,039 | 65 | 19 | 176 | 0 | 445 |
