@@ -14,6 +14,8 @@ See the [unified setup guide](https://github.com/hertigservices/Ascension_preser
 | [supplemental/bisbeard/](supplemental/bisbeard/) | Separately attributed planner export, all original rows, queryable catalog and comparison report |
 | [supplemental/exiles-db/](supplemental/exiles-db/) | Separately attributed mirror of a CoA database site, parsed into spell, item, NPC, quest, achievement and talent-tree records, with a change log and a hash index of every mirrored file |
 | [supplemental/worldforged/](supplemental/worldforged/) | Separately attributed Worldforged pickup locations and upgrade ladders ([Tareksoh/Worldforged-data](https://github.com/Tareksoh/Worldforged-data)), republished with the author's permission |
+| [supplemental/coa-databank/](supplemental/coa-databank/) | Separately attributed CoA reference data ([f3rr311/CoA-Databank](https://github.com/f3rr311/CoA-Databank)): a coabuildhub.com scrape of talents, skills and community builds, MPQ-derived spell and asset indexes, and harvest provenance. Republished with the author's permission, with community identities and local paths removed |
+| [supplemental/client-dbc-snapshots/](supplemental/client-dbc-snapshots/) | Client DBC dumps kept as their difference from the public client package: every member named with its hash, and only the DBCs whose bytes differ republished, each with a record-level report |
 
 | Guide | What it covers |
 |---|---|
