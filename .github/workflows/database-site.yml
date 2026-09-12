@@ -9,6 +9,6 @@ permissions:
   id-token: write
 jobs:
   catalog:
-    uses: hertigservices/Ascension_preservation/.github/workflows/ascension-db.yml@dc2430652fe03ec9072ba1a2f1258f673fcd866e
+    uses: hertigservices/Ascension_preservation/.github/workflows/ascension-db.yml@b22dbf4f28b8163f384feab81387fc3f2027b464
     with:
-      source_ref: dc2430652fe03ec9072ba1a2f1258f673fcd866e
+      source_ref: b22dbf4f28b8163f384feab81387fc3f2027b464
