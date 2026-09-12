@@ -192,6 +192,15 @@
    "Gather information about the target undead.  The tooltip will display damage, health, armor and any special resistances.  In addition, Undead Lore will reveal whether or not the creature is tameable and what abilities the tamed creature has."
   ]
  },
+ "1108": {
+  "name": "Curse of Weakness",
+  "tooltip": [
+   "Curse of Weakness",
+   "21 Mana",
+   "Instant cast",
+   "Target's attack power is reduced by 31 and armor is reduced by 5% for 2 min. Only one Curse per Warlock can be active on any one target.\n\n|cff00DDFFHold SHIFT for more information|r"
+  ]
+ },
  "11554": {
   "name": "Demoralizing Shout",
   "tooltip": [
@@ -448,6 +457,18 @@
    "Level: |cff1aff1a6|r",
    "Class Points: |cff1aff1a8|r |TInterface\\Icons\\classicon_priest:18:18|t",
    "Ability Essence Spent: |cff1aff1a4|r |TInterface\\Icons\\inv_custom_abilityessence:18:18|t"
+  ]
+ },
+ "172": {
+  "name": "Corruption",
+  "tooltip": [
+   "Corruption",
+   "29 Mana",
+   "Instant cast",
+   "Corrupts the target, causing 28 Shadow damage over 12 sec.",
+   " ",
+   "Cost: |cffff1a1a4 |TInterface\\Icons\\inv_custom_abilityessence:18:18|t|r",
+   "Level: |cff1aff1a1|r"
   ]
  },
  "1758": {
@@ -1204,6 +1225,16 @@
    "Level: |cff1aff1a1|r"
   ]
  },
+ "45513": {
+  "name": "Plague Strike",
+  "tooltip": [
+   "Plague Strike",
+   "1 Unholy",
+   "Instant",
+   "Requires Melee Weapon",
+   "A vicious strike that deals 50% weapon damage plus 10 and infects the target with Blood Plague, a disease dealing 8 Shadow damage over time."
+  ]
+ },
  "45902": {
   "name": "Blood Strike",
   "tooltip": [
@@ -1571,6 +1602,16 @@
    "Draws on the soul of the friendly target to shield them, absorbing 173 damage.  Lasts 30 sec.  While the shield holds, spellcasting will not be interrupted by damage.  Once shielded, the target cannot be shielded again for 15 sec."
   ]
  },
+ "6009": {
+  "name": "Curse Mastery",
+  "tooltip": [
+   "Curse Mastery",
+   "You gain Curse Mastery when learning any Curse Spell. \r\n\r\nThis Mastery automatically unlocks additional Curse Spells when you reach their Class Point requirements at no additional ability essence cost. \n|TInterface\\Common\\ui-tooltipdivider:12:180:0:0|t\n|TInterface\\Icons\\Spell_Shadow_CurseOfSargeras:20:20:0:0|t |cffFFFFFFCurse of Agony|r\n|TInterface\\Common\\ui-tooltipdivider:12:180:0:0|t\n|TInterface\\Icons\\Spell_Shadow_CurseOfMannoroth:20:20:0:0|t |cffFFFFFFCurse of Weakness|r\r\n|TInterface\\Common\\ui-tooltipdivider:12:180:0:0|t\n|TInterface\\Icons\\Spell_Shadow_GrimWard:20:20:0:0|t |cffFFFFFFCurse of Exhaustion|r\r\n|TInterface\\Common\\ui-tooltipdivider:12:180:0:0|t\n|TInterface\\Icons\\Spell_Shadow_CurseOfTounges:20:20:0:0|t |cffFFFFFFCurse of Tongues|r\r\n|TInterface\\Common\\ui-tooltipdivider:12:180:0:0|t\n|TInterface\\Icons\\Spell_Shadow_ChillTouch:20:20:0:0|t |cffFFFFFFCurse of the Elements|r\r\n|TInterface\\Common\\ui-tooltipdivider:12:180:0:0|t\n|TInterface\\Icons\\Spell_Shadow_AuraOfDarkness:20:20:0:0|t |cffFFFFFFCurse of Doom|r\n\n|cff00DDFFHold SHIFT for more information|r",
+   " ",
+   "Cost: |cffff1a1a4 |TInterface\\Icons\\inv_custom_abilityessence:18:18|t|r",
+   "Level: |cff1aff1a1|r"
+  ]
+ },
  "60103": {
   "name": "Lava Lash",
   "tooltip": [
@@ -1703,6 +1744,18 @@
    "Level: |cff1aff1a20|r",
    "Class Points: |cff1aff1a32|r |TInterface\\Icons\\classicon_deathknight:18:18|t",
    "Ability Essence Spent: |cff1aff1a18|r |TInterface\\Icons\\inv_custom_abilityessence:18:18|t"
+  ]
+ },
+ "702": {
+  "name": "Curse of Weakness",
+  "tooltip": [
+   "Curse of Weakness",
+   "21 Mana",
+   "Instant cast",
+   "Target's attack power is reduced by 21 and armor is reduced by 5% for 2 min. Only one Curse per Warlock can be active on any one target.\n\n|cff00DDFFHold SHIFT for more information|r",
+   " ",
+   "Cost: |cffff1a1a4 |TInterface\\Icons\\inv_custom_abilityessence:18:18|t|r",
+   "Level: |cff1aff1a4|r"
   ]
  },
  "706": {
@@ -2121,6 +2174,15 @@
    "Summons a random flying mount!\r\n\r\n|cFFFF0000This spell can only be used in flying areas.|r"
   ]
  },
+ "936100": {
+  "name": "Demon Claws",
+  "tooltip": [
+   "Demon Claws",
+   "15 Rage",
+   "Instant",
+   "|cffFFFFFFRequires |TInterface\\Icons\\Spell_Shadow_DemonForm:20:20:0:0|t Dark Apotheosis|r\r\nStrike twice, dealing 17 Physical damage per strike."
+  ]
+ },
  "954524": {
   "name": "Earthquake",
   "tooltip": [
@@ -2193,6 +2255,27 @@
    "Specialization II",
    "5 sec cast",
    "Change to specialization II."
+  ]
+ },
+ "980": {
+  "name": "Curse of Agony",
+  "tooltip": [
+   "Curse of Agony",
+   "21 Mana",
+   "Instant cast",
+   "Curses the target with agony, causing 36 Shadow damage over 24 sec.  This damage is dealt slowly at first, and builds up as the Curse reaches its full duration. Only one Curse per Warlock can be active on any one target.",
+   " ",
+   "Cost: |cffff1a1a4 |TInterface\\Icons\\inv_custom_abilityessence:18:18|t|r",
+   "Level: |cff1aff1a1|r"
+  ]
+ },
+ "981": {
+  "name": "Curse of Agony",
+  "tooltip": [
+   "Curse of Agony",
+   "29 Mana",
+   "Instant cast",
+   "Curses the target with agony, causing 48 Shadow damage over 24 sec.  This damage is dealt slowly at first, and builds up as the Curse reaches its full duration. Only one Curse per Warlock can be active on any one target."
   ]
  },
  "986202": {
