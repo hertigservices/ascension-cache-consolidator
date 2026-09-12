@@ -105,8 +105,8 @@ gameobjectcache records elsewhere in this dataset, which are the
 server's own description of each entry. That supplied the type of
 5,596 objects and the model of 5,596. A dump's value is never replaced. Where
 both exist they were compared on this run: the types agree for
-1,753 of 1,753 objects and the
-models for 1,751 of 1,753.
+1,754 of 1,754 objects and the
+models for 1,752 of 1,754.
 
 **277 objects are still of unknown type**: no dump
 read it and no cache record covers them. The types as published:
